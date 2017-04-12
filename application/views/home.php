@@ -71,7 +71,7 @@
 			                        <button type="submit" class="btn">Ingresar</button>
                                     
 			                    </form>
-                                <h1><?if (empty(= $errores)) { echo'' ;}else{echo = $errores;} ?></h1>
+                                
 		                    </div>
                         </div>
                     </div>
