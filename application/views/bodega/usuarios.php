@@ -23,7 +23,8 @@
                     <div class="col-lg-4">
 
                         <form role="form">
-
+                         <br>
+                         <br>
                             <div class="form-group">
                                <label>Rut</label>
                                 <input class="form-control" placeholder="Ingrese Rut  Ejemplo 11111111-1">
@@ -65,6 +66,13 @@
                     <div class="col-lg-8">
                 
                         <h2>Datos de los usuarios</h2>
+                        <div class="form-group">
+                  
+                            <label>Buscar</label>
+                            <input class="form-control" style="width: 400px" placeholder="Ingrese datos para buscar">
+                   
+                            </div>
+                    
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
