@@ -33,6 +33,27 @@
 
     <body>
 
+<center>
+    
+<?php 
+           $usuario = array(
+              'name'        => "username",
+              'id'          => "username",
+              'size'        => "50",
+              'value'       => set_value("username"),
+              'placeholder' => "Teclea tu Email",
+             );
+           $password = array(
+              'name'        => "password",
+              'id'          => "password",
+              'size'        => "50",
+              'value'       => set_value("password"),
+              'type'        => "password",
+              'placeholder' => "Teclea tu Clave",
+             );
+          $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform");
+          echo form_open("login/ValidarAcceso", $attributes);
+?>
         <!-- Top content -->
         <div class="top-content">
         	
@@ -62,11 +83,13 @@
 			                    <form role="form" action="" method="post" class="login-form">
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="form-username">Usuario</label>
-			                        	<input type="text" id ="username" name="username" placeholder="Usuario..." class="form-username form-control" id="form-username">
+			                        	 <?php echo form_input($usuario); ?>
+                               <font color="red"><?php echo form_error('username'); ?>
 			                        </div>
 			                        <div class="form-group">
 			                        	<label class="sr-only" for="form-password">Clave</label>
-			                        	<input type="password" id ="password" name="password" placeholder="Clave..." class="form-password form-control" id="form-password">
+			                        	     <?php echo form_input($password); ?>
+                               <font color="red"><?php echo form_error('password'); ?>
 			                        </div>
 			                        <button type="submit" class="btn">Ingresar</button>
                                     
