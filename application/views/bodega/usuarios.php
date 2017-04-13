@@ -66,81 +66,51 @@
                     <div class="col-lg-8">
                 
                         <h2>Datos de los usuarios</h2>
-                        <div class="form-group">
-                  
-                            <label>Buscar</label>
-                            <input class="form-control" style="width: 400px" placeholder="Ingrese datos para buscar">
-                   
+                <div class="form-group">
+                     <div class=" col-sm-3">
+                
+                                <select class="form-control">
+                                    <option>Rut</option>
+                                    <option>Nombre</option>
+                                    <option>Login</option>
+                                    <option>Password</option>
+                                    <option>Tipo_usuario</option>
+                                </select>
                             </div>
-                    
+                 <input  class="form-control input-sm col-sm-3" style="width: 400px" placeholder="Ingrese datos para buscar">   
+                   <div class="col-sm-2"> <button type="button" class="btn btn-success">Buscar</button> </div>
+                
+                     </div>
+                    <br>
+                    <br>
+                    <br>
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover table-striped">
+
                                 <thead>
                                     <tr>
+                                   
                                         <th>Rut</th>
                                         <th>Nombre</th>
                                         <th>Login</th>
                                         <th>Clave</th>
                                         <th>Tipo de usuario</th>
+                                        <th>Accion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                 <?php foreach ($consulta->result() as $fila) {
+                                        # code...
+                                     ?>
                                     <tr>
-                                        <td>/index.html</td>
-                                        <td>1265</td>
-                                        <td>32.3%</td>
-                                        <td>$321.33</td>
-                                          <td>$321.33</td>
+                                        <td><?= $fila->rut ?></td>
+                                        <td><?= $fila->nombre ?></td>
+                                        <td><?= $fila->login ?></td>
+                                        <td><?= $fila->password ?></td>
+                                        <td><?= $fila->tipo_usuario ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>/about.html</td>
-                                        <td>261</td>
-                                        <td>33.3%</td>
-                                        <td>$234.12</td>
-                                          <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/sales.html</td>
-                                        <td>665</td>
-                                        <td>21.3%</td>
-                                        <td>$16.34</td>
-                                          <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/blog.html</td>
-                                        <td>9516</td>
-                                        <td>89.3%</td>
-                                        <td>$1644.43</td>
-                                          <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/404.html</td>
-                                        <td>23</td>
-                                        <td>34.3%</td>
-                                        <td>$23.52</td>
-                                          <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/services.html</td>
-                                        <td>421</td>
-                                        <td>60.3%</td>
-                                        <td>$724.32</td>
-                                          <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/blog/post.html</td>
-                                        <td>1233</td>
-                                        <td>93.2%</td>
-                                        <td>$126.34</td>
-                                          <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/blog/post.html</td>
-                                        <td>1233</td>
-                                        <td>93.2%</td>
-                                        <td>$126.34</td>
-                                          <td>$321.33</td>
-                                    </tr>
+                                 
+                                   <?php } ?>
                                 </tbody>
                             </table>
                         </div>
