@@ -89,6 +89,7 @@
 
                                 <thead>
                                     <tr>
+                                   
                                         <th>Rut</th>
                                         <th>Nombre</th>
                                         <th>Login</th>
