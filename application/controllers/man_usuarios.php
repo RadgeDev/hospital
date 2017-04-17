@@ -25,4 +25,36 @@ class Man_usuarios extends CI_Controller
 		
 	}
 }
+
+function guardar() {
+
+		//El metodo is_ajax_request() de la libreria input permite verificar
+		//si se esta accediendo mediante el metodo AJAX 
+		if ($this->input->is_ajax_request()) {
+			$rut = $this->input->post("rut");
+			$nombre = $this->input->post("nombre");
+			$login = $this->input->post("login");
+			$clave = $this->input->post("clave");
+			$cargo = $this->input->post("seleccion");
+
+			$datos = array(
+				"rut" => $rut,
+				"nombre" => $nombre,
+				"login" => $login,
+				"password" => $clave,
+				"tipo_usuario" => $cargo
+				);
+		$this->load->model('man_usuarios_model');
+		if($this->man_usuarios_model->guardar($datos)==true)
+				echo "Registro Guardado";
+			else
+				echo "No se pudo guardar los datos";
+		}
+		else
+		{
+			show_404();
+		}
+
 }
+
+	}

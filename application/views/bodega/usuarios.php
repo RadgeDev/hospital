@@ -78,41 +78,14 @@
                                 </select>
                             </div>
                  <input  class="form-control input-sm col-sm-3" id="buscar" style="width: 400px" placeholder="Ingrese datos para buscar">   
-                   <div class="col-sm-2"> <button type="button" class="btn btn-success">Buscar</button> </div>
-                
+                   <div class="col-sm-4"> <button type="button" id="btnbuscar"  class="btn btn-primary">Mostrar Todos</button>    <button type="button" href='#' class='btn btn-success' data-toggle='modal' data-target='#myModalHorizontal'>Agregar Nuevo Usuario</button>  </div>
+             
                      </div>
                     <br>
                     <br>
                     <br>
                         <div id ="tablausuarios" class="table-responsive">
-                         <!--     <table  class="table table-bordered table-hover table-striped">
-
-                              <thead>
-                                    <tr>
-                                   
-                                        <th>Rut</th>
-                                        <th>Nombre</th>
-                                        <th>Login</th>
-                                        <th>Clave</th>
-                                        <th>Tipo de usuario</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                 //<?php foreach ($consulta->result() as $fila) {
-                                        # code...
-                                     ?>
-                                    <tr>
-                                        <td><?= $fila->rut ?></td>
-                                        <td><?= $fila->nombre ?></td>
-                                        <td><?= $fila->login ?></td>
-                                        <td><?= $fila->password ?></td>
-                                        <td><?= $fila->tipo_usuario ?></td>
-                                    </tr>
-                                 
-                                   <?php } ?>
-                                </tbody>
-                            </table> -->
+                         <!-- se cargan los datos js  de la tabla-->
                         </div>
                     </div>
         
@@ -128,4 +101,85 @@
     </div>
     <!-- /#wrapper -->
  
-   
+   <!-- modal empieza aca -->
+   <!-- Modal -->
+<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Cerrar</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Ingresar usuario
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body" >
+                
+                      <form role="form" action= "http://localhost/hospital/man_usuarios/guardar" method="POST" >
+                         <br>
+                         <br>
+                            <div class="form-group">
+                               <label>Rut</label>
+                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Login</label>
+                             <input class="form-control" id="login" name="login"  placeholder="Ingrese su usuario">
+                            </div>
+
+                             <div class="form-group">
+                                <label>Clave</label>
+                             <input class="form-control" id="clave" name="clave"  placeholder="Ingrese su Clave">
+                            </div>
+                            
+                             <div  class="form-group">
+                                <label>Tipo de Usuario</label>
+                                <select name="cargo" class="form-control">
+                                    <option>Administrador</option>
+                                    <option>Bodeguero</option>
+                                    <option>Invitado</option>
+                                </select>
+                            </div>
+                            <input type="hidden" class="form-control" id="seleccion" name="seleccion"  placeholder="Ingrese su Clave">
+                <!--
+                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
+                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
+                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
+                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
+                   -->
+                          <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg  btn-danger"
+                        data-dismiss="modal">
+                            Cerrar
+                </button>
+                <button type="submit" id="cerrarmodal" name="cerrarmodal" class="btn btn-lg  btn-success" >
+                    Guardar
+                </button>
+            </div>
+                        </form>
+                
+                
+                
+                
+                
+                
+            </div>
+            
+          
+        </div>
+    </div>
+</div>
