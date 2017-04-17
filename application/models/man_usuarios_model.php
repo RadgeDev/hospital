@@ -9,6 +9,11 @@
 
  	}
 
+function mostrar($valor){
+$this->db->like("rut",$valor);
+$consulta = $this->db->get("usuarios");
+return $consulta->result();
+}
  }
 
   ?>

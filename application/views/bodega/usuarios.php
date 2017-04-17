@@ -19,7 +19,7 @@
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
+               <!--   <div class="row">
                     <div class="col-lg-4">
 
                         <form role="form">
@@ -62,8 +62,8 @@
 
                         </form>
 
-                    </div>
-                    <div class="col-lg-8">
+                    </div>-->
+                    <div class="col-lg-12">
                 
                         <h2>Datos de los usuarios</h2>
                 <div class="form-group">
@@ -77,17 +77,17 @@
                                     <option>Tipo_usuario</option>
                                 </select>
                             </div>
-                 <input  class="form-control input-sm col-sm-3" style="width: 400px" placeholder="Ingrese datos para buscar">   
+                 <input  class="form-control input-sm col-sm-3" id="buscar" style="width: 400px" placeholder="Ingrese datos para buscar">   
                    <div class="col-sm-2"> <button type="button" class="btn btn-success">Buscar</button> </div>
                 
                      </div>
                     <br>
                     <br>
                     <br>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
+                        <div id ="tablausuarios" class="table-responsive">
+                         <!--     <table  class="table table-bordered table-hover table-striped">
 
-                                <thead>
+                              <thead>
                                     <tr>
                                    
                                         <th>Rut</th>
@@ -99,7 +99,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                 <?php foreach ($consulta->result() as $fila) {
+                                 //<?php foreach ($consulta->result() as $fila) {
                                         # code...
                                      ?>
                                     <tr>
@@ -112,7 +112,7 @@
                                  
                                    <?php } ?>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                     </div>
         
@@ -127,3 +127,5 @@
 
     </div>
     <!-- /#wrapper -->
+ 
+   

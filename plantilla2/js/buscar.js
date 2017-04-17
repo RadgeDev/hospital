@@ -1,12 +1,6 @@
 
-$(document).ready(function(){
-	mostrarDatos();
-	$(".form-username").val("Username...");
-	$(".form-password").val("Password...");
-	
-});
-
-function mostrarDatos(valor) {
+$( document ).ready(function() {
+	function mostrarDatos(valor) {
 	$.ajax({
 		url: "http://localhost/hospital/man_usuarios/mostrar",
 		type:"POST",
@@ -19,3 +13,5 @@ function mostrarDatos(valor) {
 
 
 }
+});
+
