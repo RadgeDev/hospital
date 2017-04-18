@@ -39,6 +39,36 @@ function guardar($data) {
 	}
 
 
+function eliminar( $rutsele){
+		$this->db->where('rut', $rutsele);
+		$this->db->delete('usuarios'); 
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}	
+
+
+
+
+
+function validar( $rutsele){
+
+		$this->db->where('rut', $rutsele);
+		$this->db->get("usuarios");
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}	
+
+
+
+
  }
 
 
