@@ -36,14 +36,8 @@ function guardar() {
 			$login = $this->input->post("login");
 			$clave = $this->input->post("clave");
 			$cargo = $this->input->post("seleccion");
-            $this->form_validation->set_rules('rut','Rut','required|min_length[10]|max_length[10]');
-			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|alpha');
-			$this->form_validation->set_rules('login','Login','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('clave','Clave','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('seleccion','Seleccion','required|min_length[3]|max_length[50]');
 
-   if ($this->form_validation->run() === TRUE) {
-   			$datos = array(
+			$datos = array(
 				"rut" => $rut,
 				"nombre" => $nombre,
 				"login" => $login,
@@ -55,12 +49,6 @@ function guardar() {
 				echo "Registro Guardado";
 			else
 				echo "No se pudo guardar los datos";
-	}else
-	{
-				echo validation_errors('<li>','</li>');
-	}
-
-			
 		}
 		else
 		{
@@ -76,12 +64,7 @@ function guardar() {
 			$login = $this->input->post("seleclogin");
 			$clave = $this->input->post("selecclave");
 			$cargo = $this->input->post("seleccion");
-		$this->form_validation->set_rules('selecnombre','Selecnombre','required|min_length[3]|max_length[50]|alpha');
-			$this->form_validation->set_rules('seleclogin','Seleclogin','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('selecclave','Selecclave','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('seleccion','Seleccion','required|min_length[3]|max_length[50]');
-
-  if ($this->form_validation->run() === TRUE) {
+		
 			$datos = array(
 				"nombre" => $nombres,
 				"login" => $login,
@@ -93,61 +76,9 @@ function guardar() {
 				echo "Registro Actualizado";
 			else
 				echo "No se pudo actualizar los datos";
-		}else
-	    {
-	  			echo validation_errors('<li>','</li>');
-	    }
-
 			
 		}
 		else
-		{
-			show_404();
-		}
-
-}
-
-
-
-function eliminar(){
-
-		if ($this->input->is_ajax_request()) {
-
-			$rutsele = $this->input->post("id");
-			$this->load->model('man_usuarios_model');
-       
-			if($this->man_usuarios_model->eliminar($rutsele) == true)
-				echo "Registro Eliminado";
-
-			else
-				echo "No se pudo eliminar los datos";
-			
-		}
-
-		else
-
-		{
-			show_404();
-		}
-	}
-
-
-function validar(){
-
-		if ($this->input->is_ajax_request()) {
-
-			$rutsele = $this->input->post("id");
-			$this->load->model('man_usuarios_model');
-			if($this->man_usuarios_model->validar($rutsele) == true)
-				echo "Rut existe";
-
-			else
-				echo "rut no existe";
-			
-		}
-
-		else
-
 		{
 			show_404();
 		}

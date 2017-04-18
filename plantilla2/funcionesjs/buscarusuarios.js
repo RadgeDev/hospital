@@ -2,7 +2,7 @@
 $( document ).ready(function() {
   // Handler for .ready() called.mostrarDatos
 mostrarDatos(""); //muestra todo al iniciar el formualrio
-$("#msg-error").hide();
+
  $("#buscar").keyup(function(){ //busca segun el valor del imput 
 buscar =  $("#buscar").val();
 
@@ -18,13 +18,7 @@ buscar =  $("#buscar").val();
 
 
 $("#cerrarmodal2").click(actualizar);
-$("#cerrando").click(cerrarModal);
 
-function cerrarModal() {
-  $("#msg-error").hide();
-    $("#msgerrorut").hide();
-   $('#usuarioGuardar').get(0).reset();//resetea  los campos del formulario
-}
 
 
 $("#usuarioGuardar").submit(function (event){
@@ -37,19 +31,15 @@ $("#usuarioGuardar").submit(function (event){
       data:$("#usuarioGuardar").serialize(),
       success:function(respuesta){
        
-        if (respuesta === "Registro Guardado") {
+        if (respuesta == "Registro Guardado") {
          
            $('#myModalHorizontal').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
+           swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
            $('#usuarioGuardar').get(0).reset();//resetea  los campos del formulario
-        } else if (respuesta === "No se pudo guardar los datos") {
-          swal("Error", "Error revise si los datos estan correctos", "error");
-        }
+        } 
         else
         {
-    
-          $("#msg-error").show();
-          $(".list-errors").html(respuesta);
+          swal("Error", "Error revise si los datos estan correctos", "error");
         }
               mostrarDatos("");
       }
@@ -144,29 +134,13 @@ $("body").on("click","#tablausuarios a",function(event){
     $("#selecnombre").val(nombressele);
     $("#seleclogin").val(loginsele);
     $("#seleclave").val(passwordsele);
-    $("#seleccion").val(tipousuariosele);
+    $("#seleccargo").val(tipousuariosele);
   document.getElementById('cargo').value= tipousuariosele;
   }); 
 
   $("body").on("click","#tablausuarios button",function(event){
-
-    selecrut = $(this).attr("value");
-    nombressele = $(this).parent().parent().children("td:eq(1)").text();
-   
-swal({
-  title: "Estas seguro que deseas eliminar?",
-  text: "Quieres eliminar a: "+nombressele ,
-  type: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#DD6B55",
-  confirmButtonText: "Si, deseo borrarlo!",
-  closeOnConfirm: false
-},
-function(){
- eliminar(selecrut); 
-  swal("Deleted!", "Registro eliminado.", "success");
-});
-
+    rutselec = $(this).attr("value");
+    eliminar(rutselec); 
   });
 
 function actualizar(){
@@ -185,91 +159,10 @@ function actualizar(){
       if (respuesta == "Registro Actualizado") {
            $('#myModalEditar').modal('hide');//esconde formulario modal
            swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
-            $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
         }else{
           swal("Error", respuesta, "error");
         }
       mostrarDatos("");
     }
   });
-
 }
-
-
-function eliminar(selecrut){
-  $.ajax({
-    url:"http://localhost/hospital/man_usuarios/eliminar",
-    type:"POST",
-    data:{id:selecrut},
-    success:function(respuesta){
-
-      if (respuesta =="Registro Eliminado" ) {
-           swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
-           
-        }else{
-          swal("Error", respuesta, "error");
-        }
-      mostrarDatos("");
-    }
-  });
-
-}
-
-function validar(mirut){
- 
-  $.ajax({
-    url:"http://localhost/hospital/man_usuarios/validar",
-    type:"POST",
-    data:{id:mirut},
-    success:function(respuesta){
-    if (respuesta =="Rut existe" ) {
-           swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos
-           
-        }else{
-        
-
-
-        }
-  
-    }
-  });
-
-}
-
-
-var Fn = {
-  // Valida el rut con su cadena completa "XXXXXXXX-X"
-  validaRut : function (rutCompleto) {
-    if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
-      return false;
-    var tmp   = rutCompleto.split('-');
-    var digv  = tmp[1]; 
-    var rut   = tmp[0];
-    if ( digv == 'K' ) digv = 'k' ;
-    return (Fn.dv(rut) == digv );
-  },
-  dv : function(T){
-    var M=0,S=1;
-    for(;T;T=Math.floor(T/10))
-      S=(S+T%10*(9-M++%6))%11;
-    return S?S-1:'k';
-  }
-}
-
-function validarRut() {
-
-
-if (Fn.validaRut( $("#rut").val() )){
-   // $("#msgerrorut").html("El rut ingresado es válido :D");
-  var inputs = $('#rut')
-  var mirut = $(inputs).val();
-  validar(mirut);
-    $("#msgerrorut").html(" ");
-  } else {
-    $("#msgerrorut").show();
-    $("#msgerrorut").html("<font color='red'>El Rut no es válido  </font> ");
-  }
-}
-
-
-

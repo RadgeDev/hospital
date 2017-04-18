@@ -118,10 +118,7 @@
                   Ingresar usuario
                 </h4>
             </div>
-            <div class="alert alert-danger" id="msg-error" style="text-align:left;">
-                  <strong>¡Importante!</strong> Corregir los siguientes errores.
-                  <div class="list-errors"></div>
-              </div>
+            
             <!-- Modal Body -->
             <div class="modal-body" >
                 
@@ -130,8 +127,7 @@
                          <br>
                             <div class="form-group">
                                <label>Rut</label>
-                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10">
-                                  <p class="text-errors" id="msgerrorut"></p>
+                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1">
                             </div>
 
                             <div class="form-group">
@@ -167,7 +163,7 @@
                    -->
                           <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
+                <button type="button" class="btn btn-lg  btn-danger"
                         data-dismiss="modal">
                             Cerrar
                 </button>
