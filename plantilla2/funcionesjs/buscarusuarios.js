@@ -16,27 +16,52 @@ buscar =  $("#buscar").val();
 
  });
 
-$("form").submit(function (event){
+
+$("#cerrarmodal2").click(actualizar);
+
+
+
+$("#usuarioGuardar").submit(function (event){
 
     event.preventDefault();
 
     $.ajax({
-      url:$("form").attr("action"),
-      type:$("form").attr("method"),
-      data:$("form").serialize(),
+      url:$("#usuarioGuardar").attr("action"),
+      type:$("#usuarioGuardar").attr("method"),
+      data:$("#usuarioGuardar").serialize(),
       success:function(respuesta){
-       // alert(respuesta);
        
-        if (respuesta ="Registro Guardado") {
+        if (respuesta == "Registro Guardado") {
          
            $('#myModalHorizontal').modal('hide');//esconde formulario modal
            swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
            $('#usuarioGuardar').get(0).reset();//resetea  los campos del formulario
+        } 
+        else
+        {
+          swal("Error", "Error revise si los datos estan correctos", "error");
         }
               mostrarDatos("");
       }
     });
   });
+
+  $("#usuarioEditar").submit(function (event){
+
+    event.preventDefault();
+
+    $.ajax({
+      url:$("#usuarioEditar").attr("action"),
+      type:$("#usuarioEditar").attr("method"),
+      data:$("#usuarioEditar").serialize(),
+      success:function(respuesta){
+ 
+        
+      }
+    });
+  });
+
+
 
 $("select[name=cargo]").change(function(){
             $('input[name=seleccion]').val($(this).val());
@@ -45,8 +70,11 @@ $("select[name=cargo]").change(function(){
 });
     
 
+    
+    
 //creauna tabla de la base de datos segun consulta del buscar
 function mostrarDatos(valor) {
+
     $.ajax({
         url: "http://localhost/hospital/man_usuarios/mostrar",
         type:"POST",
@@ -100,15 +128,14 @@ $("body").on("click","#tablausuarios a",function(event){
    loginsele = $(this).parent().parent().children("td:eq(2)").text();
     passwordsele = $(this).parent().parent().children("td:eq(3)").text();
     tipousuariosele = $(this).parent().parent().children("td:eq(4)").text();
-    alert(tipousuariosele);
+
 
     $("#selecrut").val(rutsele);
     $("#selecnombre").val(nombressele);
     $("#seleclogin").val(loginsele);
     $("#seleclave").val(passwordsele);
     $("#seleccargo").val(tipousuariosele);
-
-  document.getElementById('cargo2').value= tipousuariosele;
+  document.getElementById('cargo').value= tipousuariosele;
   }); 
 
   $("body").on("click","#tablausuarios button",function(event){
@@ -116,3 +143,26 @@ $("body").on("click","#tablausuarios a",function(event){
     eliminar(rutselec); 
   });
 
+function actualizar(){
+
+  $("#usuarioEditar").submit(function (event){
+
+    event.preventDefault();
+
+  });
+
+  $.ajax({
+    url:"http://localhost/hospital/man_usuarios/actualizar",
+    type:"POST",
+    data:$("#usuarioEditar").serialize(),
+    success:function(respuesta){
+      if (respuesta == "Registro Actualizado") {
+           $('#myModalEditar').modal('hide');//esconde formulario modal
+           swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
+        }else{
+          swal("Error", respuesta, "error");
+        }
+      mostrarDatos("");
+    }
+  });
+}

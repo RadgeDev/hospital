@@ -201,7 +201,7 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="usuarioEditar" role="form" action= "http://localhost/hospital/man_usuarios/guardar" method="POST" >
+                      <form  id="usuarioEditar" role="form" action= "http://localhost/hospital/man_usuarios/actualizar" method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
@@ -226,14 +226,14 @@
                             
                              <div  class="form-group">
                                 <label>Tipo de Usuario</label>
-                                <select name="cargo" id="cargo2" class="form-control">
+                                <select name="cargo" id="cargo" class="form-control">
                                     <option>Seleccione una opcion</option>
                                     <option>Administrador</option>
                                     <option>Bodeguero</option>
                                     <option>Invitado</option>
                                 </select>
                             </div>
-                            <input type="hidden" class="form-control" id="seleccargo" name="eleccargo"  placeholder="Ingrese su Clave">
+                            <input  type="hidden" class="form-control" id="seleccion" name="seleccion"  placeholder="Ingrese su Clave">
                 <!--
                     <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
                     <button type="button" class="btn btn-lg  btn-success">Guardar</button>
@@ -246,7 +246,7 @@
                         data-dismiss="modal">
                             Cerrar
                 </button>
-                <button type="submit" id="cerrarmodal2" name="cerrarmodal" class="btn btn-lg  btn-success" >
+                <button type="submit" id="cerrarmodal2" name="cerrarmodal2" class="btn btn-lg  btn-success" >
                     Guardar
                 </button>
             </div>

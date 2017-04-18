@@ -26,6 +26,19 @@ function guardar($data) {
 		}
 	}
 
+
+	function actualizar($rut,$data){
+		$this->db->where('rut', $rut);
+		$this->db->update('usuarios', $data); 
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+
  }
 
 

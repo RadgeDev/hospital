@@ -57,4 +57,32 @@ function guardar() {
 
 }
 
+	function actualizar(){
+		if ($this->input->is_ajax_request()) {
+			$rutsele = $this->input->post("selecrut");
+			$nombres = $this->input->post("selecnombre");
+			$login = $this->input->post("seleclogin");
+			$clave = $this->input->post("selecclave");
+			$cargo = $this->input->post("seleccion");
+		
+			$datos = array(
+				"nombre" => $nombres,
+				"login" => $login,
+				"password" => $clave,
+		        "tipo_usuario" => $cargo
+				);
+			$this->load->model('man_usuarios_model');
+			if($this->man_usuarios_model->actualizar($rutsele,$datos) == true)
+				echo "Registro Actualizado";
+			else
+				echo "No se pudo actualizar los datos";
+			
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+
 	}
