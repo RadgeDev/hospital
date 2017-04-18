@@ -22,6 +22,8 @@
 
     <!-- Custom Fonts -->
     <link href="<?= base_url()?>plantilla2/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="<?= base_url()?>plantilla2/sweetalert/sweetalert.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="<?= base_url()?>plantilla2/sweetalert/sweetalert.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

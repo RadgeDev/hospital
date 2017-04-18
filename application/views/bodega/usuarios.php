@@ -122,7 +122,7 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form role="form" action= "http://localhost/hospital/man_usuarios/guardar" method="POST" >
+                      <form  id="usuarioGuardar" role="form" action= "http://localhost/hospital/man_usuarios/guardar" method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
@@ -148,6 +148,7 @@
                              <div  class="form-group">
                                 <label>Tipo de Usuario</label>
                                 <select name="cargo" class="form-control">
+                                    <option>Seleccione una opcion</option>
                                     <option>Administrador</option>
                                     <option>Bodeguero</option>
                                     <option>Invitado</option>
@@ -171,15 +172,89 @@
                 </button>
             </div>
                         </form>
-                
-                
-                
-                
-                
+
                 
             </div>
             
-          
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModalEditar" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Cerrar</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Editar usuario
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body" >
+                
+                      <form  id="usuarioEditar" role="form" action= "http://localhost/hospital/man_usuarios/guardar" method="POST" >
+                         <br>
+                         <br>
+                            <div class="form-group">
+                               <label>Rut</label>
+                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Login</label>
+                             <input class="form-control" id="seleclogin" name="seleclogin"  placeholder="Ingrese su usuario">
+                            </div>
+
+                             <div class="form-group">
+                                <label>Clave</label>
+                             <input class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave">
+                            </div>
+                            
+                             <div  class="form-group">
+                                <label>Tipo de Usuario</label>
+                                <select name="cargo" id="cargo2" class="form-control">
+                                    <option>Seleccione una opcion</option>
+                                    <option>Administrador</option>
+                                    <option>Bodeguero</option>
+                                    <option>Invitado</option>
+                                </select>
+                            </div>
+                            <input type="hidden" class="form-control" id="seleccargo" name="eleccargo"  placeholder="Ingrese su Clave">
+                <!--
+                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
+                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
+                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
+                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
+                   -->
+                          <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg  btn-danger"
+                        data-dismiss="modal">
+                            Cerrar
+                </button>
+                <button type="submit" id="cerrarmodal2" name="cerrarmodal" class="btn btn-lg  btn-success" >
+                    Guardar
+                </button>
+            </div>
+                        </form>
+
+                
+            </div>
+            
         </div>
     </div>
 </div>
