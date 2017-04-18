@@ -56,39 +56,21 @@ $("#usuarioGuardar").submit(function (event){
     });
   });
 
-
-function actualizar(){
-
   $("#usuarioEditar").submit(function (event){
 
     event.preventDefault();
 
-  });
-
-  $.ajax({
-    url:"http://localhost/hospital/man_usuarios/actualizar",
-    type:"POST",
-    data:$("#usuarioEditar").serialize(),
-    success:function(respuesta){
-       if (respuesta === "Registro Actualizado") {
-         
-           $('#myModalEditar').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos Eitados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
-           $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
-        } else if (respuesta === "No se pudo actualizar los datos") {
-          swal("Error", "Error revise si los datos estan correctos", "error");
-        }
-        else
-        {
-    
-          $("#msg-error2").show();
-          $(".list-errors2").html(respuesta);
-        }
-              mostrarDatos("");
+    $.ajax({
+      url:$("#usuarioEditar").attr("action"),
+      type:$("#usuarioEditar").attr("method"),
+      data:$("#usuarioEditar").serialize(),
+      success:function(respuesta){
+ 
+        
       }
     });
+  });
 
-}
 
 
 $("select[name=cargo]").change(function(){
@@ -187,9 +169,31 @@ function(){
 
   });
 
+function actualizar(){
 
+  $("#usuarioEditar").submit(function (event){
 
+    event.preventDefault();
 
+  });
+
+  $.ajax({
+    url:"http://localhost/hospital/man_usuarios/actualizar",
+    type:"POST",
+    data:$("#usuarioEditar").serialize(),
+    success:function(respuesta){
+      if (respuesta == "Registro Actualizado") {
+           $('#myModalEditar').modal('hide');//esconde formulario modal
+           swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
+            $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
+        }else{
+          swal("Error", respuesta, "error");
+        }
+      mostrarDatos("");
+    }
+  });
+
+}
 
 
 function eliminar(selecrut){
@@ -218,11 +222,10 @@ function validar(mirut){
     type:"POST",
     data:{id:mirut},
     success:function(respuesta){
-    if (respuesta ==="Rut existe" ) {
-
-    swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos
+    if (respuesta =="Rut existe" ) {
+           swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos
            
-    }else{
+        }else{
         
 
 
