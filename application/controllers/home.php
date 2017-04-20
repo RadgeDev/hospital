@@ -8,8 +8,10 @@ class Home extends Ci_Controller
 }
 
 	if(isset($_POST['password'])){
+    $this->load->library('encrypt');
+    $miclave= $this->encrypt->decode($_POST['password']);
 	$this->load->model('usuario_model');
-	if ($this->usuario_model->login($_POST['username'],md5($_POST['password']))){
+	if ($this->usuario_model->login($_POST['username'],$miclave)){
 		$this->session->set_userdata('username',$_POST['username']);
         redirect('welcome');
    } else {

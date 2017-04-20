@@ -161,11 +161,11 @@ $("body").on("click","#tablausuarios a",function(event){
     $("#selecrut").val(rutsele);
     $("#selecnombre").val(nombressele);
     $("#seleclogin").val(loginsele);
-    $("#seleclave").val(passwordsele);
+    $("#seleclave2").val(passwordsele);
     $("#seleccion").val(tipousuariosele);
   document.getElementById('cargo').value= tipousuariosele;
   document.getElementById('seleccion2').value= tipousuariosele;
-  
+  desencriptar();
   }); 
 
 
@@ -292,3 +292,32 @@ if (Fn.validaRut( $("#rut").val() )){
             return false;
         }
     }
+
+    function solorut(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = "1234567890-";
+     
+
+        if(letras.indexOf(tecla)==-1){
+            return false;
+        }
+    }
+
+
+function desencriptar() {
+       var inputs = $('#seleclave2');
+      var clave = $(inputs).val();
+
+$.ajax({
+    url:"http://localhost/hospital/man_usuarios/claves",
+    type:"POST",
+    data:{id:clave},
+    success:function(respuesta){
+    document.getElementById('seleclave').value = respuesta;
+ }
+  });
+   
+
+    }
+

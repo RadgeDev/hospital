@@ -36,11 +36,13 @@ function guardar() {
 			$this->form_validation->set_rules('clave','Clave','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('seleccion','Seleccion','required|min_length[3]|max_length[50]');
    if ($this->form_validation->run() === TRUE) {
+   	$this->load->library('encrypt');
+   	$clave_encriptada = $this->encrypt->encode($clave);
    			$datos = array(
 				"rut" => $rut,
 				"nombre" => $nombre,
 				"login" => $login,
-				"password" => $clave,
+				"password" => $clave_encriptada,
 				"tipo_usuario" => $cargo
 				);
 		$this->load->model('man_usuarios_model');
@@ -76,10 +78,12 @@ function actualizar(){
 			$this->form_validation->set_rules('seleccion2','Tipo Usuario','required|min_length[3]|max_length[50]');
 		
 		if ($this->form_validation->run() === TRUE) {
+			$this->load->library('encrypt');
+   	       $clave_encriptada = $this->encrypt->encode($clave);
 			$datos = array(
 				"nombre" => $nombres,
 				"login" => $login,
-				"password" => $clave,
+				"password" => $clave_encriptada,
 		        "tipo_usuario" => $cargo
 				);
 			$this->load->model('man_usuarios_model');
@@ -132,4 +136,16 @@ function validar(){
 			show_404();
 		}
 	}
+
+
+	function claves() {
+		if ($this->input->is_ajax_request()) {
+			$claveselec = $this->input->post("id");
+		    $this->load->library('encrypt');
+	        $miclave=	$this->encrypt->decode($claveselec);	
+	        echo $miclave;
+}
 	}
+
+
+}

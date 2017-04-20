@@ -124,7 +124,7 @@
                          <br>
                             <div class="form-group">
                                <label>Rut</label>
-                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10">
+                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10" onkeypress="return solorut(event)">
                                   <p class="text-errors" id="msgerrorut"></p>
                             </div>
 
@@ -141,6 +141,7 @@
                              <div class="form-group">
                                 <label>Clave</label>
                              <input class="form-control" id="clave" name="clave"  placeholder="Ingrese su Clave">
+
                             </div>
                             
                              <div  class="form-group">
@@ -207,7 +208,7 @@
                          <br>
                             <div class="form-group">
                                <label>Rut</label>
-                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly>
+                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly  >
                             </div>
 
                             <div class="form-group">
@@ -222,7 +223,8 @@
 
                              <div class="form-group">
                                 <label>Clave</label>
-                             <input class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave">
+                             <input type="password" class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave" ">
+                             <input type="hidden" class="form-control" id="seleclave2" name="seleclave2"  placeholder="Ingrese su Clave" readonly >
                             </div>
                             
                              <div  class="form-group">
