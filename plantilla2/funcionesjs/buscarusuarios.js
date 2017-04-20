@@ -1,24 +1,29 @@
-
 $( document ).ready(function() {
   // Handler for .ready() called.mostrarDatos
 mostrarDatos(""); //muestra todo al iniciar el formualrio
-
+$("#msg-error").hide();
  $("#buscar").keyup(function(){ //busca segun el valor del imput 
 buscar =  $("#buscar").val();
 
-	mostrarDatos(buscar);
+  mostrarDatos(buscar);
 
  });
 
  $("#btnbuscar").click(function(){ //muestra todos los datos de la tabla
 
-	mostrarDatos("");
+  mostrarDatos("");
 
  });
 
 
 $("#cerrarmodal2").click(actualizar);
+$("#cerrando").click(cerrarModal);
 
+function cerrarModal() {
+  $("#msg-error").hide();
+    $("#msgerrorut").hide();
+   $('#usuarioGuardar').get(0).reset();//resetea  los campos del formulario
+}
 
 
 $("#usuarioGuardar").submit(function (event){
@@ -31,44 +36,68 @@ $("#usuarioGuardar").submit(function (event){
       data:$("#usuarioGuardar").serialize(),
       success:function(respuesta){
        
-        if (respuesta == "Registro Guardado") {
+        if (respuesta === "Registro Guardado") {
          
            $('#myModalHorizontal').modal('hide');//esconde formulario modal
-           swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
+           swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
            $('#usuarioGuardar').get(0).reset();//resetea  los campos del formulario
-        } 
+        } else if (respuesta === "No se pudo guardar los datos") {
+          swal("Error", "Error revise si los datos estan correctos", "error");
+        }
         else
         {
-          swal("Error", "Error revise si los datos estan correctos", "error");
+    
+          $("#msg-error").show();
+          $(".list-errors").html(respuesta);
         }
               mostrarDatos("");
       }
     });
   });
 
+
+function actualizar(){
+
   $("#usuarioEditar").submit(function (event){
-
-    event.preventDefault();
-
-    $.ajax({
-      url:$("#usuarioEditar").attr("action"),
-      type:$("#usuarioEditar").attr("method"),
-      data:$("#usuarioEditar").serialize(),
-      success:function(respuesta){
- 
-        
+  
+   event.preventDefault();
+ });
+  $.ajax({
+    url:"http://localhost/hospital/man_usuarios/actualizar",
+    type:"POST",
+    data:$("#usuarioEditar").serialize(),
+    success:function(respuesta){
+       if (respuesta === "Registro Actualizado") {
+         $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
+           $('#myModalEditar').modal('hide');//esconde formulario modal
+           swal("Genial!", "Datos Eitados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
+           
+        } else if (respuesta === "Error al Actualizar") {
+          $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
+             $('#myModalEditar').modal('hide');//esconde formulario modal
+          swal("Error", respuesta, "error");
+        }
+        else
+        {
+    
+          $("#msg-error2").show();
+          $(".list-errors").html(respuesta);
+        }
+              mostrarDatos("");
       }
     });
-  });
-
+ 
+}
 
 
 $("select[name=cargo]").change(function(){
             $('input[name=seleccion]').val($(this).val());
+            $('input[name=seleccion2]').val($(this).val());
  });
 
 });
     
+
 
     
     
@@ -122,47 +151,144 @@ nombresele =$(this).parent().parent().children("td:eq(1)").text();
 });
 */
 $("body").on("click","#tablausuarios a",function(event){
+    $("#msg-error2").hide();
     event.preventDefault();
     rutsele = $(this).attr("href");
    nombressele = $(this).parent().parent().children("td:eq(1)").text();
    loginsele = $(this).parent().parent().children("td:eq(2)").text();
     passwordsele = $(this).parent().parent().children("td:eq(3)").text();
     tipousuariosele = $(this).parent().parent().children("td:eq(4)").text();
-
-
     $("#selecrut").val(rutsele);
     $("#selecnombre").val(nombressele);
     $("#seleclogin").val(loginsele);
     $("#seleclave").val(passwordsele);
-    $("#seleccargo").val(tipousuariosele);
+    $("#seleccion").val(tipousuariosele);
   document.getElementById('cargo').value= tipousuariosele;
+  document.getElementById('seleccion2').value= tipousuariosele;
+  
   }); 
 
+
+
   $("body").on("click","#tablausuarios button",function(event){
-    rutselec = $(this).attr("value");
-    eliminar(rutselec); 
+
+    selecrut = $(this).attr("value");
+    nombressele = $(this).parent().parent().children("td:eq(1)").text();
+   
+swal({
+  title: "Estas seguro que deseas eliminar?",
+  text: "Quieres eliminar a: "+nombressele ,
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "Si, deseo borrarlo!",
+  closeOnConfirm: false
+},
+function(){
+ eliminar(selecrut); 
+  swal("Deleted!", "Registro eliminado.", "success");
+});
+
   });
 
-function actualizar(){
 
-  $("#usuarioEditar").submit(function (event){
 
-    event.preventDefault();
 
-  });
 
+
+function eliminar(selecrut){
   $.ajax({
-    url:"http://localhost/hospital/man_usuarios/actualizar",
+    url:"http://localhost/hospital/man_usuarios/eliminar",
     type:"POST",
-    data:$("#usuarioEditar").serialize(),
+    data:{id:selecrut},
     success:function(respuesta){
-      if (respuesta == "Registro Actualizado") {
-           $('#myModalEditar').modal('hide');//esconde formulario modal
+
+      if (respuesta =="Registro Eliminado" ) {
            swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
+           
         }else{
           swal("Error", respuesta, "error");
         }
       mostrarDatos("");
     }
   });
+
 }
+
+function validar(mirut){
+ 
+  $.ajax({
+    url:"http://localhost/hospital/man_usuarios/validar",
+    type:"POST",
+    data:{id:mirut},
+    success:function(respuesta){
+    if (respuesta ==="Rut existe" ) {
+
+    swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos
+           
+    }else{
+        
+
+
+        }
+  
+    }
+  });
+
+}
+
+
+var Fn = {
+  // Valida el rut con su cadena completa "XXXXXXXX-X"
+  validaRut : function (rutCompleto) {
+    if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
+      return false;
+    var tmp   = rutCompleto.split('-');
+    var digv  = tmp[1]; 
+    var rut   = tmp[0];
+    if ( digv == 'K' ) digv = 'k' ;
+    return (Fn.dv(rut) == digv );
+  },
+  dv : function(T){
+    var M=0,S=1;
+    for(;T;T=Math.floor(T/10))
+      S=(S+T%10*(9-M++%6))%11;
+    return S?S-1:'k';
+  }
+}
+
+function validarRut() {
+
+
+if (Fn.validaRut( $("#rut").val() )){
+   // $("#msgerrorut").html("El rut ingresado es válido :D");
+  var inputs = $('#rut')
+  var mirut = $(inputs).val();
+  validar(mirut);
+    $("#msgerrorut").html(" ");
+  } else {
+    $("#msgerrorut").show();
+    $("#msgerrorut").html("<font color='red'>El Rut no es válido  </font> ");
+  }
+}
+
+
+
+ function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = "8-37-39-46";
+
+       tecla_especial = false
+       for(var i in especiales){
+            if(key == especiales[i]){
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if(letras.indexOf(tecla)==-1 && !tecla_especial){
+            return false;
+        }
+    }

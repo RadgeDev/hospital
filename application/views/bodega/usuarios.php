@@ -1,4 +1,4 @@
-  <div id="page-wrapper">
+ <div id="page-wrapper">
  <div class="container-fluid">
 
               <!-- Page Heading -->
@@ -21,7 +21,6 @@
 
                <!--   <div class="row">
                     <div class="col-lg-4">
-
                         <form role="form">
                          <br>
                          <br>
@@ -29,17 +28,14 @@
                                <label>Rut</label>
                                 <input class="form-control" placeholder="Ingrese Rut  Ejemplo 11111111-1">
                             </div>
-
                             <div class="form-group">
                                 <label>Nombre</label>
                                 <input class="form-control" placeholder="Ingrese Nombre">
                             </div>
-
                             <div class="form-group">
                                 <label>Login</label>
                              <input class="form-control" placeholder="Ingrese su usuario">
                             </div>
-
                              <div class="form-group">
                                 <label>Clave</label>
                              <input class="form-control" placeholder="Ingrese su Clave">
@@ -59,9 +55,7 @@
                     <button type="button" class="btn btn-lg  btn-info">Modificar</button>
                     <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
                    
-
                         </form>
-
                     </div>-->
                     <div class="col-lg-12">
                 
@@ -118,7 +112,10 @@
                   Ingresar usuario
                 </h4>
             </div>
-            
+            <div class="alert alert-danger" id="msg-error" style="text-align:left;">
+                  <strong>¡Importante!</strong> Corregir los siguientes errores.
+                  <div class="list-errors"></div>
+              </div>
             <!-- Modal Body -->
             <div class="modal-body" >
                 
@@ -127,12 +124,13 @@
                          <br>
                             <div class="form-group">
                                <label>Rut</label>
-                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1">
+                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10">
+                                  <p class="text-errors" id="msgerrorut"></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre">
+                                <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
                             </div>
 
                             <div class="form-group">
@@ -163,7 +161,7 @@
                    -->
                           <!-- Modal Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-lg  btn-danger"
+                <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
                         data-dismiss="modal">
                             Cerrar
                 </button>
@@ -197,7 +195,10 @@
                   Editar usuario
                 </h4>
             </div>
-            
+             <div class="alert alert-danger" id="msg-error2" style="text-align:left;">
+                  <strong>¡Importante!</strong> Corregir los siguientes errores.
+                  <div class="list-errors"></div>
+              </div>
             <!-- Modal Body -->
             <div class="modal-body" >
                 
@@ -211,7 +212,7 @@
 
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre">
+                                <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
                             </div>
 
                             <div class="form-group">
@@ -227,14 +228,13 @@
                              <div  class="form-group">
                                 <label>Tipo de Usuario</label>
                                 <select name="cargo" id="cargo" class="form-control">
-                                    <option>Seleccione una opcion</option>
                                     <option>Administrador</option>
                                     <option>Bodeguero</option>
                                     <option>Invitado</option>
                                 </select>
                             </div>
-                            <input  type="hidden" class="form-control" id="seleccion" name="seleccion"  placeholder="Ingrese su Clave">
-                <!--
+                            <input type="hidden"   class="form-control" id="seleccion2" name="seleccion2"  placeholder="Ingrese su cargo">
+                <!-- 
                     <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
                     <button type="button" class="btn btn-lg  btn-success">Guardar</button>
                     <button type="button" class="btn btn-lg  btn-info">Modificar</button>
