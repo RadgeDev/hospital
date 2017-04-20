@@ -13,8 +13,9 @@ class Man_usuarios extends CI_Controller
  function mostrar(){
 		if($this->input->is_ajax_request()){
 			$buscar = $this->input->post("buscar");
+			$campos = $this->input->post("campos");
 			 $this->load->model('man_usuarios_model');
-			$datos = $this->man_usuarios_model->mostrar($buscar);
+			$datos = $this->man_usuarios_model->mostrar($buscar,$campos);
 			echo json_encode($datos);
 		}else {
 			show_404();

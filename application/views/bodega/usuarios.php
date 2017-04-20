@@ -63,13 +63,13 @@
                 <div class="form-group">
                      <div class=" col-sm-3">
                 
-                                <select class="form-control">
-                                    <option>Rut</option>
-                                    <option>Nombre</option>
-                                    <option>Login</option>
-                                    <option>Password</option>
-                                    <option>Tipo_usuario</option>
+                                <select name="buscando" id ="buscando" class="form-control">
+                                    <option value="rut">Rut</option>
+                                    <option value="nombre">Nombre</option>
+                                    <option value="login">Login</option>
+                                    <option value="tipo_usuario">Tipo Usuario</option>
                                 </select>
+                    
                             </div>
                  <input  class="form-control input-sm col-sm-3" id="buscar" style="width: 400px" placeholder="Ingrese datos para buscar">   
                    <div class="col-sm-4"> <button type="button" id="btnbuscar"  class="btn btn-primary">Mostrar Todos</button>    <button type="button" href='#' class='btn btn-success' data-toggle='modal' data-target='#myModalHorizontal'>Agregar Nuevo Usuario</button>  </div>

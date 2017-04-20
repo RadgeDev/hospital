@@ -1,17 +1,21 @@
 $( document ).ready(function() {
   // Handler for .ready() called.mostrarDatos
-mostrarDatos(""); //muestra todo al iniciar el formualrio
+mostrarDatos("","rut"); //muestra todo al iniciar el formualrio
 $("#msg-error").hide();
+
+
  $("#buscar").keyup(function(){ //busca segun el valor del imput 
 buscar =  $("#buscar").val();
 
-  mostrarDatos(buscar);
+   var valores = $("#buscando").val();
+
+  mostrarDatos(buscar,valores);
 
  });
 
  $("#btnbuscar").click(function(){ //muestra todos los datos de la tabla
 
-  mostrarDatos("");
+  mostrarDatos("","rut");
 
  });
 
@@ -50,7 +54,7 @@ $("#usuarioGuardar").submit(function (event){
           $("#msg-error").show();
           $(".list-errors").html(respuesta);
         }
-              mostrarDatos("");
+             mostrarDatos("","rut");
       }
     });
   });
@@ -83,7 +87,7 @@ function actualizar(){
           $("#msg-error2").show();
           $(".list-errors").html(respuesta);
         }
-              mostrarDatos("");
+          mostrarDatos("","rut");
       }
     });
  
@@ -95,19 +99,24 @@ $("select[name=cargo]").change(function(){
             $('input[name=seleccion2]').val($(this).val());
  });
 
-});
+
+
+
+});//fin de ready
     
+
+
 
 
     
     
 //creauna tabla de la base de datos segun consulta del buscar
-function mostrarDatos(valor) {
+function mostrarDatos(valor,campo) {
 
     $.ajax({
         url: "http://localhost/hospital/man_usuarios/mostrar",
         type:"POST",
-        data:{buscar:valor},
+        data:{buscar:valor,campos:campo},
         success:function(respuesta){
            //alert(respuesta);
            var registros =eval(respuesta);
@@ -209,7 +218,7 @@ function eliminar(selecrut){
         }else{
           swal("Error", respuesta, "error");
         }
-      mostrarDatos("");
+   mostrarDatos("","rut");
     }
   });
 
