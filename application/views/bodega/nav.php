@@ -131,7 +131,7 @@
                                 <a href="<?= base_url('man_usuarios') ?>">Usuarios</a>
                             </li>
                             <li>
-                                <a href="#">Productos</a>
+                                <a href="<?= base_url('control_proveedor') ?>">Proveedor</a>
                             </li>
                         </ul>
                     </li>

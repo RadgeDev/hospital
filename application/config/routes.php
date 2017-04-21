@@ -39,8 +39,10 @@
 */
 
 $route['default_controller'] = "home";
+$route['control_proveedor/pagina/(:num)'] = "control_proveedor/index/$1";
+$route['control_proveedor'] = "control_proveedor";
 $route['404_override'] = '';
-
+$route['translate_url_dashes'] = FALSE;
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
