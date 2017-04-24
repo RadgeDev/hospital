@@ -1,148 +1,137 @@
-<?php  
-class Control_proveedor extends CI_Controller
-{
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Control_proveedor extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
-		$this->load->model("proveedor_model");
+		$this->load->model("Proveedor_model");
 	}
 
-  public function index($nropagina = FALSE){
-  //
-       $inicio = 0;
-		$mostrarpor = 10; 
-		$buscador = "";
-
-		if ($nropagina) {
-			$inicio = ($nropagina - 1) * $mostrarpor;
-		}
-$this->load->library('pagination');
-
-		$config['base_url'] = base_url()."control_proveedor/pagina/";
-		$config['total_rows'] =  count($this->proveedor_model->buscar($buscador));
-		$config['per_page'] = $mostrarpor; 
-		$config['uri_segment'] = 3;//segmentos controlproveedo1/pagina2/nrpagina3
-		$config['num_links'] = 2;
-		$config['use_page_numbers'] = TRUE;
-		$config['first_url'] = base_url()."control_proveedor";
-
-		$config['full_tag_open'] = "<ul class='pagination'>";
-		$config['full_tag_close'] ="</ul>";
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
-		$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='javascript:void(0)'>";
-		$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-		$config['next_tag_open'] = "<li>";
-		$config['next_tagl_close'] = "</li>";
-		$config['prev_tag_open'] = "<li>";
-		$config['prev_tagl_close'] = "</li>";
-		$config['first_tag_open'] = "<li>";
-		$config['first_tagl_close'] = "</li>";
-		$config['last_tag_open'] = "<li>";
-		$config['last_tagl_close'] = "</li>";
-		$this->pagination->initialize($config); 
-
-	$data = array(
-			"proveedor" => $this->proveedor_model->buscar("",$inicio,$mostrarpor)
-		); 
-    $this->load->view('bodega/header');
-    $this->load->view('bodega/nav');
-    $this->load->view('bodega/vista_proveedor/view_proveedor', $data);
-    $this->load->view('bodega/footer2');
-
-
-  }
-
-	public function mostrar(){
-		
+	public function index(){
+		$this->load->view('bodega/header');
+		$this->load->view("bodega/nav");
+		$this->load->view("bodega/vista_proveedor/view_proveedor");
+		$this->load->view("bodega/vista_proveedor/footer2");
 	}
 
-	public function busqueda(){
-		
-	
-		
-	}
-
-	public function cantidad(){
-
-	}
-
-}
-
-/*
-public function __construct(){
-		parent::__construct();
-		$this->load->model("proveedor_model");
-	}
-
-	public function index($nropagina = FALSE)
-	{
-		$inicio = 0;
-		$mostrarpor = 5; 
-		$buscador = "";
-		if ($this->session->userdata("cantidad")) {
-			$mostrarpor =  $this->session->userdata("cantidad");
-		}
-		if ($this->session->userdata("busqueda")) {
-			$buscador = $this->session->userdata("busqueda");
-		}
-		if ($nropagina) {
-			$inicio = ($nropagina - 1) * $mostrarpor;
-		}
-		$this->load->library('pagination');
-
-		$config['base_url'] = base_url()."control_proveedor/pagina/";
-		$config['total_rows'] = count($this->proveedor_model->buscar($buscador));
-		$config['per_page'] = $mostrarpor; 
-		$config['uri_segment'] = 3;
-		$config['num_links'] = 2;
-		$config['use_page_numbers'] = TRUE;
-		$config['first_url'] = base_url()."usuarios";
-
-		$config['full_tag_open'] = "<ul class='pagination'>";
-		$config['full_tag_close'] ="</ul>";
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
-		$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='javascript:void(0)'>";
-		$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
-		$config['next_tag_open'] = "<li>";
-		$config['next_tagl_close'] = "</li>";
-		$config['prev_tag_open'] = "<li>";
-		$config['prev_tagl_close'] = "</li>";
-		$config['first_tag_open'] = "<li>";
-		$config['first_tagl_close'] = "</li>";
-		$config['last_tag_open'] = "<li>";
-		$config['last_tagl_close'] = "</li>";
-		$this->pagination->initialize($config); 
-
-		
-
+	public function mostrar()
+	{	
+		//valor a Buscar
+		$buscar = $this->input->post("buscar");
+		$numeropagina = $this->input->post("nropagina");
+		$cantidad = $this->input->post("cantidad");
+		$combobuscar= $this->input->post("valorcombos");
+		$inicio = ($numeropagina -1)*$cantidad;
 		$data = array(
-			"usuarios" => $this->Usuarios_model->buscar($buscador,$inicio,$mostrarpor)
-		); 
-    $this->load->view('bodega/header');
-    $this->load->view('bodega/nav');
-    $this->load->view('bodega/vista_proveedor/view_proveedor', $data);
-    $this->load->view('bodega/footer2');
+			"clientes" => $this->Proveedor_model->buscar($buscar,$inicio,$cantidad,$combobuscar),
+			"totalregistros" => count($this->Proveedor_model->buscar($buscar)),
+			"cantidad" =>$cantidad
+			
+		);
+		echo json_encode($data);
 	}
 
-	public function mostrar(){
-		$this->session->unset_userdata('busqueda');
-		redirect(base_url()."control_proveedor");
+function validar(){
+		if ($this->input->is_ajax_request()) {
+			$rutsele = $this->input->post("id");
+			if($this->Proveedor_model->validar($rutsele) == true)
+				echo "Rut existe";
+			else
+				echo "rut no existe";
+			
+		}
+		else
+		{
+			show_404();
+		}
 	}
 
-	public function busqueda(){
-		
-			$this->session->set_userdata("busqueda",$this->input->post("busqueda"));
-			redirect(base_url()."control_proveedor");
-		
+function guardar() {
+		//El metodo is_ajax_request() de la libreria input permite verificar
+		//si se esta accediendo mediante el metodo AJAX 
+		if ($this->input->is_ajax_request()) {
+
+			$rut = $this->input->post("rut");
+			$nombre = $this->input->post("nombre");
+			$razon = $this->input->post("razon");
+			$direccion = $this->input->post("direccion");
+			$telefono = $this->input->post("telefono");
+            $correo = $this->input->post("correo");
+
+            $this->form_validation->set_rules('rut','Rut Proveedor','required|min_length[10]|max_length[10]');
+			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|alpha');
+			$this->form_validation->set_rules('razon','Razon Social','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('direccion','Direccion','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('telefono','Telefono','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('correo','Correo','required|min_length[3]|max_length[50]');
+
+       if ($this->form_validation->run() === TRUE) {
+   			$datos = array(
+				"rut_proveedor" => $rut,
+				"nombre_proveedor" => $nombre,
+				"razon_social" => $razon,
+				"direccion" => $direccion,
+				"telefono" => $telefono,
+				"correo" => $correo
+				);
+		if($this->Proveedor_model->guardar($datos)==true)
+				echo "Registro Guardado";
+			else
+				echo "No se pudo guardar los datos";
+	}else
+	{
+				echo validation_errors('<li>','</li>');
 	}
-	public function cantidad(){
-		$this->session->set_userdata("cantidad",$this->input->post("cantidad"));
-	}
+			
+		}
+		else
+		{
+			show_404();
+		}
 }
-*/
-?>
 
+function actualizar(){
+	
+		if ($this->input->is_ajax_request()) {
 
+			$rutselect = $this->input->post("selecrut");
+			$nombres = $this->input->post("selecnombre");
+			$razon = $this->input->post("selecrazon");
+			$direccion= $this->input->post("selecdireccion");
+			$telefono = $this->input->post("selectelefono");
+			$correo = $this->input->post("seleccorreo");
 
+			$this->form_validation->set_rules('selecnombre','Nombre','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('selecrazon','Razon Social','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('selecdireccion','Direccion','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('selectelefono','Telefono','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('seleccorreo','Correo','required|min_length[3]|max_length[50]');
+		
+		if ($this->form_validation->run() === TRUE) {
+	
+			$datos = array(
+				"nombre_proveedor" => $nombres,
+				"razon_social" => $razon_social,
+				"direccion" => $direccion,
+		        "telefono" => $telefono,
+		        "correo" => $correo,
+				);
+		
+			if($this->Proveedor_model->actualizar($rutsele,$datos) == true)
+				echo "Registro Actualizado";
+			else
+				echo "Error al Actualizar";
+			
+			}else
+	{
+				echo validation_errors('<li>','</li>');
+	}
+			
+		}
+		else
+		{
+			show_404();
+		}
+}
 
+} 

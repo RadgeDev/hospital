@@ -17,46 +17,7 @@
                         </ol>
                     </div>
                 </div>
-                <!-- /.row -->
-
-               <!--   <div class="row">
-                    <div class="col-lg-4">
-                        <form role="form">
-                         <br>
-                         <br>
-                            <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" placeholder="Ingrese Rut  Ejemplo 11111111-1">
-                            </div>
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input class="form-control" placeholder="Ingrese Nombre">
-                            </div>
-                            <div class="form-group">
-                                <label>Login</label>
-                             <input class="form-control" placeholder="Ingrese su usuario">
-                            </div>
-                             <div class="form-group">
-                                <label>Clave</label>
-                             <input class="form-control" placeholder="Ingrese su Clave">
-                            </div>
-                            
-                             <div class="form-group">
-                                <label>Tipo de Usuario</label>
-                                <select class="form-control">
-                                    <option>Administrador</option>
-                                    <option>Bodeguero</option>
-                                    <option>Invitado</option>
-                                </select>
-                            </div>
-                
-                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
-                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
-                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
-                   
-                        </form>
-                    </div>-->
+        
                     <div class="col-lg-12">
                 
                         <h2>Datos de los usuarios</h2>

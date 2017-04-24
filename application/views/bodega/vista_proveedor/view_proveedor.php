@@ -15,84 +15,279 @@
                         </ol>
                     </div>
                 </div>
-    <div class="row">
-      <div class="col-md-6">
-        <a href="#" class="btn btn-success">Agregar Proveedor</a>
-      </div>
-      <div class="col-md-4">
-        <?php echo form_open('control_proveedor/busqueda'); ?>
-          <div class="input-group">
-            <?php if ($this->session->userdata("busqueda")) {
-               echo form_input(["type" => "text", "name" => "busqueda", "class" => "form-control", "placeholder" => "Ingrese su busqueda", "value" => $this->session->userdata("busqueda")]);
-            }else{
-              echo form_input(["type" => "text", "name" => "busqueda", "class" => "form-control", "placeholder" => "Ingrese su busqueda"]); 
-            } ?>
-            
-                <span class="input-group-btn">
-                  <?php echo form_button(["type" => "submit", "class" => "btn btn-warning", "content"=>"<span class='glyphicon glyphicon-search'></span>"]);?>                  
-                </span>
-            </div>
-        <?php echo form_close(); ?>
-      </div>
+   <div class="row">
       <div class="col-md-2">
-        <?php echo form_open('control_proveedor/mostrar');?>
-          <?php echo form_submit("", "Mostrar Todo", "class= 'btn btn-danger btn-block'");?>
-        <?php echo form_close(); ?>
+        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Proveedor</a>
+
       </div>
+   
+          <div class="col-md-3 col-md-offset-4">
+    <select name="buscando" id ="buscando" class="form-control" >
+        <option value="rut_proveedor">Rut</option>
+        <option value="nombre_proveedor">Nombre</option>
+        <option value="razon_social">Razon Social</option>
+        <option value="direccion">Direccion</option>
+        <option value="telefono">Telefono</option>
+        <option value="correo">Correo</option>
+
+        </select>
+
+      </div>
+      <div class="col-md-3 ">
+        <div class="form-group has-feedback has-feedback-left">
+
+            <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
+            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+        </div>
+        
+      </div>
+      
     </div>
     <br>
     <div class="row">
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>Lista de Proveedores</h4>
+            <h4>Lista de Proveedor</h4>
           </div>
-          <div class="panel-body">
-            <?php
-              $options = array(
-                        '5'  => '5',
-                        '10'    => '10'
-                      );
-
-              $selected = "5";
-              if ($this->session->userdata("cantidad")) {
-                $selected = $this->session->userdata("cantidad");
-              }
-            ?>
-            <p><strong>Mostrar por : </strong><?php  echo form_dropdown('cantidad', $options,$selected)?></p>
-            <table class="table table-bordered">
+          <div id="tbproveedor" class="panel-body">
+            
+            <p>
+              <strong>Mostrar por : </strong>
+              <select name="cantidad" id="cantidad">
+                <option value="10">10</option>
+                <option value="20">20</option>
+              </select>
+            </p>
+            <table id="tbclientes" name="tbclientes" class="table table-bordered-responsive ">
               <thead>
                 <tr>
                   <th>Rut</th>
                   <th>Nombres</th>
                   <th>Razon Social</th>
                   <th>Direccion</th>
-                  <th>Celular</th>
-                  <th>Email</th>
-                  
+                  <th>Telefono</th>
+                  <th>Correo</th>
+                  <th>Accion</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($proveedor as $usuario) { ?>
-                  <tr>
-                    <td><?php echo $usuario->rut_proveedor;?></td>
-                    <td><?php echo $usuario->nombre_proveedor;?></td>
-                    <td><?php echo $usuario->razon_social;?></td>
-                    <td><?php echo $usuario->direccion;?></td>
-                    <td><?php echo $usuario->telefono;?></td>
-                    <td><?php echo $usuario->correo;?></td>
-                  
-                  </tr>
-                <?php } ?>
               </tbody>
             </table>
-            <div   class="text-center">
-              <?php echo $this->pagination->create_links(); ?>
+            <div class="text-center paginacion ">
+              
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
- </div>
-  </div>
+
+
+
+
+     <!-- modal empieza aca -->
+   <!-- Modal -->
+<div class="modal fade" id="myModalproveedor" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Cerrar</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Ingresar proveedor
+                </h4>
+            </div>
+            <div class="alert alert-danger" id="msg-error" style="text-align:left;">
+                  <strong>¡Importante!</strong> Corregir los siguientes errores.
+                  <div class="list-errors"></div>
+              </div>
+            <!-- Modal Body -->
+            <div class="modal-body" >
+                
+                      <form  id="proveedorGuardar" role="form" action= "<?= base_url()?>control_proveedor/guardar " method="POST" >
+                         <br>
+                         <br>
+                            <div class="form-group">
+                               <label>Rut</label>
+                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10" onkeypress="return solorut(event)">
+                                  <p class="text-errors" id="msgerrorut"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nombre Proveedor</label>
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Razon social</label>
+                            <input class="form-control" id="razon" name="razon"  placeholder="Ingrese su Razon Social">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Direccion</label>
+                            <input class="form-control" id="direccion" name="direccion"  placeholder="Ingrese su Direccion">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Telefono</label>
+                            <input class="form-control" id="telefono" name="telefono"  placeholder="Ingrese su Telefono">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Correo</label>
+                            <input class="form-control" id="correo" name="correo"  placeholder="Ingrese su Correo">
+                            </div>
+                            
+                        
+                <!--
+                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
+                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
+                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
+                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
+                   -->
+                          <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
+                        data-dismiss="modal">
+                            Cerrar
+                </button>
+                <button type="submit" id="cerrarmodal" name="cerrarmodal" class="btn btn-lg  btn-success" >
+                    Guardar
+                </button>
+            </div>
+                        </form>
+
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModalEditar" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Cerrar</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Editar usuario
+                </h4>
+            </div>
+             <div class="alert alert-danger" id="msg-error2" style="text-align:left;">
+                  <strong>¡Importante!</strong> Corregir los siguientes errores.
+                  <div class="list-errors"></div>
+              </div>
+            <!-- Modal Body -->
+            <div class="modal-body" >
+                
+                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>man_usuarios/actualizar" method="POST" >
+                         <br>
+                         <br>
+                            <div class="form-group">
+                               <label>Rut</label>
+                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly  >
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Razon Social</label>
+                             <input class="form-control" id="selecrazon" name="selecrazon"  placeholder="Ingrese su razon social">
+                            </div>
+
+                             <div class="form-group">
+                                <label>Direccion</label>
+                             <input  class="form-control" id="selecdireccion" name="selecdireccion"  placeholder="Ingrese su direccion" ">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Telefono</label>
+                             <input class="form-control" id="selectelefono" name="selectelefono"  placeholder="Ingrese su telefono">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Correo</label>
+                             <input class="form-control" id="seleccorreo" name="seleccorreo"  placeholder="Ingrese su correo">
+                            </div>
+                           
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg  btn-danger"
+                        data-dismiss="modal">
+                            Cerrar
+                </button>
+                <button type="submit" id="cerrarmodal2" name="cerrarmodal2" class="btn btn-lg  btn-success" >
+                    Actualizar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </button>
+            </div>
+                        </form>
+
+                
+            </div>
+            
+        </div>
+    </div>
+</div>

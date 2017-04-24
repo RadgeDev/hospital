@@ -232,7 +232,8 @@ function validar(mirut){
     data:{id:mirut},
     success:function(respuesta){
     if (respuesta ==="Rut existe" ) {
-
+     $('#rut').val("");
+    document.getElementById("rut").focus();
     swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos
            
     }else{
@@ -278,6 +279,7 @@ if (Fn.validaRut( $("#rut").val() )){
   } else {
     $("#msgerrorut").show();
     $("#msgerrorut").html("<font color='red'>El Rut no es válido  </font> ");
+    document.getElementById("rut").focus();
   }
 }
 
