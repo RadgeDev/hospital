@@ -62,8 +62,8 @@ function guardar() {
 			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|alpha');
 			$this->form_validation->set_rules('razon','Razon Social','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('direccion','Direccion','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('telefono','Telefono','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('correo','Correo','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('telefono','Telefono','required|min_length[3]|max_length[50]|numeric');
+			$this->form_validation->set_rules('correo','Correo','required|min_length[3]|max_length[50]|valid_email');
 
        if ($this->form_validation->run() === TRUE) {
    			$datos = array(
@@ -104,20 +104,20 @@ function actualizar(){
 			$this->form_validation->set_rules('selecnombre','Nombre','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('selecrazon','Razon Social','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('selecdireccion','Direccion','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('selectelefono','Telefono','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('seleccorreo','Correo','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('selectelefono','Telefono','required|min_length[3]|max_length[50]|numeric');
+			$this->form_validation->set_rules('seleccorreo','Correo','required|min_length[3]|max_length[50]|valid_email');
 		
 		if ($this->form_validation->run() === TRUE) {
 	
 			$datos = array(
 				"nombre_proveedor" => $nombres,
-				"razon_social" => $razon_social,
+				"razon_social" => $razon,
 				"direccion" => $direccion,
 		        "telefono" => $telefono,
 		        "correo" => $correo,
 				);
 		
-			if($this->Proveedor_model->actualizar($rutsele,$datos) == true)
+			if($this->Proveedor_model->actualizar($rutselect,$datos) == true)
 				echo "Registro Actualizado";
 			else
 				echo "Error al Actualizar";
@@ -133,5 +133,41 @@ function actualizar(){
 			show_404();
 		}
 }
+
+
+function editando() {
+
+		if ($this->input->is_ajax_request()) {
+			$rutsele = $this->input->post("id");
+         $data = array(
+			"obtener" => $this->Proveedor_model->editando($rutsele)
+         	);
+            echo json_encode($data);
+		}
+
+     
+			
+	}
+
+
+function eliminar() {
+		if ($this->input->is_ajax_request()) {
+
+			$mipost = $this->input->post("mirut");
+
+			if($this->Proveedor_model->eliminar($mipost) == true)
+				echo "Registro Eliminado";
+			else
+				echo "No se pudo eliminar los datos";
+			
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+
+
 
 } 

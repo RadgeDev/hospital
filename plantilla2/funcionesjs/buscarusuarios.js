@@ -74,7 +74,7 @@ function actualizar(){
        if (respuesta === "Registro Actualizado") {
          $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
            $('#myModalEditar').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos Eitados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
+           swal("Genial!", "Datos Editados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
            
         } else if (respuesta === "Error al Actualizar") {
           $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario

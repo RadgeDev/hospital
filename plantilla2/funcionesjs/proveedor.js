@@ -39,7 +39,7 @@ function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
 			
 			filas = "";
 			$.each(response.clientes,function(key,item){
-				filas+="<tr><td>"+item.rut_proveedor+"</td><td>"+item.nombre_proveedor+"</td><td>"+item.razon_social+"</td><td>"+item.direccion+"</td><td>"+item.telefono+"</td><td>"+item.correo+"</td><td> <a href='"+item.rut_proveedor+"' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</a></td></tr>";
+				filas+="<tr><td>"+item.rut_proveedor+"</td><td>"+item.nombre_proveedor+"</td><td>"+item.razon_social+"</td><td>"+item.direccion+"</td><td>"+item.telefono+"</td><td>"+item.correo+"</td><td> <button href='"+item.rut_proveedor+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.rut_proveedor+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
 			});
 
 			$("#tbclientes tbody").html(filas);
@@ -232,6 +232,38 @@ $("#proveedorGuardar").submit(function (event){
 
 $("#cerrando").click(cerrarModal);
 
+$("#editando").click(editandos);
+
+
+function editandos(obj) {
+  var rutseleccionado = obj.getAttribute("href");
+   $("#msg-error2").hide();
+    event.preventDefault();
+// alert(rutseleccionado);
+ $.ajax({
+    url:"http://localhost/hospital/control_proveedor/editando",
+    type:"POST",
+    data:{id:rutseleccionado},
+    dataType:"json",
+    success:function(respuesta){
+   $.each(respuesta.obtener,function(key,item){
+    $("#selecrut").val(item.rut_proveedor);
+    $("#selecnombre").val(item.nombre_proveedor);
+    $("#selecrazon").val(item.razon_social);
+    $("#selecdireccion").val(item.direccion);
+    $("#selectelefono").val(item.telefono);
+    $("#seleccorreo").val(item.correo);
+      });
+
+    }
+
+  });
+
+
+
+}
+
+
 function cerrarModal() {
   $("#msg-error").hide();
     $("#msgerrorut").hide();
@@ -239,7 +271,7 @@ function cerrarModal() {
 }
 
 
-
+$("#actualizaron").click(actualizar);
 function actualizar(){
 
   $("#usuarioEditar").submit(function (event){
@@ -254,7 +286,7 @@ function actualizar(){
        if (respuesta === "Registro Actualizado") {
          $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
            $('#myModalEditar').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos Eitados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
+           swal("Genial!", "Datos Editados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
            
         } else if (respuesta === "Error al Actualizar") {
           $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
@@ -271,25 +303,48 @@ function actualizar(){
       }
     });
  
+}
 
-$("body").on("click","tbody a",function(event){
+
+function eliminar(obj) {
+
+rutseleccionado = obj.getAttribute("href");
    
-    $("#msg-error2").hide();
-    event.preventDefault();
-    rutsele = $(this).attr("href");
-    nombressele = $(this).parent().parent().children("td:eq(1)").text();
-    razonsele = $(this).parent().parent().children("td:eq(2)").text();
-    direccionsele = $(this).parent().parent().children("td:eq(3)").text();
-    telefonosele = $(this).parent().parent().children("td:eq(4)").text();
-    correosele = $(this).parent().parent().children("td:eq(5)").text();
-    $("#selecrut").val(rutsele);
-    $("#selecnombre").val(nombressele);
-    $("#selecrazon").val(razonsele);
-    $("#selecdireccion").val(direccionsele);
-    $("#selectelefono").val(telefonosele);
-    $("#seleccorreo").val(correosele);
-  
+swal({
+  title: "Estas seguro que deseas eliminar?",
+  text: "Quieres eliminar al RUT: "+rutseleccionado ,
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "Si, deseo borrarlo!",
+  closeOnConfirm: false
+},
+function(){
 
-  }); 
+ eliminando(rutseleccionado); 
+  swal("Eliminado!", "Registro eliminado.", "success");
+});
 
 }
+
+function eliminando(borrarrut){
+      alert(borrarrut);
+  $.ajax({
+
+    url:"http://localhost/hospital/control_proveedor/eliminar",
+    type:"POST",
+    data:{mirut:borrarrut},
+    success:function(respuesta){
+
+      if (respuesta ==="Registro Eliminado") {
+           swal("Genial!", respuesta, "success");// a trves swift una libreria permite crear mensajes bonitos
+           
+        }else{
+          swal("Error", respuesta, "error");
+        }
+  mostrarDatos("",1,10,"rut_proveedor");
+    }
+  });
+
+}
+

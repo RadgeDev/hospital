@@ -49,4 +49,28 @@ class Proveedor_model extends CI_Model {
 		}
 	}
  
-}
+
+public function editando($rutselec){
+
+		$this->db->where('rut_proveedor',$rutselec);
+		
+		$q= $this->db->get('proveedor');
+		return $q->result();
+
+		}
+
+
+public function eliminar($rutas){
+		$this->db->where('rut_proveedor',$rutas);
+		$this->db->delete('proveedor'); 
+	  if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+
+
+}//fin de clase
