@@ -2,7 +2,7 @@ $(document).on("ready", main);
 
 
 function main(){
-	mostrarDatos("",1,10,"rut_proveedor");
+	mostrarDatos("",1,10,"cod_depto");
 	$("#msg-error").hide();
 
 	
@@ -19,27 +19,27 @@ function main(){
 		valorhref = $(this).attr("href");
 		valorBuscar = $("input[name=busqueda]").val();
 		valoroption = $("#cantidad").val();
-		mostrarDatos(valorBuscar,valorhref,valoroption,"rut_proveedor");
+		mostrarDatos(valorBuscar,valorhref,valoroption,"cod_depto");
 	});
 
 	$("#cantidad").change(function(){
 		valoroption = $(this).val();
 		valorBuscar = $("input[name=busqueda]").val();
-		mostrarDatos(valorBuscar,1,valoroption,"rut_proveedor");
+		mostrarDatos(valorBuscar,1,valoroption,"cod_depto");
 	});
 }
 function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
 
 	$.ajax({
-		url : "http://localhost/hospital/control_proveedor/mostrar",
+		url : "http://localhost/hospital/control_depto/mostrar",
 		type: "POST",
 		data: {buscar:valorBuscar,nropagina:pagina,cantidad:cantidad,valorcombos:valorcombo},
 		dataType:"json",
 		success:function(response){
 			
 			filas = "";
-			$.each(response.clientes,function(key,item){
-				filas+="<tr class='active' ><td >"+item.rut_proveedor+"</td><td>"+item.nombre_proveedor+"</td><td>"+item.razon_social+"</td><td>"+item.direccion+"</td><td>"+item.telefono+"</td><td>"+item.correo+"</td><td> <button href='"+item.rut_proveedor+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.rut_proveedor+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
+			$.each(response.depto,function(key,item){
+				filas+="<tr class='active' ><td >"+item.cod_depto+"</td><td>"+item.nombre_depto+"</td><td> <button href='"+item.cod_depto+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.cod_depto+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
 			});
 
 			$("#tbclientes tbody").html(filas);
@@ -109,63 +109,38 @@ function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
 
 
 
-function validar(mirut){
- 
+function validarCodigo() {
+ micodigo = $("#codigo").val();
+
   $.ajax({
-    url:"http://localhost/hospital/control_proveedor/validar",
+    url:"http://localhost/hospital/control_depto/validar",
     type:"POST",
-    data:{id:mirut},
+    data:{id:micodigo},
     success:function(respuesta){
-    if (respuesta ==="Rut existe" ) {
-    	$('#rut').val("");
-    	swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos       
-        document.getElementById("rut").focus();
+      valorcodigo = $("#codigo").val();
+      if (valorcodigo==="") {
+  document.getElementById("codigo").focus();
+     
+      }else{
+    if (respuesta ==="Codigo existe" ) {
+    swal("Error!", "Este Codigo ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos       
+        
+       
+       $('#departamentoGuardar').get(0).reset();//resetea  los campos del formulario
+        document.getElementById("codigo").focus();
+    
     }else{
         
-
+ document.getElementById("nombre").focus();
 
         }
-  
+  }
     }
   });
 
 }
 
 
-var Fn = {
-  // Valida el rut con su cadena completa "XXXXXXXX-X"
-  validaRut : function (rutCompleto) {
-    if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
-      return false;
-    var tmp   = rutCompleto.split('-');
-    var digv  = tmp[1]; 
-    var rut   = tmp[0];
-    if ( digv == 'K' ) digv = 'k' ;
-    return (Fn.dv(rut) == digv );
-  },
-  dv : function(T){
-    var M=0,S=1;
-    for(;T;T=Math.floor(T/10))
-      S=(S+T%10*(9-M++%6))%11;
-    return S?S-1:'k';
-  }
-}
-
-function validarRut() {
-
-
-if (Fn.validaRut( $("#rut").val() )){
-   // $("#msgerrorut").html("El rut ingresado es válido :D");
-  var inputs = $('#rut')
-  var mirut = $(inputs).val();
-  validar(mirut);
-    $("#msgerrorut").html(" ");
-  } else {
-    $("#msgerrorut").show();
-    $("#msgerrorut").html("<font color='red'>El Rut no es válido  </font> ");
-     document.getElementById("rut").focus();
-  }
-}
 
 
 
@@ -188,33 +163,24 @@ if (Fn.validaRut( $("#rut").val() )){
         }
     }
 
-    function solorut(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = "1234567890-";
-     
-
-        if(letras.indexOf(tecla)==-1){
-            return false;
-        }
-    }
+   
 
 
-$("#proveedorGuardar").submit(function (event){
+$("#departamentoGuardar").submit(function (event){
 
     event.preventDefault();
 
     $.ajax({
-      url:$("#proveedorGuardar").attr("action"),
-      type:$("#proveedorGuardar").attr("method"),
-      data:$("#proveedorGuardar").serialize(),
+      url:$("#departamentoGuardar").attr("action"),
+      type:$("#departamentoGuardar").attr("method"),
+      data:$("#departamentoGuardar").serialize(),
       success:function(respuesta){
        
         if (respuesta === "Registro Guardado") {
          
-           $('#myModalproveedor').modal('hide');//esconde formulario modal
+           $('#myModaldepartamento').modal('hide');//esconde formulario modal
            swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
-           $('#proveedorGuardar').get(0).reset();//resetea  los campos del formulario
+           $('#departamentoGuardar').get(0).reset();//resetea  los campos del formulario
         } else if (respuesta === "No se pudo guardar los datos") {
           swal("Error", "Error revise si los datos estan correctos", "error");
         }
@@ -224,7 +190,7 @@ $("#proveedorGuardar").submit(function (event){
           $("#msg-error").show();
           $(".list-errors").html(respuesta);
         }
-       mostrarDatos("",1,10,"rut_proveedor");
+       mostrarDatos("",1,10,"cod_depto");
       }
     });
   });
@@ -267,7 +233,7 @@ function editandos(obj) {
 function cerrarModal() {
   $("#msg-error").hide();
     $("#msgerrorut").hide();
-   $('#proveedorGuardar').get(0).reset();//resetea  los campos del formulario
+   $('#departamentoGuardar').get(0).reset();//resetea  los campos del formulario
 }
 
 

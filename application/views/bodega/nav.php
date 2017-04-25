@@ -122,7 +122,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
+                        <a href="<?= base_url('welcome') ?>"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenedores <i class="fa fa-fw fa-caret-down"></i></a>
@@ -132,6 +132,9 @@
                             </li>
                             <li>
                                 <a href="<?= base_url('control_proveedor') ?>">Proveedor</a>
+                            </li>
+                             <li>
+                                <a href="<?= base_url('control_depto') ?>">Departamento</a>
                             </li>
                         </ul>
                     </li>

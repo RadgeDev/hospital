@@ -3,33 +3,29 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                          Proveedores
+                         Departamentos
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.html">Inicio</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-edit"></i> Proveedor
+                                <i class="fa fa-edit"></i> Departamentos
                             </li>
                         </ol>
                     </div>
                 </div>
    <div class="row">
       <div class="col-md-2">
-        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Proveedor</a>
+        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Departamentos</a>
 
       </div>
    
           <div class="col-md-3 col-md-offset-4">
     <select name="buscando" id ="buscando" class="form-control" >
-        <option value="rut_proveedor">Rut</option>
-        <option value="nombre_proveedor">Nombre</option>
-        <option value="razon_social">Razon Social</option>
-        <option value="direccion">Direccion</option>
-        <option value="telefono">Telefono</option>
-        <option value="correo">Correo</option>
-
+        <option value="cod_depto">Codigo Departamento</option>
+        <option value="nombre_depto">Nombre Departamento</option>
+       
         </select>
 
       </div>
@@ -48,7 +44,7 @@
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>Lista de Proveedor</h4>
+            <h4>Lista de Departamentos</h4>
           </div>
           <div id="tbproveedor" class="panel-body table-responsive">
             
@@ -62,13 +58,9 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Rut</th>
-                  <th>Nombres</th>
-                  <th>Razon Social</th>
-                  <th>Direccion</th>
-                  <th>Telefono</th>
-                  <th>Correo</th>
-                  <th>Accion</th>
+                  <th>Codigos Departamentos</th>
+                  <th>Nombres Departamentos</th>
+                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -109,48 +101,19 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="proveedorGuardar" role="form" action= "<?= base_url()?>control_proveedor/guardar " method="POST" >
+                      <form  id="departamentoGuardar" role="form" action= "<?= base_url()?>control_proveedor/guardar " method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10" onkeypress="return solorut(event)">
+                               <label>Codigo Departamento</label>
+                                <input class="form-control" id="codigo" name="codigo" placeholder="Ingrese Codigo depto " onblur="validarCodigo();" maxlength="10" >
                                   <p class="text-errors" id="msgerrorut"></p>
                             </div>
 
                             <div class="form-group">
-                                <label>Nombre Proveedor</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                                <label>Nombre Departamento</label>
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="" ">
                             </div>
-
-                            <div class="form-group">
-                            <label>Razon social</label>
-                            <input class="form-control" id="razon" name="razon"  placeholder="Ingrese su Razon Social">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Direccion</label>
-                            <input class="form-control" id="direccion" name="direccion"  placeholder="Ingrese su Direccion">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Telefono</label>
-                            <input class="form-control" id="telefono" name="telefono"  placeholder="Ingrese su Telefono">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Correo</label>
-                            <input class="form-control" id="correo" name="correo"  placeholder="Ingrese su Correo">
-                            </div>
-                            
-                        
-                <!--
-                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
-                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
-                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
-                   -->
-                          <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
                         data-dismiss="modal">

@@ -1,24 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Proveedor_model extends CI_Model {
+class Depto_model extends CI_Model {
 
 	public function buscar($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE)
 	{
 		if ($valorbuscar==""){
-			$valorbuscar="rut_proveedor";
+			$valorbuscar="cod_depto";
 		}
 		$this->db->like($valorbuscar,$buscar);
 		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
 			$this->db->limit($cantidadregistro,$inicio);
 		}
-		$consulta = $this->db->get("proveedor");
+		$consulta = $this->db->get("depto");
 		return $consulta->result();
 	}
 
 
-	function validar( $rutsele){
-		$this->db->where('cod_depto', $rutsele);
+	function validar( $depto){
+		$this->db->where('cod_depto', $depto);
 		$this->db->get("depto");
 		if ($this->db->affected_rows() > 0) {
 			return true;
