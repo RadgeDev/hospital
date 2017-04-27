@@ -3,34 +3,29 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                          Proveedores
+                        Seccion Bodega
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= base_url('welcome') ?>">Inicio</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-edit"></i> Proveedor
+                                <i class="fa fa-edit"></i> Seccion Bodega
                             </li>
                         </ol>
                     </div>
                 </div>
    <div class="row">
       <div class="col-md-2">
-        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Proveedor</a>
+        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar Seccion </a>
 
       </div>
    
           <div class="col-md-3 col-md-offset-4">
     <select name="buscando" id ="buscando" class="form-control" >
-        <option value="rut_proveedor">Rut</option>
-        <option value="nombre_proveedor">Nombre</option>
-        <option value="razon_social">Razon Social</option>
-        <option value="direccion">Direccion</option>
-        <option value="telefono">Telefono</option>
-        <option value="correo">Correo</option>
-
-        </select>
+        <option value="cod_bodegas"> Codigo Bodega</option>
+        <option value="nombre"> Nombre Bodega</option>
+    </select>
 
       </div>
       <div class="col-md-3 ">
@@ -48,7 +43,7 @@
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>Lista de Proveedor</h4>
+            <h4>Lista de Seccion Bodega</h4>
           </div>
           <div id="tbproveedor" class="panel-body table-responsive">
             
@@ -62,13 +57,11 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Rut</th>
-                  <th>Nombres</th>
-                  <th>Razon Social</th>
-                  <th>Direccion</th>
-                  <th>Telefono</th>
-                  <th>Correo</th>
-                  <th>Accion</th>
+                  <th>Codigos Bodega</th>
+                  <th>Nombres Bodega</th>
+                  <th>Correlativo</th>
+                  <th>Ultimo Codigo</th>
+                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -87,7 +80,7 @@
 
      <!-- modal empieza aca -->
    <!-- Modal -->
-<div class="modal fade" id="myModalproveedor" tabindex="-1" role="dialog" 
+<div class="modal fade" id="myModalguardar" tabindex="-1" role="dialog" 
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -99,7 +92,7 @@
                        <span class="sr-only">Cerrar</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                  Ingresar proveedor
+                  Ingresar Codigo Bodega
                 </h4>
             </div>
             <div class="alert alert-danger" id="msg-error" style="text-align:left;">
@@ -109,48 +102,23 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="proveedorGuardar" role="form" action= "<?= base_url()?>control_proveedor/guardar " method="POST" >
+                      <form  id="formGuardar" role="form" action= "<?= base_url()?>control_bodega/guardar " method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10" onkeypress="return solorut(event)">
+                               <label>Codigo Bodega</label>
+                                <input class="form-control" id="codigo" name="codigo" placeholder="Ingrese Codigo  " onblur="validarCodigo();" maxlength="10" >
                                   <p class="text-errors" id="msgerrorut"></p>
                             </div>
 
                             <div class="form-group">
-                                <label>Nombre Proveedor</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                                <label>Nombre Bodega</label>
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)" onkeypress="" ">
                             </div>
-
-                            <div class="form-group">
-                            <label>Razon social</label>
-                            <input class="form-control" id="razon" name="razon"  placeholder="Ingrese su Razon Social">
+                              <div class="form-group">
+                                <label>Correlativo</label>
+                            <input class="form-control" id="correlativo" name="correlativo"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)" onblur="validarCorrelativo();"   onKeyUp="this.value = this.value.toUpperCase();" >
                             </div>
-
-                            <div class="form-group">
-                            <label>Direccion</label>
-                            <input class="form-control" id="direccion" name="direccion"  placeholder="Ingrese su Direccion">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Telefono</label>
-                            <input class="form-control" id="telefono" name="telefono"  placeholder="Ingrese su Telefono">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Correo</label>
-                            <input class="form-control" id="correo" name="correo"  placeholder="Ingrese su Correo">
-                            </div>
-                            
-                        
-                <!--
-                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
-                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
-                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
-                   -->
-                          <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
                         data-dismiss="modal">
@@ -183,7 +151,7 @@
                        <span class="sr-only">Cerrar</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                  Editar usuario
+                  Editar Codigo Bodega
                 </h4>
             </div>
              <div class="alert alert-danger" id="msg-error2" style="text-align:left;">
@@ -193,37 +161,23 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>man_usuarios/actualizar" method="POST" >
+                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>control_bodega/actualizar" method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly  >
+                               <label>Codigo</label>
+                                <input class="form-control" id="seleccod" name="seleccod" placeholder="Ingrese codigo" readonly  >
                             </div>
 
                             <div class="form-group">
                                 <label>Nombre</label>
                                 <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
                             </div>
-
                             <div class="form-group">
-                                <label>Razon Social</label>
-                             <input class="form-control" id="selecrazon" name="selecrazon"  placeholder="Ingrese su razon social">
+                                <label>Correlativo</label>
+                                <input class="form-control" id="seleccorrelativo" name="seleccorrelativo"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
                             </div>
-
-                             <div class="form-group">
-                                <label>Direccion</label>
-                             <input  class="form-control" id="selecdireccion" name="selecdireccion"  placeholder="Ingrese su direccion" ">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Telefono</label>
-                             <input class="form-control" id="selectelefono" name="selectelefono"  placeholder="Ingrese su telefono">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Correo</label>
-                             <input class="form-control" id="seleccorreo" name="seleccorreo"  placeholder="Ingrese su correo">
+                          
                             </div>
                            
             <div class="modal-footer">

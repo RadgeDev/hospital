@@ -2,7 +2,7 @@ $(document).on("ready", main);
 
 
 function main(){
-	mostrarDatos("",1,10,"cod_depto");
+	mostrarDatos("",1,10,"cod_bodegas");
 	$("#msg-error").hide();
 
 	
@@ -28,18 +28,19 @@ function main(){
 		mostrarDatos(valorBuscar,1,valoroption,"cod_depto");
 	});
 }
+
 function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
 
 	$.ajax({
-		url : "http://localhost/hospital/control_depto/mostrar",
+		url : "http://localhost/hospital/control_bodega/mostrar",
 		type: "POST",
 		data: {buscar:valorBuscar,nropagina:pagina,cantidad:cantidad,valorcombos:valorcombo},
 		dataType:"json",
 		success:function(response){
 			
 			filas = "";
-			$.each(response.depto,function(key,item){
-				filas+="<tr class='active' ><td >"+item.cod_depto+"</td><td>"+item.nombre_depto+"</td><td> <button href='"+item.cod_depto+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.cod_depto+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
+			$.each(response.bodega,function(key,item){
+				filas+="<tr class='active' ><td >"+item.cod_bodegas+"</td><td>"+item.nombre+"</td><td>"+item.correlativo+"</td><td>"+item.ultimo_codigo+"</td><td> <button href='"+item.cod_bodegas+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.cod_bodegas+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
 			});
 
 			$("#tbclientes tbody").html(filas);
@@ -113,7 +114,7 @@ function validarCodigo() {
  micodigo = $("#codigo").val();
 
   $.ajax({
-    url:"http://localhost/hospital/control_depto/validar",
+    url:"http://localhost/hospital/control_bodega/validar",
     type:"POST",
     data:{id:micodigo},
     success:function(respuesta){
@@ -121,12 +122,11 @@ function validarCodigo() {
       if (valorcodigo==="") {
   document.getElementById("codigo").focus();
      
-      }else{
+  }else{
+
     if (respuesta ==="Codigo existe" ) {
     swal("Error!", "Este Codigo ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos       
-        
-       
-       $('#departamentoGuardar').get(0).reset();//resetea  los campos del formulario
+    $('#formGuardar').get(0).reset();//resetea  los campos del formulario
         document.getElementById("codigo").focus();
     
     }else{
@@ -140,7 +140,38 @@ function validarCodigo() {
 
 }
 
+function validarCorrelativo() {
+ micodigo = $("#correlativo").val();
 
+  $.ajax({
+    url:"http://localhost/hospital/control_bodega/validarCorrelativo",
+    type:"POST",
+    data:{id:micodigo},
+    success:function(respuesta){
+       valorcodigo = $("#correlativo").val();
+      valorcodigo2 = $("#codigo").val();
+      if (valorcodigo==="" && valorcodigo2==="") {
+
+      document.getElementById("codigo").focus();
+
+     
+      }else{
+
+      if (respuesta ==="Codigo existe" ) {
+      swal("Error!", "Este Correlativo ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos       
+      
+    $("#correlativo").val("");
+        document.getElementById("cerrarmodal").focus();
+    }else{
+        
+ //document.getElementById("").focus();
+
+        }
+  }
+    }
+  });
+
+}
 
 
 
@@ -166,32 +197,32 @@ function validarCodigo() {
    
 
 
-$("#departamentoGuardar").submit(function (event){
+$("#formGuardar").submit(function (event){
 
     event.preventDefault();
 
     $.ajax({
-      url:$("#departamentoGuardar").attr("action"),
-      type:$("#departamentoGuardar").attr("method"),
-      data:$("#departamentoGuardar").serialize(),
+      url:$("#formGuardar").attr("action"),
+      type:$("#formGuardar").attr("method"),
+      data:$("#formGuardar").serialize(),
       success:function(respuesta){
        
         if (respuesta === "Registro Guardado") {
          
-           $('#myModaldepartamento').modal('hide');//esconde formulario modal
+           $('#myModalguardar').modal('hide');//esconde formulario modal
            swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
-           $('#departamentoGuardar').get(0).reset();//resetea  los campos del formulario
-          $('#myModaldepto').modal('hide');
+           $('#formGuardar').get(0).reset();//resetea  los campos del formulario
+            $("#msg-error").hide() ;
+          $('#myModalguardar').modal('hide');
         } else if (respuesta === "No se pudo guardar los datos") {
           swal("Error", "Error revise si los datos estan correctos", "error");
         }
         else
         {
-    
           $("#msg-error").show();
           $(".list-errors").html(respuesta);
         }
-       mostrarDatos("",1,10,"cod_depto");
+       mostrarDatos("",1,10,"cod_bodegas");
       }
     });
   });
@@ -208,14 +239,14 @@ function editandos(obj) {
     event.preventDefault();
 // alert(rutseleccionado);
  $.ajax({
-    url:"http://localhost/hospital/control_depto/editando",
+    url:"http://localhost/hospital/control_bodega/editando",
     type:"POST",
     data:{id:codseleccionado},
     dataType:"json",
     success:function(respuesta){
    $.each(respuesta.obtener,function(key,item){
-    $("#seleccod").val(item.cod_depto);
-    $("#selecnombre").val(item.nombre_depto);
+    $("#seleccod").val(item.cod_bodegas);
+    $("#selecnombre").val(item.nombre);
       });
 
     }
@@ -230,7 +261,7 @@ function editandos(obj) {
 function cerrarModal() {
   $("#msg-error").hide();
     $("#msgerrorut").hide();
-   $('#departamentoGuardar').get(0).reset();//resetea  los campos del formulario
+   $('#formGuardar').get(0).reset();//resetea  los campos del formulario
     $('#myModaldepto').modal('hide');
     $('#myModaleditar').modal('hide');
 }
@@ -268,7 +299,7 @@ function cerrarModal() {
           $("#msg-error2").show();
           $(".list-errors").html(respuesta);
         }
-        	mostrarDatos("",1,10,"cod_depto");
+        	mostrarDatos("",1,10,"cod_bodegas");
       }
     });
   });
@@ -299,7 +330,7 @@ function(){
 function eliminando(borrarcod){
   $.ajax({
 
-    url:"http://localhost/hospital/control_depto/eliminar",
+    url:"http://localhost/hospital/control_bodega/eliminar",
     type:"POST",
     data:{micod:borrarcod},
     success:function(respuesta){
@@ -310,7 +341,7 @@ function eliminando(borrarcod){
         }else{
           swal("Error", respuesta, "error");
         }
-  mostrarDatos("",1,10,"cod_depto");
+  mostrarDatos("",1,10,"cod_bodegas");
     }
   });
 

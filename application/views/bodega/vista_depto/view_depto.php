@@ -7,7 +7,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Inicio</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?= base_url('welcome') ?>">Inicio</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Departamentos
@@ -79,7 +79,7 @@
 
      <!-- modal empieza aca -->
    <!-- Modal -->
-<div class="modal fade" id="myModalproveedor" tabindex="-1" role="dialog" 
+<div class="modal fade" id="myModaldepto" tabindex="-1" role="dialog" 
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -91,7 +91,7 @@
                        <span class="sr-only">Cerrar</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                  Ingresar proveedor
+                  Ingresar Departamento
                 </h4>
             </div>
             <div class="alert alert-danger" id="msg-error" style="text-align:left;">
@@ -101,7 +101,7 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="departamentoGuardar" role="form" action= "<?= base_url()?>control_proveedor/guardar " method="POST" >
+                      <form  id="departamentoGuardar" role="form" action= "<?= base_url()?>control_depto/guardar " method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
@@ -146,7 +146,7 @@
                        <span class="sr-only">Cerrar</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                  Editar usuario
+                  Editar Departamento
                 </h4>
             </div>
              <div class="alert alert-danger" id="msg-error2" style="text-align:left;">
@@ -156,12 +156,12 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>man_usuarios/actualizar" method="POST" >
+                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>control_depto/actualizar" method="POST" >
                          <br>
                          <br>
                             <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly  >
+                               <label>Codigo</label>
+                                <input class="form-control" id="seleccod" name="seleccod" placeholder="Ingrese codigo" readonly  >
                             </div>
 
                             <div class="form-group">
@@ -169,24 +169,7 @@
                                 <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
                             </div>
 
-                            <div class="form-group">
-                                <label>Razon Social</label>
-                             <input class="form-control" id="selecrazon" name="selecrazon"  placeholder="Ingrese su razon social">
-                            </div>
-
-                             <div class="form-group">
-                                <label>Direccion</label>
-                             <input  class="form-control" id="selecdireccion" name="selecdireccion"  placeholder="Ingrese su direccion" ">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Telefono</label>
-                             <input class="form-control" id="selectelefono" name="selectelefono"  placeholder="Ingrese su telefono">
-                            </div>
-
-                            <div class="form-group">
-                            <label>Correo</label>
-                             <input class="form-control" id="seleccorreo" name="seleccorreo"  placeholder="Ingrese su correo">
+                          
                             </div>
                            
             <div class="modal-footer">

@@ -3,33 +3,31 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                          Proveedores
+                        Productos
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= base_url('welcome') ?>">Inicio</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-edit"></i> Proveedor
+                                <i class="fa fa-edit"></i> Productos
                             </li>
                         </ol>
                     </div>
                 </div>
    <div class="row">
       <div class="col-md-2">
-        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Proveedor</a>
+        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Productos</a>
 
       </div>
    
           <div class="col-md-3 col-md-offset-4">
     <select name="buscando" id ="buscando" class="form-control" >
-        <option value="rut_proveedor">Rut</option>
-        <option value="nombre_proveedor">Nombre</option>
-        <option value="razon_social">Razon Social</option>
-        <option value="direccion">Direccion</option>
-        <option value="telefono">Telefono</option>
-        <option value="correo">Correo</option>
-
+        <option value="cod_producto">Codigo Interno</option>
+        <option value="nombre_proveedor">Codigo de barra </option>
+        <option value="razon_social">Nombre</option>
+        <option value="direccion">Unidad Medida</option>
+        <option value="telefono">Departamento</option>
         </select>
 
       </div>

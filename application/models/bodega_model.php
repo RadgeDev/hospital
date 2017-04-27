@@ -1,25 +1,25 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Depto_model extends CI_Model {
+class Bodega_model extends CI_Model {
 
 	public function buscar($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE)
 	{
 		if ($valorbuscar==""){
-			$valorbuscar="cod_depto";
+			$valorbuscar="cod_bodegas";
 		}
 		$this->db->like($valorbuscar,$buscar);
 		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
 			$this->db->limit($cantidadregistro,$inicio);
 		}
-		$consulta = $this->db->get("depto");
+		$consulta = $this->db->get("bodegas");
 		return $consulta->result();
 	}
 
 
-	function validar( $depto){
-		$this->db->where('cod_depto', $depto);
-		$this->db->get("depto");
+	function validar( $cod){
+		$this->db->where('cod_bodegas', $cod);
+		$this->db->get("bodegas");
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -28,8 +28,21 @@ class Depto_model extends CI_Model {
 		}
 	}
 
+
+	function validarCorrelativo( $cod){
+		$this->db->where('correlativo', $cod);
+		$this->db->get("bodegas");
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+
 	function guardar($data) {
-		$this->db->insert("depto",$data);
+		$this->db->insert("bodegas",$data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -39,8 +52,8 @@ class Depto_model extends CI_Model {
 	}	
 
 	function actualizar($rut,$data){
-		$this->db->where('cod_depto', $rut);
-		$this->db->update('depto', $data); 
+		$this->db->where('cod_bodegas', $rut);
+		$this->db->update('bodegas', $data); 
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -52,17 +65,17 @@ class Depto_model extends CI_Model {
 
 public function editando($codselec){
 
-		$this->db->where('cod_depto',$codselec);
+		$this->db->where('cod_bodegas',$codselec);
 		
-		$q= $this->db->get('depto');
+		$q= $this->db->get('bodegas');
 		return $q->result();
 
 		}
 
 
 public function eliminar($cod){
-		$this->db->where('cod_depto',$cod);
-		$this->db->delete('depto'); 
+		$this->db->where('cod_bodegas',$cod);
+		$this->db->delete('bodegas'); 
 	  if ($this->db->affected_rows() > 0) {
 			return true;
 		}
