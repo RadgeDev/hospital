@@ -175,14 +175,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Correlativo</label>
-                                <input class="form-control" id="seleccorrelativo" name="seleccorrelativo"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                                <input class="form-control" id="seleccorrelativo" name="seleccorrelativo"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)" onblur="validarCorrelativo2(); " onKeyUp="this.value = this.value.toUpperCase();">
                             </div>
                           
                             </div>
                            
             <div class="modal-footer">
-                <button type="button" class="btn btn-lg  btn-danger"
-                        data-dismiss="modal">
+                <button type="button" class="btn btn-lg  btn-danger" data-dismiss="modal">
                             Cerrar
                 </button>
                 <button type="submit" id="actualizaron" name="atualizaron" class="btn btn-lg  btn-success" >

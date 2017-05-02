@@ -94,13 +94,15 @@ function actualizar(){
 }
 
 
+$("select[name=cod_combo]").change(function(){
+            $('input[name=combocorrelativo]').val($(this).val());        
+ });
+
+
 $("select[name=cargo]").change(function(){
             $('input[name=seleccion]').val($(this).val());
             $('input[name=seleccion2]').val($(this).val());
  });
-
-
-
 
 });//fin de ready
     

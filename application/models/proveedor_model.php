@@ -18,8 +18,8 @@ class Proveedor_model extends CI_Model {
 
 
 	function validar( $rutsele){
-		$this->db->where('cod_depto', $rutsele);
-		$this->db->get("depto");
+		$this->db->where('rut_proveedor', $rutsele);
+		$this->db->get("proveedor");
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}

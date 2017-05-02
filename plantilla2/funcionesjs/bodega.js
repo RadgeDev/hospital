@@ -173,7 +173,24 @@ function validarCorrelativo() {
 
 }
 
+function validarCorrelativo2() {
+ micodigo = $("#seleccorrelativo").val();
 
+  $.ajax({
+    url:"http://localhost/hospital/control_bodega/validarCorrelativo2",
+    type:"POST",
+    data:{id:micodigo},
+    success:function(respuesta){
+      micodigo = $("#seleccorrelativo").val();
+      if (respuesta ==="Codigo existe" ) {
+      swal("Error!", "Este Correlativo ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos       
+        $("#seleccorrelativo").val("");
+        document.getElementById("cerrarmodal2").focus();
+       }
+       }
+  });
+
+}
 
  function soloLetras(e){
        key = e.keyCode || e.which;
@@ -247,6 +264,7 @@ function editandos(obj) {
    $.each(respuesta.obtener,function(key,item){
     $("#seleccod").val(item.cod_bodegas);
     $("#selecnombre").val(item.nombre);
+    $("#seleccorrelativo").val(item.correlativo);
       });
 
     }

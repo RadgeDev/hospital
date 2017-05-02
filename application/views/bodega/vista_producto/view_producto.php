@@ -17,17 +17,17 @@
                 </div>
    <div class="row">
       <div class="col-md-2">
-        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Productos</a>
+        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar Productos</a>
 
       </div>
    
           <div class="col-md-3 col-md-offset-4">
     <select name="buscando" id ="buscando" class="form-control" >
-        <option value="cod_producto">Codigo Interno</option>
-        <option value="nombre_proveedor">Codigo de barra </option>
-        <option value="razon_social">Nombre</option>
-        <option value="direccion">Unidad Medida</option>
-        <option value="telefono">Departamento</option>
+        <option value="cod_interno_prod">Codigo Interno</option>
+        <option value="codigo_barra">Codigo de barra </option>
+        <option value="nombre">Nombre</option>
+        <option value="cantidad">Cantidad</option>
+        <option value="precio">Precio</option>
         </select>
 
       </div>
@@ -46,9 +46,9 @@
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>Lista de Proveedor</h4>
+            <h4>Lista de Productos</h4>
           </div>
-          <div id="tbproveedor" class="panel-body table-responsive">
+          <div id="tbproductos" class="panel-body table-responsive">
             
             <p>
               <strong>Mostrar por : </strong>
@@ -60,12 +60,16 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Rut</th>
-                  <th>Nombres</th>
-                  <th>Razon Social</th>
-                  <th>Direccion</th>
-                  <th>Telefono</th>
-                  <th>Correo</th>
+                  <th>Codigo Interno </th>
+                  <th>Codigo Barra</th>
+                  <th>Codigo Bodega</th>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Unidad</th>
+                  <th>Stock Critico</th>
+                  <th>Stock Min.</th>
+                  <th>Stock Max</th>
                   <th>Accion</th>
                 </tr>
               </thead>
@@ -85,7 +89,7 @@
 
      <!-- modal empieza aca -->
    <!-- Modal -->
-<div class="modal fade" id="myModalproveedor" tabindex="-1" role="dialog" 
+<div class="modal fade" id="myModalguardar" tabindex="-1" role="dialog" 
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -97,7 +101,7 @@
                        <span class="sr-only">Cerrar</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                  Ingresar proveedor
+                  Ingresar Producto
                 </h4>
             </div>
             <div class="alert alert-danger" id="msg-error" style="text-align:left;">
@@ -107,60 +111,93 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="proveedorGuardar" role="form" action= "<?= base_url()?>control_proveedor/guardar " method="POST" >
-                         <br>
-                         <br>
-                            <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" id="rut" name="rut" placeholder="Ingrese Rut  Ejemplo 11111111-1" onfocusout="validarRut() " maxlength="10" onkeypress="return solorut(event)">
+              <form  id="formGuardar" role="form" action= "<?= base_url()?>control_producto/guardar " method="POST" >
+                 <div class="row">
+                  <div class="col-md-6">
+
+                              <div  class="form-group">
+                              <label>Eliga Correlativo</label>
+                        <select name='cod_combo' id ='cod_combo'  class='form-control' >
+            
+                           <?php
+                           $elige="Elige una opcion";
+                           echo '  <option value="',0,'">', $elige ,'</option>';
+                           foreach ($arrayCorrelativo as $i => $cod_bodega)
+                           
+                             echo '<option value="',$i,'">',$cod_bodega,'</option>';
+                             ?>
+                           </select >
+
+                            <input type="hidden"  class="form-control" id="combocorrelativo" name="combocorrelativo"  >
+                             <input  type="hidden" class="form-control" id="ultimocorrelativo" name="ultimocorrelativo"  >
+                              </div>
+                             <div class="form-group">
+
+                              <label>Codigo Interno</label> 
+                                <input class="form-control" id="codigo" name="codigo" placeholder="Ingrese codigo"  readonly  >
                                   <p class="text-errors" id="msgerrorut"></p>
                             </div>
 
                             <div class="form-group">
-                                <label>Nombre Proveedor</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                                <label>Codigo Barra</label>
+                            <input class="form-control" id="codigobarra"  name="codigobarra"  placeholder="Ingrese Codigo Barra" >
                             </div>
 
                             <div class="form-group">
-                            <label>Razon social</label>
-                            <input class="form-control" id="razon" name="razon"  placeholder="Ingrese su Razon Social">
+                            <label>Nombre</label>
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese su Razon Social">
                             </div>
 
                             <div class="form-group">
-                            <label>Direccion</label>
-                            <input class="form-control" id="direccion" name="direccion"  placeholder="Ingrese su Direccion">
+                            <label>Cantidad</label>
+                            <input class="form-control" id="cantidad" name="cantidad"  placeholder="Ingrese su Direccion">
                             </div>
 
                             <div class="form-group">
-                            <label>Telefono</label>
-                            <input class="form-control" id="telefono" name="telefono"  placeholder="Ingrese su Telefono">
+                            <label>Precio</label>
+                            <input class="form-control" id="precio" name="precio"  placeholder="Ingrese su Telefono">
                             </div>
+                            </div>
+                      
 
-                            <div class="form-group">
-                            <label>Correo</label>
-                            <input class="form-control" id="correo" name="correo"  placeholder="Ingrese su Correo">
+                      
+                       <div class="col-md-6">
+
+                            <div  class="form-group">
+                                <label>Unidad Medida</label>
+                                <select name="medida" class="form-control">
+                                    <option>Seleccione una opcion</option>
+                                    <option>Botella</option>
+                                    <option>Unidad</option>
+                                    <option>Paquete</option>
+                                    <option>Caja</option>
+                                </select>
                             </div>
-                            
-                        
-                <!--
-                    <button type="button" class="btn btn-lg  btn-primary">Nuevo</button>
-                    <button type="button" class="btn btn-lg  btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg  btn-info">Modificar</button>
-                    <button type="button" class="btn btn-lg  btn-danger">Eliminar</button>
-                   -->
-                          <!-- Modal Footer -->
+                            <input  class="form-control" id="seleccion" name="seleccion"  >
+                            <div class="form-group">
+                            <label>Stock Critico</label>
+                            <input class="form-control" id="stockcri" name="stockcri"  placeholder="Ingrese su Stock">
+                            </div>
+                            <div class="form-group">
+                            <label>Stock Minimo</label>
+                            <input class="form-control" id="stockmin" name="stockmin"   placeholder="Ingrese su Stock">
+                            </div>
+                            <div class="form-group">
+                            <label>Stock Maximo</label>
+                            <input class="form-control" id="stockmax" name="stockmax"   placeholder="Ingrese su Stock">
+                            </div>
+                        </div>
+                        </div>
             <div class="modal-footer">
                 <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
                         data-dismiss="modal">
                             Cerrar
                 </button>
-                <button type="submit" id="cerrarmodal" name="cerrarmodal" class="btn btn-lg  btn-success" >
+                <button type="submit" id="enviar" name="enviar" class="btn btn-lg  btn-success" >
                     Guardar
                 </button>
             </div>
-                        </form>
-
-                
+             </form> 
             </div>
             
         </div>
@@ -191,51 +228,73 @@
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>man_usuarios/actualizar" method="POST" >
+                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>control_producto/actualizar" method="POST" >
                          <br>
                          <br>
-                            <div class="form-group">
-                               <label>Rut</label>
-                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly  >
+                              <div class="form-group">
+
+                               <label>Codigo Interno</label>
+                                <input class="form-control" id="codigoselec" name="codigoselec" placeholder="Ingrese codigo" onfocusout="validarcodigo() " maxlength="10" onkeypress="return solorut(event)">
+                                  <p class="text-errors" id="msgerrorut"></p>
                             </div>
 
                             <div class="form-group">
-                                <label>Nombre</label>
-                                <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                                <label>Codigo Barra</label>
+                            <input class="form-control" id="codigobarra" name="codigobarra"  placeholder="Ingrese Codigo Barra" >
+                            </div>
+                            <div class="form-group">
+                                <label>Codigo Bodega</label>
+                            <input class="form-control" id="codigobarra" name="codigobarra"  placeholder="Ingrese Codigo Bodega" >
                             </div>
 
                             <div class="form-group">
-                                <label>Razon Social</label>
-                             <input class="form-control" id="selecrazon" name="selecrazon"  placeholder="Ingrese su razon social">
-                            </div>
-
-                             <div class="form-group">
-                                <label>Direccion</label>
-                             <input  class="form-control" id="selecdireccion" name="selecdireccion"  placeholder="Ingrese su direccion" ">
+                            <label>Nombre</label>
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese su Razon Social">
                             </div>
 
                             <div class="form-group">
-                            <label>Telefono</label>
-                             <input class="form-control" id="selectelefono" name="selectelefono"  placeholder="Ingrese su telefono">
+                            <label>Cantidad</label>
+                            <input class="form-control" id="cantidad" name="cantidad"  placeholder="Ingrese su Direccion">
                             </div>
 
                             <div class="form-group">
-                            <label>Correo</label>
-                             <input class="form-control" id="seleccorreo" name="seleccorreo"  placeholder="Ingrese su correo">
+                            <label>Precio</label>
+                            <input class="form-control" id="precio" name="precio"  placeholder="Ingrese su Telefono">
                             </div>
-                           
+                            <div  class="form-group">
+                                <label>Unidad Medida</label>
+                                <select name="medida" class="form-control">
+                                    <option>Seleccione una opcion</option>
+                                    <option>Botella</option>
+                                    <option>Unidad</option>
+                                    <option>Paquete</option>
+                                    <option>Caja</option>
+                                </select>
+                            </div>
+                            <input type="hidden" class="form-control" id="seleccion" name="seleccion"  >
+                            <div class="form-group">
+                            <label>Stock Critico</label>
+                            <input class="form-control" id="precio" name="precio"  placeholder="Ingrese su Stock">
+                            </div>
+                            <div class="form-group">
+                            <label>Stock Minimo</label>
+                            <input class="form-control" id="precio" name="precio"   placeholder="Ingrese su Stock">
+                            </div>
+                            <div class="form-group">
+                            <label>Stock Maximo</label>
+                            <input class="form-control" id="precio" name="precio"   placeholder="Ingrese su Stock">
+                            </div>
+                        
             <div class="modal-footer">
-                <button type="button" class="btn btn-lg  btn-danger"
+                <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
                         data-dismiss="modal">
                             Cerrar
                 </button>
-                <button type="submit" id="actualizaron" name="atualizaron" class="btn btn-lg  btn-success" >
-                    Actualizar
+                <button type="submit" id="enviar" name="enviar" class="btn btn-lg  btn-success" >
+                    Guardar
                 </button>
             </div>
-                        </form>
-
-                
+             </form> 
             </div>
             
         </div>

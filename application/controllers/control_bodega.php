@@ -62,7 +62,21 @@ function validar(){
 			show_404();
 		}
 	}
+function validarCorrelativo2(){
 
+		if ($this->input->is_ajax_request()) {
+			$correlativo = $this->input->post("id");
+			if($this->Bodega_model->validarCorrelativo($correlativo) == true)
+				echo "Codigo existe";
+			else
+				echo "Codigo no existe";
+			
+		}
+		else
+		{
+			show_404();
+		}
+	}
 function guardar() {
 		//El metodo is_ajax_request() de la libreria input permite verificar
 		//si se esta accediendo mediante el metodo AJAX 
@@ -72,7 +86,7 @@ function guardar() {
 			$nombre = $this->input->post("nombre");
             $correlativo = $this->input->post("correlativo");
     $this->form_validation->set_rules('codigo','Codigo','required|min_length[1]|max_length[10]');
-	$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|alpha');
+	$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|');
 	$this->form_validation->set_rules('correlativo','Correlativo','required|min_length[2]|max_length[50]|alpha');
 			
 

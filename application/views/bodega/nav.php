@@ -139,6 +139,9 @@
                              <li>
                                 <a href="<?= base_url('control_bodega') ?>">Seccion Bodega</a>
                             </li>
+                             <li>
+                                <a href="<?= base_url('control_producto') ?>">Productos</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
