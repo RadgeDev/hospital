@@ -23,8 +23,8 @@
    
           <div class="col-md-3 col-md-offset-4">
     <select name="buscando" id ="buscando" class="form-control" >
+       <option value="codigo_barra">Codigo de barra </option>
         <option value="cod_interno_prod">Codigo Interno</option>
-        <option value="codigo_barra">Codigo de barra </option>
         <option value="nombre">Nombre</option>
         <option value="cantidad">Cantidad</option>
         <option value="precio">Precio</option>
@@ -52,7 +52,7 @@
             
             <p>
               <strong>Mostrar por : </strong>
-              <select name="cantidad" id="cantidad">
+              <select name="cantidadpag" id="cantidadpag">
                 <option value="10">10</option>
                 <option value="20">20</option>
               </select>
@@ -60,8 +60,8 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Codigo Interno </th>
                   <th>Codigo Barra</th>
+                  <th>Codigo Interno </th>
                   <th>Codigo Bodega</th>
                   <th>Nombre</th>
                   <th>Cantidad</th>
@@ -145,17 +145,17 @@
 
                             <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese su Razon Social">
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese su nombre">
                             </div>
 
                             <div class="form-group">
                             <label>Cantidad</label>
-                            <input class="form-control" id="cantidad" name="cantidad"  placeholder="Ingrese su Direccion">
+                            <input class="form-control" id="cantidad" name="cantidad" onkeypress="return solonumeros(event)"  placeholder="Ingrese su cantidad">
                             </div>
-
-                            <div class="form-group">
                             <label>Precio</label>
-                            <input class="form-control" id="precio" name="precio"  placeholder="Ingrese su Telefono">
+                            <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input class="form-control" id="precio" name="precio"  onkeypress="return solonumeros(event)"  placeholder="Ingrese su precio">
                             </div>
                             </div>
                       
@@ -173,18 +173,18 @@
                                     <option>Caja</option>
                                 </select>
                             </div>
-                            <input  class="form-control" id="seleccion" name="seleccion"  >
+                            <input type="hidden"  class="form-control" id="seleccion" name="seleccion"  >
                             <div class="form-group">
                             <label>Stock Critico</label>
-                            <input class="form-control" id="stockcri" name="stockcri"  placeholder="Ingrese su Stock">
+                            <input class="form-control" id="stockcri" name="stockcri"  onkeypress="return solonumeros(event)" placeholder="Ingrese su Stock">
                             </div>
                             <div class="form-group">
                             <label>Stock Minimo</label>
-                            <input class="form-control" id="stockmin" name="stockmin"   placeholder="Ingrese su Stock">
+                            <input class="form-control" id="stockmin" name="stockmin"  onkeypress="return solonumeros(event)" placeholder="Ingrese su Stock">
                             </div>
                             <div class="form-group">
                             <label>Stock Maximo</label>
-                            <input class="form-control" id="stockmax" name="stockmax"   placeholder="Ingrese su Stock">
+                            <input class="form-control" id="stockmax" name="stockmax"  onkeypress="return solonumeros(event)"  placeholder="Ingrese su Stock">
                             </div>
                         </div>
                         </div>
@@ -206,6 +206,7 @@
 
 
 
+   <!-- Modal -->
 <div class="modal fade" id="myModalEditar" tabindex="-1" role="dialog" 
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -218,52 +219,53 @@
                        <span class="sr-only">Cerrar</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                  Editar usuario
+                  Ingresar Producto
                 </h4>
             </div>
-             <div class="alert alert-danger" id="msg-error2" style="text-align:left;">
+            <div class="alert alert-danger" id="msg-error2" style="text-align:left;">
                   <strong>¡Importante!</strong> Corregir los siguientes errores.
-                  <div class="list-errors"></div>
+                  <div class="list-errors2"></div>
               </div>
             <!-- Modal Body -->
             <div class="modal-body" >
                 
-                      <form  id="usuarioEditar" role="form" action= "<?= base_url()?>control_producto/actualizar" method="POST" >
-                         <br>
-                         <br>
-                              <div class="form-group">
-
-                               <label>Codigo Interno</label>
-                                <input class="form-control" id="codigoselec" name="codigoselec" placeholder="Ingrese codigo" onfocusout="validarcodigo() " maxlength="10" onkeypress="return solorut(event)">
-                                  <p class="text-errors" id="msgerrorut"></p>
+              <form  id="formEditar" role="form" action= "<?= base_url()?>control_producto/actualizar " method="POST" >
+                 <div class="row">
+                  <div class="col-md-6">
+                             <div class="form-group">
+                              <label>Codigo Interno</label> 
+                                <input class="form-control" id="editcodigo" name="editcodigo" placeholder="Ingrese codigo"  readonly  >
+            
                             </div>
 
                             <div class="form-group">
                                 <label>Codigo Barra</label>
-                            <input class="form-control" id="codigobarra" name="codigobarra"  placeholder="Ingrese Codigo Barra" >
-                            </div>
-                            <div class="form-group">
-                                <label>Codigo Bodega</label>
-                            <input class="form-control" id="codigobarra" name="codigobarra"  placeholder="Ingrese Codigo Bodega" >
+                            <input class="form-control" id="editcodigobarra"  name="editcodigobarra"  placeholder="Ingrese Codigo Barra" >
                             </div>
 
                             <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese su Razon Social">
+                            <input class="form-control" id="editnombre" name="editnombre"  placeholder="Ingrese su nombre">
                             </div>
 
                             <div class="form-group">
                             <label>Cantidad</label>
-                            <input class="form-control" id="cantidad" name="cantidad"  placeholder="Ingrese su Direccion">
+                            <input class="form-control" id="editcantidad" name="editcantidad" onkeypress="return solonumeros(event)"  placeholder="Ingrese su cantidad">
                             </div>
-
-                            <div class="form-group">
                             <label>Precio</label>
-                            <input class="form-control" id="precio" name="precio"  placeholder="Ingrese su Telefono">
+                            <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input class="form-control" id="editprecio" name="editprecio"  onkeypress="return solonumeros(event)"  placeholder="Ingrese su precio">
                             </div>
+                            </div>
+                      
+
+                      
+                       <div class="col-md-6">
+
                             <div  class="form-group">
                                 <label>Unidad Medida</label>
-                                <select name="medida" class="form-control">
+                                <select id="medida2" name="medida2" class="form-control">
                                     <option>Seleccione una opcion</option>
                                     <option>Botella</option>
                                     <option>Unidad</option>
@@ -271,27 +273,27 @@
                                     <option>Caja</option>
                                 </select>
                             </div>
-                            <input type="hidden" class="form-control" id="seleccion" name="seleccion"  >
+                            <input type="hidden"  class="form-control" id="seleccion2" name="seleccion2"  >
                             <div class="form-group">
                             <label>Stock Critico</label>
-                            <input class="form-control" id="precio" name="precio"  placeholder="Ingrese su Stock">
+                            <input class="form-control" id="editstockcri" name="editstockcri"  onkeypress="return solonumeros(event)" placeholder="Ingrese su Stock">
                             </div>
                             <div class="form-group">
                             <label>Stock Minimo</label>
-                            <input class="form-control" id="precio" name="precio"   placeholder="Ingrese su Stock">
+                            <input class="form-control" id="editstockmin" name="editstockmin"  onkeypress="return solonumeros(event)" placeholder="Ingrese su Stock">
                             </div>
                             <div class="form-group">
                             <label>Stock Maximo</label>
-                            <input class="form-control" id="precio" name="precio"   placeholder="Ingrese su Stock">
+                            <input class="form-control" id="editstockmax" name="editstockmax"  onkeypress="return solonumeros(event)"  placeholder="Ingrese su Stock">
                             </div>
-                        
+                        </div>
+                        </div>
             <div class="modal-footer">
-                <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
-                        data-dismiss="modal">
+                <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger" data-dismiss="modal">
                             Cerrar
-                </button>
+                 </button>
                 <button type="submit" id="enviar" name="enviar" class="btn btn-lg  btn-success" >
-                    Guardar
+                  Actualizar
                 </button>
             </div>
              </form> 

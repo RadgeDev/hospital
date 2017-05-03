@@ -12,7 +12,7 @@ function main(){
 	
 	$("input[name=busqueda]").keyup(function(){
 		textobuscar = $(this).val();
-		valoroption = $("#cantidad").val();
+		valoroption = $("#cantidadpag").val();
 	    var valorcombo = $("#buscando").val();
 	   
 		mostrarDatos(textobuscar,1,valoroption,valorcombo);
@@ -22,14 +22,14 @@ function main(){
 		e.preventDefault();
 		valorhref = $(this).attr("href");
 		valorBuscar = $("input[name=busqueda]").val();
-		valoroption = $("#cantidad").val();
-		mostrarDatos(valorBuscar,valorhref,valoroption,"rut_proveedor");
+		valoroption = $("#cantidadpag").val();
+		mostrarDatos(valorBuscar,valorhref,valoroption,"cod_interno_prod");
 	});
 
-	$("#cantidad").change(function(){
+	$("#cantidadpag").change(function(){
 		valoroption = $(this).val();
 		valorBuscar = $("input[name=busqueda]").val();
-		mostrarDatos(valorBuscar,1,valoroption,"rut_proveedor");
+		mostrarDatos(valorBuscar,1,valoroption,"cod_interno_prod");
 	});
 }
 function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
@@ -131,65 +131,22 @@ $("select[name=medida]").change(function(){
    
  });
 
+$("select[name=editcod_combo]").change(function(){
+            $('input[name=editcombocorrelativo]').val($(this).val());  
+            var varieble = $("#editcombocorrelativo").val();
+            if (varieble==='Elige una opcion') {
+            $("#editcombocorrelativo").val("");  
+            }    
+ });
 
-
-function validar(mirut){
- 
-  $.ajax({
-    url:"http://localhost/hospital/control_proveedor/validar",
-    type:"POST",
-    data:{id:mirut},
-    success:function(respuesta){
-    if (respuesta ==="Rut existe" ) {
-    	$('#rut').val("");
-    	swal("Error!", "Este rut ya esta registrado", "error");// a trves swift una libreria permite crear mensajes bonitos       
-        document.getElementById("rut").focus();
-    }else{
-        
-
-
-        }
-  
-    }
-  });
-
-}
-
-
-var Fn = {
-  // Valida el rut con su cadena completa "XXXXXXXX-X"
-  validaRut : function (rutCompleto) {
-    if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
-      return false;
-    var tmp   = rutCompleto.split('-');
-    var digv  = tmp[1]; 
-    var rut   = tmp[0];
-    if ( digv == 'K' ) digv = 'k' ;
-    return (Fn.dv(rut) == digv );
-  },
-  dv : function(T){
-    var M=0,S=1;
-    for(;T;T=Math.floor(T/10))
-      S=(S+T%10*(9-M++%6))%11;
-    return S?S-1:'k';
-  }
-}
-
-function validarRut() {
-
-
-if (Fn.validaRut( $("#rut").val() )){
-   // $("#msgerrorut").html("El rut ingresado es válido :D");
-  var inputs = $('#rut')
-  var mirut = $(inputs).val();
-  validar(mirut);
-    $("#msgerrorut").html(" ");
-  } else {
-    $("#msgerrorut").show();
-    $("#msgerrorut").html("<font color='red'>El Rut no es válido  </font> ");
-     document.getElementById("rut").focus();
-  }
-}
+$("select[name=medida2]").change(function(){
+            $('input[name=seleccion2]').val($(this).val());
+            var varieble = $("#seleccion2").val();
+            if (varieble==='Seleccione una opcion') {
+            $("#seleccion2").val("");
+             }
+   
+ });
 
 
 //evitar enter codigo de barras
@@ -199,6 +156,16 @@ if (Fn.validaRut( $("#rut").val() )){
     }
   });
     $('#nombre').keypress(function(e){
+    if(e.which == 13){
+      return false;
+    }
+  });
+     $('#editcodigobarra').keypress(function(e){
+    if(e.which == 13){
+      return false;
+    }
+  });
+    $('#editnombre').keypress(function(e){
     if(e.which == 13){
       return false;
     }
@@ -236,6 +203,39 @@ $("#codigo").val("");
   }
   }
 
+function obtenerCorrelativo2() {
+var porId=document.getElementById("editcod_combo").value;
+if (porId==0) {
+$("#editcodigo").val("");
+}else {
+
+   var micorrelatico;
+   var ultimocodigo;
+    var entero;
+    micod = $("#editcombocorrelativo").val();
+    $.ajax({
+    url:"http://localhost/hospital/control_producto/obtenercorrelativo",
+    type:"POST",
+    dataType:"json",
+    data:{cod:micod},
+    success:function(respuesta){
+    $.each(respuesta.obtener,function(key,item){
+     micorrelativo=item.correlativo;
+    ultimocodigo=item.ultimo_codigo;
+   // alert(ultimocodigo);
+    entero = parseInt(ultimocodigo);
+  });
+       
+   var numero=entero+1;
+    $("#editcodigo").val(micorrelativo+numero);
+    $("#editultimocorrelativo").val(numero);
+
+  }
+  });
+  }
+  }
+
+
  function soloLetras(e){
        key = e.keyCode || e.which;
        tecla = String.fromCharCode(key).toLowerCase();
@@ -255,17 +255,16 @@ $("#codigo").val("");
         }
     }
 
-    function solorut(e){
+   function solonumeros(e){
        key = e.keyCode || e.which;
        tecla = String.fromCharCode(key).toLowerCase();
-       letras = "1234567890-";
+       letras = "1234567890.,";
      
 
         if(letras.indexOf(tecla)==-1){
             return false;
         }
     }
-
 
 $("#formGuardar").submit(function (event){
 
@@ -304,31 +303,36 @@ $("#editando").click(editandos);
 
 
 function editandos(obj) {
-  var rutseleccionado = obj.getAttribute("href");
+  var codseleccionado = obj.getAttribute("href");
    $("#msg-error2").hide();
     event.preventDefault();
-// alert(rutseleccionado);
+// alert(codseleccionado);
  $.ajax({
-    url:"http://localhost/hospital/control_proveedor/editando",
+    url:"http://localhost/hospital/control_producto/editando",
     type:"POST",
-    data:{id:rutseleccionado},
+    data:{id:codseleccionado},
     dataType:"json",
     success:function(respuesta){
    $.each(respuesta.obtener,function(key,item){
-    $("#selecrut").val(item.rut_proveedor);
-    $("#selecnombre").val(item.nombre_proveedor);
-    $("#selecrazon").val(item.razon_social);
-    $("#selecdireccion").val(item.direccion);
-    $("#selectelefono").val(item.telefono);
-    $("#seleccorreo").val(item.correo);
+  $("#editcod_combo option[value="+ item.cod_bodega +"]").attr("selected",true);
+    $("#editcodigo").val(item.cod_interno_prod);
+    $("#editcodigobarra").val(item.codigo_barra);
+    $("#editnombre").val(item.nombre);
+    $("#editcantidad").val(item.cantidad);
+    $("#editprecio").val(item.precio);
+    $("#editstockcri").val(item.stock_critico);
+    $("#editstockmin").val(item.stock_minimo);
+    $("#editstockmax").val(item.stock_maximo);
+    $("#seleccion2").val(item.unidad_medida);
+    var unidad =item.unidad_medida;
+    document.getElementById('medida2').value= unidad;
+
+
       });
 
     }
 
   });
-
-
-
 }
 
 
@@ -339,25 +343,26 @@ function cerrarModal() {
 }
 
 
-$("#actualizaron").click(actualizar);
-function actualizar(){
 
-  $("#usuarioEditar").submit(function (event){
+
+
+  $("#formEditar").submit(function (event){
   
    event.preventDefault();
- });
+
   $.ajax({
-    url:"http://localhost/hospital/control_producto/actualizar",
-    type:"POST",
-    data:$("#usuarioEditar").serialize(),
+      url:$("#formEditar").attr("action"),
+      type:$("#formEditar").attr("method"),
+      data:$("#formEditar").serialize(),
     success:function(respuesta){
-       if (respuesta === "Registro Actualizado") {
-         $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
+       if (respuesta === "Registro Guardado") {
+          $("#msg-error2").hide();
+         $('#formEditar').get(0).reset();//resetea  los campos del formulario
            $('#myModalEditar').modal('hide');//esconde formulario modal
            swal("Genial!", "Datos Editados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
            
-        } else if (respuesta === "Error al Actualizar") {
-          $('#usuarioEditar').get(0).reset();//resetea  los campos del formulario
+        } else if (respuesta === "No se pudo guardar los datos") {
+          $('#formEditar').get(0).reset();//resetea  los campos del formulario
              $('#myModalEditar').modal('hide');//esconde formulario modal
           swal("Error", respuesta, "error");
         }
@@ -365,13 +370,13 @@ function actualizar(){
         {
     
           $("#msg-error2").show();
-          $(".list-errors").html(respuesta);
+          $(".list-errors2").html(respuesta);
         }
         	mostrarDatos("",1,10,"cod_interno_prod");
       }
     });
  
-}
+ });
 
 
 function eliminar(obj) {
@@ -380,7 +385,7 @@ rutseleccionado = obj.getAttribute("href");
    
 swal({
   title: "Estas seguro que deseas eliminar?",
-  text: "Quieres eliminar al RUT: "+rutseleccionado ,
+  text: "Quieres eliminar al Codigo: "+rutseleccionado ,
   type: "warning",
   showCancelButton: true,
   confirmButtonColor: "#DD6B55",
@@ -396,7 +401,6 @@ function(){
 }
 
 function eliminando(borrarrut){
-      alert(borrarrut);
   $.ajax({
 
     url:"http://localhost/hospital/control_producto/eliminar",

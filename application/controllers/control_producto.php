@@ -124,36 +124,44 @@ function guardar() {
 function actualizar(){
 	
 		if ($this->input->is_ajax_request()) {
+			$codigo = $this->input->post("editcodigo");
+			$codbarra = $this->input->post("editcodigobarra");
+			$nombre = $this->input->post("editnombre");
+			$cantidad = $this->input->post("editcantidad");
+			$precio = $this->input->post("editprecio");
+            $unidad = $this->input->post("seleccion2");
+            $stockcri = $this->input->post("editstockcri");
+            $stockmin = $this->input->post("editstockmin");
+            $stockmax = $this->input->post("editstockmax");
 
-			$rutselect = $this->input->post("selecrut");
-			$nombres = $this->input->post("selecnombre");
-			$razon = $this->input->post("selecrazon");
-			$direccion= $this->input->post("selecdireccion");
-			$telefono = $this->input->post("selectelefono");
-			$correo = $this->input->post("seleccorreo");
+            $this->form_validation->set_rules('editcodigo','Codigo','required|min_length[1]|max_length[10]');
+			$this->form_validation->set_rules('editcodigobarra','Codigo Barra','required|min_length[1]|max_length[50]');
+			$this->form_validation->set_rules('editnombre','Nombre','required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('editcantidad','Cantidad','required|min_length[1]|max_length[50]|numeric');
+			$this->form_validation->set_rules('editprecio','Precio','required|min_length[1]|max_length[50]|numeric');
+			$this->form_validation->set_rules('seleccion2','Unidad','required|min_length[1]|max_length[50]');
+			$this->form_validation->set_rules('editstockcri','Stock Critico','required|min_length[1]|max_length[50]|numeric');
+			$this->form_validation->set_rules('editstockmin','Stock Minimo','required|min_length[1]|max_length[50]|numeric');
+			$this->form_validation->set_rules('editstockmax','Stock Maximo','required|min_length[1]|max_length[50]|numeric');
 
-			$this->form_validation->set_rules('selecnombre','Nombre','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('selecrazon','Razon Social','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('selecdireccion','Direccion','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('selectelefono','Telefono','required|min_length[3]|max_length[50]|numeric');
-			$this->form_validation->set_rules('seleccorreo','Correo','required|min_length[3]|max_length[50]|valid_email');
-		
 		if ($this->form_validation->run() === TRUE) {
-	
+
 			$datos = array(
-				"nombre_proveedor" => $nombres,
-				"razon_social" => $razon,
-				"direccion" => $direccion,
-		        "telefono" => $telefono,
-		        "correo" => $correo,
+				"codigo_barra" => $codbarra,
+				"nombre" => $nombre,
+				"cantidad" => $cantidad,
+				"precio" => $precio,
+				"unidad_medida" => $unidad,
+				"stock_critico" => $stockcri,
+				"stock_minimo" => $stockmin,
+				"stock_maximo" => $stockmax
 				);
-		
-			if($this->Producto_model->actualizar($rutselect,$datos) == true)
-				echo "Registro Actualizado";
+
+	if($this->Producto_model->actualizar($codigo,$datos)==true)
+				echo "Registro Guardado";
 			else
-				echo "Error al Actualizar";
-			
-			}else
+				echo "No se pudo guardar los datos";
+	}else
 	{
 				echo validation_errors('<li>','</li>');
 	}
@@ -165,13 +173,12 @@ function actualizar(){
 		}
 }
 
-
 function editando() {
 
 		if ($this->input->is_ajax_request()) {
-			$rutsele = $this->input->post("id");
+			$codselec = $this->input->post("id");
          $data = array(
-			"obtener" => $this->Producto_model->editando($rutsele)
+			"obtener" => $this->Producto_model->editando($codselec)
          	);
             echo json_encode($data);
 		}

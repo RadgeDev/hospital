@@ -48,8 +48,8 @@ class Producto_model extends CI_Model {
 			return false;
 		}
 	}
- 	function actualizar($codigo,$numero){
-		$this->db->where('cod_interno_prod', $rut);
+ 	function actualizar($codigo,$data){
+		$this->db->where('cod_interno_prod', $codigo);
 		$this->db->update('producto', $data); 
 		if ($this->db->affected_rows() > 0) {
 			return true;
@@ -60,13 +60,10 @@ class Producto_model extends CI_Model {
 	}
  
 
-public function editando($rutselec){
-
-		$this->db->where('cod_interno_prod',$rutselec);
-		
+public function editando($codselec){
+		$this->db->where('cod_interno_prod',$codselec);
 		$q= $this->db->get('producto');
 		return $q->result();
-
 		}
 
 	public function obtenercorrelativo($codselec){
