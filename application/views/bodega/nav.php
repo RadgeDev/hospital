@@ -127,9 +127,11 @@
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Mantenedores <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo" class="collapse">
-                            <li>
-                                <a href="<?= base_url('man_usuarios') ?>">Usuarios</a>
+                
+                             <li>
+                                <a href="<?= base_url('control_producto') ?>">Productos</a>
                             </li>
+
                             <li>
                                 <a href="<?= base_url('control_proveedor') ?>">Proveedor</a>
                             </li>
@@ -140,18 +142,24 @@
                                 <a href="<?= base_url('control_bodega') ?>">Seccion Bodega</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_producto') ?>">Productos</a>
+                                <a href="<?= base_url('control_tipo_compra') ?>">Tipo Compra</a>
+                            </li>
+                              <li>
+                                <a href="<?= base_url('control_tipo_ingreso') ?>">Tipo Ingreso</a>
+                            </li>
+                             <li>
+                                <a href="<?= base_url('man_usuarios') ?>">Usuarios</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                        <a href="charts.html"><i class="fa fa-fw fa-edit"></i> Ingreso/Compra</a> 
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                        <a href="tables.html"><i class="fa fa-fw fa-edit"></i> Egreso/Salidas</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        <a href="forms.html"><i class="fa fa-fw fa-bar-chart-o"></i> Forms</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
