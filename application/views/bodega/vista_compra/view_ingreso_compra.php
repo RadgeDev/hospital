@@ -60,8 +60,9 @@
           <div class="col-lg-4 col-sm-4">
           <br>
                 <label>Tipo Compra</label>
-                  <select name='combo_tipocompra' id ='combo_tipocompra'  class='form-control' >
+                  <select name='combo_tipocompra'  id ='combo_tipocompra'  class='form-control' >
              <?php
+
                  $elige="Elige una opcion";
                    echo '  <option value="',0,'">', $elige ,'</option>';
                     foreach ($arrayTipocompra as $i => $cod_tipocompra)
@@ -69,16 +70,43 @@
                              ?>
              </select >
             </div>
-              <div class="col-lg-3 col-sm-3">
+              <div class="col-lg-2 col-sm-2">
              <br>
                 <label>Proveedor</label>
-	
-                <input type="text" class="form-control" name="search_data" id="search_data" type="text" onkeyup="ajaxSearch()">
-                 <div id="suggestions">
-                 <div id="autoSuggestionsList"></div>
-                 </div>
-
+	   <input type="text" id="proveedornombre" list="misproveedores" class="form-control" placeholder="Buscar Proveedor">
+	     <input type="text" id="proveedorrut" list="misproveedores2" class="form-control" placeholder="Buscar Proveedor">
+  
+         <datalist id="misproveedores">
+                <?php
+                    foreach ($arrayProveedor as $i => $nombre_proveedor)
+                    echo '<option value="',$i,'">',$nombre_proveedor,'</option>';
+                             ?>
+         </datalist>
+       <datalist id="misproveedores2">
+                <?php
+                    foreach ($arrayProveedor as $i => $rut_proveedor)
+                    echo '<option value="',$i,'">',$rut_proveedor,'</option>';
+                             ?>
+         </datalist>
+  
+        
              </div>
+                 <div class="col-lg-1 col-sm-1">
+                 <br>
+            <div class="row">
+            <form name="frmSO">
+           <label for="mibuscarproveedor" class="control-label input-group">Buscar por:</label>
+		    <div class="btn-group" data-toggle="buttons" >
+			<label class="btn btn-default">
+				<input id="radiorut" name="mibuscarproveedor"  onclick="obtenerradio();" value="1" type="radio">Rut
+			</label>
+			<label class="btn btn-default active">
+				<input id="radionombre" name="mibuscarproveedor"  onclick="obtenerradio();"   value="0" type="radio"  checked="" >Nombre
+			</label>
+			</div>
+			</form>
+          </div>
+                 </div>
             <div class="col-lg-1 col-sm-1">
             <br>
             <label>Agregar</label>

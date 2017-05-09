@@ -8,6 +8,7 @@ $( "#datetimepicker1" ).datepicker({dateFormat:"dd/mm/yy"}).datepicker("setDate"
 
 setTimeout("mostrarhora()",1000); 
  $("#msg-error").hide();
+$('#proveedorrut').hide();
 
  }
 
@@ -149,32 +150,28 @@ if (Fn.validaRut( $("#rut").val() )){
     }
 
 
-
-function ajaxSearch()
-{
-    var input_data = $('#search_data').val();
-
-    if (input_data.length === 0)
-    {
-        $('#suggestions').hide();
+$('input[type="radio"]').on('click change', function(e) {
+    var radios = document.getElementsByName('mibuscarproveedor');
+ 
+for (var i = 0, length = radios.length; i < length; i++) {
+    if (radios[i].checked) {
+        // do whatever you want with the checked radio
+        var valorradio=radios[i].value;
+        // only one radio can be logically checked, don't check the rest
+        break;
     }
-    else
-    {
+}
+  if (valorradio== '1') {
+  	$('#proveedorrut').show();
+  	$('#proveedornombre').hide();
+  	$('#proveedorrut').val("");
+  	$('#proveedornombre').val("");
+  } else {
+	$('#proveedorrut').hide();
+  	$('#proveedornombre').show();
+  	$('#proveedorrut').val("");
+  	$('#proveedornombre').val("");
+  }
 
-  
-        $.ajax({
-            type: "POST",
-            url: "http://localhost/hospital/control_compra_ingreso/autocomplete/",
-            data: input_data,
-            success: function (data) {
-                // return success
-                if (data.length > 0) {
-                    $('#suggestions').show();
-                    $('#autoSuggestionsList').addClass('auto_list');
-                    $('#autoSuggestionsList').html(data);
-                }
-            }
-         });
+});
 
-     }
- }

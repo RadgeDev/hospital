@@ -12,8 +12,8 @@ class Control_compra_ingreso extends CI_Controller {
 		$this->load->view("bodega/nav");
 		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
 		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
-		$datosproveedor['countries'] = $this ->Compra_ingreso_model -> get_proveedor();
-		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra));
+		$datosproveedor['arrayProveedor'] = $this->Compra_ingreso_model->get_proveedor();
+		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra,$datosproveedor));
 		$this->load->view("bodega/vista_compra/footer2");
 	}
 

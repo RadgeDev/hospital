@@ -124,25 +124,21 @@ function get_tipocompra(){
 function get_proveedor(){
 
     // armamos la consulta
-    $query = $this->db-> query('SELECT cod_tipocompra,nombre FROM tipo_compra');
+    $query = $this->db-> query('SELECT rut_proveedor,nombre_proveedor FROM proveedor');
 
     // si hay resultados
     if ($query->num_rows() > 0) {
         // almacenamos en una matriz bidimensional
         foreach($query->result() as $row)
-           $arrDatos[htmlspecialchars($row->cod_tipocompra, ENT_QUOTES)] = 
-      htmlspecialchars($row->nombre, ENT_QUOTES);
+           $arrDatos[htmlspecialchars($row->rut_proveedor, ENT_QUOTES)] = 
+      htmlspecialchars($row->nombre_proveedor, ENT_QUOTES);
 
         $query->free_result();
         return $arrDatos;
      }
 }
 
-public function get_autocomplete($search_data)
-{
-    $this->db->like('nombre_proveedor', $search_data);
-    return $this->db->get('proveedor', 10)->result();
-}
+
 
 
 }//fin de clase modelo
