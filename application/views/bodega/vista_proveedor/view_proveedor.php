@@ -243,3 +243,55 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
+      </div>
+      <div class="modal-body">
+        <h3>Modal Body</h3>
+          <form  id="usuarioEditar" role="form" action= "<?= base_url()?>man_usuarios/actualizar" method="POST" >
+                         <br>
+                         <br>
+                            <div class="form-group">
+                               <label>Rut</label>
+                                <input class="form-control" id="selecrut" name="selecrut" placeholder="Ingrese Rut  Ejemplo 11111111-1" readonly  >
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input class="form-control" id="selecnombre" name="selecnombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Razon Social</label>
+                             <input class="form-control" id="selecrazon" name="selecrazon"  placeholder="Ingrese su razon social">
+                            </div>
+
+                             <div class="form-group">
+                                <label>Direccion</label>
+                             <input  class="form-control" id="selecdireccion" name="selecdireccion"  placeholder="Ingrese su direccion" ">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Telefono</label>
+                             <input class="form-control" id="selectelefono" name="selectelefono"  placeholder="Ingrese su telefono">
+                            </div>
+
+                            <div class="form-group">
+                            <label>Correo</label>
+                             <input class="form-control" id="seleccorreo" name="seleccorreo"  placeholder="Ingrese su correo">
+                            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

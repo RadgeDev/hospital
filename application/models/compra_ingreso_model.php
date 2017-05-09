@@ -87,16 +87,16 @@ public function eliminar($rutas){
 		}
 	}
 
-function get_correlativo(){
+function get_tipoingreso(){
 
     // armamos la consulta
-    $query = $this->db-> query('SELECT cod_bodegas,nombre FROM bodegas');
+    $query = $this->db-> query('SELECT cod_ingreso,nombre FROM tipo_ingreso');
 
     // si hay resultados
     if ($query->num_rows() > 0) {
         // almacenamos en una matriz bidimensional
         foreach($query->result() as $row)
-           $arrDatos[htmlspecialchars($row->cod_bodegas, ENT_QUOTES)] = 
+           $arrDatos[htmlspecialchars($row->cod_ingreso, ENT_QUOTES)] = 
       htmlspecialchars($row->nombre, ENT_QUOTES);
 
         $query->free_result();
@@ -104,4 +104,45 @@ function get_correlativo(){
      }
 }
 
-}//fin de clase
+function get_tipocompra(){
+
+    // armamos la consulta
+    $query = $this->db-> query('SELECT cod_tipocompra,nombre FROM tipo_compra');
+
+    // si hay resultados
+    if ($query->num_rows() > 0) {
+        // almacenamos en una matriz bidimensional
+        foreach($query->result() as $row)
+           $arrDatos[htmlspecialchars($row->cod_tipocompra, ENT_QUOTES)] = 
+      htmlspecialchars($row->nombre, ENT_QUOTES);
+
+        $query->free_result();
+        return $arrDatos;
+     }
+}
+
+function get_proveedor(){
+
+    // armamos la consulta
+    $query = $this->db-> query('SELECT cod_tipocompra,nombre FROM tipo_compra');
+
+    // si hay resultados
+    if ($query->num_rows() > 0) {
+        // almacenamos en una matriz bidimensional
+        foreach($query->result() as $row)
+           $arrDatos[htmlspecialchars($row->cod_tipocompra, ENT_QUOTES)] = 
+      htmlspecialchars($row->nombre, ENT_QUOTES);
+
+        $query->free_result();
+        return $arrDatos;
+     }
+}
+
+public function get_autocomplete($search_data)
+{
+    $this->db->like('nombre_proveedor', $search_data);
+    return $this->db->get('proveedor', 10)->result();
+}
+
+
+}//fin de clase modelo
