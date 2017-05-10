@@ -126,19 +126,20 @@ function get_proveedor(){
     // armamos la consulta
     $query = $this->db-> query('SELECT rut_proveedor,nombre_proveedor FROM proveedor');
 
-    // si hay resultados
-    if ($query->num_rows() > 0) {
-        // almacenamos en una matriz bidimensional
-        foreach($query->result() as $row)
-           $arrDatos[htmlspecialchars($row->rut_proveedor, ENT_QUOTES)] = 
-      htmlspecialchars($row->nombre_proveedor, ENT_QUOTES);
+   return $query->result();
 
-        $query->free_result();
-        return $arrDatos;
+   
      }
-}
 
+function get_productos()
+{
+    // armamos la consulta
+    $query = $this->db-> query('SELECT cod_interno_prod,codigo_barra,nombre FROM producto');
 
+   return $query->result();
+
+   
+     }
 
 
 }//fin de clase modelo

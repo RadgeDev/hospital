@@ -12,8 +12,7 @@ class Control_compra_ingreso extends CI_Controller {
 		$this->load->view("bodega/nav");
 		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
 		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
-		$datosproveedor['arrayProveedor'] = $this->Compra_ingreso_model->get_proveedor();
-		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra,$datosproveedor));
+		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra));
 		$this->load->view("bodega/vista_compra/footer2");
 	}
 
@@ -33,6 +32,24 @@ class Control_compra_ingreso extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
+function devolverarray() {
+$datosproveedor = array(
+			"proveedor" => $this->Compra_ingreso_model->get_proveedor()
+			
+		);
+	echo json_encode($datosproveedor);
+}
+
+function devolverproductos() {
+$datosproductos = array(
+			"misproductos" => $this->Compra_ingreso_model->get_productos()
+			
+		);
+	echo json_encode($datosproductos);
+}
+
+
+	
 
 function validar(){
 		if ($this->input->is_ajax_request()) {

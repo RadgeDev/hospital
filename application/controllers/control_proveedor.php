@@ -59,7 +59,7 @@ function guardar() {
             $correo = $this->input->post("correo");
 
             $this->form_validation->set_rules('rut','Rut Proveedor','required|min_length[10]|max_length[10]');
-			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|alpha');
+			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('razon','Razon Social','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('direccion','Direccion','required|min_length[3]|max_length[50]');
 			$this->form_validation->set_rules('telefono','Telefono','required|min_length[3]|max_length[50]|numeric');
