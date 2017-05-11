@@ -1,14 +1,17 @@
     $(document).on("ready", main);
    $(document).on("ready", mostrarProveedores);
    $(document).on("ready", mostrarProductos);
+      $(document).on("ready", desabilitarcontroles);
+    
 function main(){
-
+  setInterval(obtenerCorrelativo, 400);
 var now = new Date();
 $( "#datetimepicker1" ).datepicker({dateFormat:"dd/mm/yy"}).datepicker("setDate",new Date());
 
 setTimeout("mostrarhora()",1000); 
 
  $("#msg-error").hide();
+  $("#msg-error2").hide();
  }
 
 function mostrarhora(){ 
@@ -80,6 +83,7 @@ mostrarProveedores();
   $("#msg-error").hide();
     $("#msgerrorut").hide();
    $('#proveedorGuardar').get(0).reset();//resetea  los campos del formulario
+      $('#formGuardar').get(0).reset();//resetea  los campos del formulario
 }
 
 
@@ -196,6 +200,9 @@ function mostrarProveedores(){
 
 }
 
+
+
+
 function mostrarProductos(){
 
 	$.ajax({
@@ -230,6 +237,18 @@ function borrardatalist(){
 }
 
 
+function borrardatalist2(){
+ 
+        var parent = document.getElementById("buscandoprod");
+        var childArray = parent.children;
+        var cL = childArray.length;
+        while(cL > 0) {
+            cL--;
+            parent.removeChild(childArray[cL]);
+        }
+}
+
+
 $(function(){
     $('#Agregandogrilla').click(function(){
  var minombre= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
@@ -252,6 +271,10 @@ function multiplicar() {
 
 function cerrarModal() {
    $('#ingresararticulo').get(0).reset();//resetea  los campos del formulario
+    $("#msg-error").hide();
+    $("#msgerrorut").hide();
+       $("#msg-error2").hide();
+
 }
 
 //evitar enter codigo de barras
@@ -266,7 +289,32 @@ function cerrarModal() {
 
 
   function addProductotabla(e) {
-  e.preventDefault();
+  var micodigoarticulo=	$('#codigoarticulo').val();
+  var milote=	$('#lote').val();
+  var mifecha=$('#fechaingreso').val();
+  var mirecepcionado= $('#recepcionado').val();
+  var mivalorunidad=$('#valorunidad').val();
+  var mivalortotal=$('#valortotal').val();
+if (micodigoarticulo==="") {
+   swal("Error", "Error vuelva agregar el articulo", "error");
+     e.preventDefault();
+}else if(milote==="") {
+ swal("Error", "Agrege un lote valido", "error");
+   e.preventDefault();
+}else if(mifecha==="") {
+ swal("Error", "Agrege un fecha valida", "error");
+   e.preventDefault();
+}else if(mirecepcionado==0 || mirecepcionado===""  ) {
+ swal("Error", "Agrege la cantidad recepcionada valida", "error");
+   e.preventDefault();
+}else if(mivalorunidad==0 || mivalorunidad==="") {
+ swal("Error", "Agrege la valor unidad valida", "error");
+   e.preventDefault();
+}else if(mivalortotal==0 || mivalortotal==="") {
+ swal("Error", "Agrege la cantidad recepcionada y  valor unidad ", "error");
+   e.preventDefault();
+}else {
+   e.preventDefault();
   const row = createRow({
     codigointerno: $('#codigoarticulo').val(),
     codigobarra: $('#codigobarra').val(),
@@ -279,6 +327,9 @@ function cerrarModal() {
   });
   $("#tbproductos tbody").append(row);
   clean();
+    $('#ingresararticulo').get(0).reset();//resetea  los campos del formulario
+   $('#largeModal').modal('hide');
+}
 }
 
 function createRow(data) {
@@ -303,3 +354,177 @@ function clean() {
 }
 
 
+function desabilitarcontroles() {
+
+$("#ndocumento").prop("readonly",true);
+$("#proveedorrut").prop("readonly",true);
+$("#combo_tipocompra").prop("disabled",true);
+$("#buscarproducto").prop("readonly",true);
+$("#descuento").prop("readonly",true);
+$("#agregarprov").prop("disabled",true);
+$("#agreganuevo").prop("disabled",true);
+$("#agregardesc").prop("disabled",true);
+$("#Agregandogrilla").prop("disabled",true);
+}
+
+
+$("select[name=combo_tipoingreso]").change(function(){
+    var porNombre=document.getElementsByName("combo_tipoingreso")[0].value;
+         if (porNombre==0) {
+         $("#ndocumento").prop("readonly",true);
+         $("#ndocumento").val("");
+            } else{
+            	      
+           $("#ndocumento").prop("readonly",false);
+
+            }    
+ });
+
+function habilitando() {
+var mitexto=$("#ndocumento").val();
+if (mitexto=="") {
+	$("#combo_tipocompra").val('0');
+	$("#combo_tipocompra").prop("disabled",true);
+}else{
+	$("#combo_tipocompra").prop("disabled",false);
+}
+
+var mitexto2=$("#proveedorrut").val();
+if (mitexto2=="") {
+$("#buscarproducto").val("");
+$("#buscarproducto").prop("readonly",true);
+$("#Agregandogrilla").prop("disabled",true);
+$("#agreganuevo").prop("disabled",true);
+}else{
+$("#buscarproducto").prop("readonly",false);
+$("#Agregandogrilla").prop("disabled",false);
+$("#agreganuevo").prop("disabled",false);
+}
+
+
+
+}
+
+$("select[name=combo_tipocompra]").change(function(){
+	   var porNombre=document.getElementsByName("combo_tipocompra")[0].value;
+       if (porNombre==0) {
+         $("#proveedorrut").prop("readonly",true);
+         $("#agregarprov").prop("disabled",true);
+         $("#proveedorrut").val("");
+            } else{
+            	      
+           $("#proveedorrut").prop("readonly",false);
+           $("#agregarprov").prop("disabled",false);
+
+            }    
+ 
+ });
+
+
+
+
+///guardar
+$("select[name=cod_combo]").change(function(){
+            $('input[name=combocorrelativo]').val($(this).val());  
+            var varieble = $("#combocorrelativo").val();
+            if (varieble==='Elige una opcion') {
+            $("#combocorrelativo").val("");  
+            }    
+ });
+
+$("select[name=medida]").change(function(){
+            $('input[name=seleccion]').val($(this).val());
+            var varieble = $("#seleccion").val();
+            if (varieble==='Seleccione una opcion') {
+            $("#seleccion").val("");
+             }
+   
+ });
+
+$('#codigobarra').keypress(function(e){
+    if(e.which == 13){
+      return false;
+    }
+  });
+    $('#nombre').keypress(function(e){
+    if(e.which == 13){
+      return false;
+    }
+  });
+
+
+function obtenerCorrelativo() {
+var porId=document.getElementById("cod_combo").value;
+if (porId==0) {
+$("#codigo").val("");
+}else {
+
+   var micorrelatico;
+   var ultimocodigo;
+    var entero;
+    micod = $("#combocorrelativo").val();
+    $.ajax({
+    url:"http://localhost/hospital/control_producto/obtenercorrelativo",
+    type:"POST",
+    dataType:"json",
+    data:{cod:micod},
+    success:function(respuesta){
+    $.each(respuesta.obtener,function(key,item){
+     micorrelativo=item.correlativo;
+    ultimocodigo=item.ultimo_codigo;
+   // alert(ultimocodigo);
+    entero = parseInt(ultimocodigo);
+  });
+       
+   var numero=entero+1;
+    $("#codigo").val(micorrelativo+numero);
+    $("#ultimocorrelativo").val(numero);
+
+  }
+  });
+  }
+  }
+
+
+function solonumeros(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = "1234567890.,";
+     
+
+        if(letras.indexOf(tecla)==-1){
+            return false;
+        }
+    }
+
+
+$("#formGuardar").submit(function (event){
+
+    event.preventDefault();
+
+    $.ajax({
+      url:$("#formGuardar").attr("action"),
+      type:$("#formGuardar").attr("method"),
+      data:$("#formGuardar").serialize(),
+      success:function(respuesta){
+       
+        if (respuesta === "Registro Guardado") {
+         
+           $('#myModalguardar').modal('hide');//esconde formulario modal
+           swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
+           $('#formGuardar').get(0).reset();//resetea  los campos del formulario
+             $("#msg-error2").hide();
+        } else if (respuesta === "No se pudo guardar los datos") {
+          swal("Error", "Error revise si los datos estan correctos", "error");
+        }
+        else
+        {
+    
+          $("#msg-error2").show();
+          $(".list-errors2").html(respuesta);
+        }
+     borrardatalist2();
+  mostrarProductos();
+      }
+    });
+  });

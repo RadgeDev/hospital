@@ -5,6 +5,7 @@ class Control_compra_ingreso extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model("Compra_ingreso_model");
+			$this->load->model("Producto_model");
 	}
 
 	public function index(){
@@ -12,7 +13,8 @@ class Control_compra_ingreso extends CI_Controller {
 		$this->load->view("bodega/nav");
 		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
 		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
-		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra));
+			$datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
+		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra,$datoscorrelativo));
 		$this->load->view("bodega/vista_compra/footer2");
 	}
 
@@ -39,6 +41,8 @@ $datosproveedor = array(
 		);
 	echo json_encode($datosproveedor);
 }
+
+
 
 function devolverproductos() {
 $datosproductos = array(
