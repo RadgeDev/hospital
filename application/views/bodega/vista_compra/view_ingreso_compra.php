@@ -155,19 +155,11 @@
           				</button>				
             </div>
             </div>
-          <div class="col-lg-2 col-sm-2">
-               <label>Descuento</label>
-                <input type="text" id="descuento" class="form-control">
-            
+          <div class="col-lg-4 col-sm-4">
+               <label>Comentarios</label>
+                <input type="text" id="Comentarios"  class="form-control">
             </div>
-             <div class="col-lg-2 col-sm-2">
-                <label>Agregar Descuento</label>
-                <div class='input-group ' >
-          				<button type="button" id="agregardesc" class="btn btn-warning" class="btn btn-warning"  data-toggle='modal' data-target='#largeModal'>
-          				 <span class="glyphicon glyphicon-plus"></span> Desc.
-          				</button>				
-            </div>
-            </div>
+         
     
           <div class="col-lg-12 col-sm-12">
           <br>
@@ -183,45 +175,54 @@
                   <th>Cantidad</th>
                   <th>Valor Unitario.</th>
                   <th>Valor total</th>
+                  <th>Borrar</th>
                 </tr>
               </thead>
               <tbody>
               </tbody>
             </table>
             </div>
-           <div class="col-lg-4 col-sm-8">
-            </div>
-           <div class="form-group form-inline col-lg-4 col-sm-4 ">
-        
-      <label for="InputFieldA" class="col-lg-4">Field A</label>
-      <div class="col-lg-8">
-        <input type="text" class="form-control" id="InputFieldA" placeholder="InputFieldA">
-      </div>
-    </div>
-            <div class="col-lg-8 col-sm-8">
-            </div>
-                  <div class="col-lg-4 col-sm-4">
-            <br>
-                <label>Recepcionado</label>
-                <input type="text" id="recepcionado" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
-            </div>
-                   <div class="col-lg-8 col-sm-8">
-            </div>
-                  <div class="col-lg-4 col-sm-4">
-            <br>
-                <label>Recepcionado</label>
-                <input type="text" id="recepcionado" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
-            </div>
-
-
-        
           </div>
         </div>
       </div>
     </div>
-  </div>
+
+  
+              <div class="form-group form-inline col-lg-4 col-sm-4 " ">
+               <label style=" float: right;">Descuento :
+             <input type="text" id="descuento" value="0" class="form-control">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
+          				 <span class="glyphicon glyphicon-plus"></span> Desc.
+          				</button>				</label>
+           </div>
+
+              <div class="form-group form-inline col-lg-4 col-sm-4 " ">
+               <label style=" float: right;" >Valor factura :
+            <input type="text"  id="valorfactura" class="form-control" readonly  placeholder="VALOR FACTURA" name="Comentarios"/></label>
+           </div>
+           <div class="form-group form-inline col-lg-4 col-sm-4 ">
+      
+              <label style=" float: right;">NETO :
+          <input type="text"  id="neto" class="form-control" readonly placeholder="NETO" name="neto"/>
+                </label>
+            </div>
+           <div class="form-group form-inline col-lg-8 col-sm-8 ">
+           </div>
+            <div class="form-group form-inline col-lg-4 col-sm-4">
+              <label style=" float: right;">I.V.A :
+            <input type="text"  id="iva" class="form-control" readonly placeholder="IVA" name="iva"/>
+             </label>
+            </div>
+                   <div class="form-group form-inline col-lg-8 col-sm-8 ">
+           </div>
+            <div class="form-group form-inline col-lg-4 col-sm-4">
+             <label style=" float: right;">TOTAL :
+            <input type="text" id="total"   class="form-control" readonly placeholder="TOTAL" name="total"/>
+             </label>
+            </div>
+           </div>
   <!-- Row end -->
             </div>
+
 
 
    <!-- modal empieza aca -->

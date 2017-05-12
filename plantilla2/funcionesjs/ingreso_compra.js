@@ -326,11 +326,19 @@ if (micodigoarticulo==="") {
     valortotal:$('#valortotal').val(),
   });
   $("#tbproductos tbody").append(row);
-  clean();
+
     $('#ingresararticulo').get(0).reset();//resetea  los campos del formulario
    $('#largeModal').modal('hide');
+    calculartotal();
+    $("#descuento").prop("readonly",false);
+    $("#agregardesc").prop("disabled",false);
+    $("#Comentarios").prop("readonly",false);
+  
 }
 }
+
+
+
 
 function createRow(data) {
   return (
@@ -343,20 +351,39 @@ function createRow(data) {
        `<td>${data.cantidad}</td>` +
        `<td>${data.valorunitario}</td>` +
        `<td>${data.valortotal}</td>` +
+       `<td><button   id='eliminando'  onclick='' class='btn btn-danger delRowBtn' >X</button></td>` +
     `</tr>`
   );
 }
+function calculartotal() {
+	 var theneto = 0;
+    $("td:nth-child(8)").each(function () {
+        var val = $(this).text().replace(" ", "").replace(",-", "");
+        theneto += parseInt(val);
+    });
+    var iva_venta=0;
+     var total=0;
+     var descuento= $("#descuento").val();
+  if(descuento===""){
+  	swal("Error", "Agrege decuento valido", "error");
+ descuento=0;
+  }
+  thenetodesc=theneto-descuento;
+     iva_venta = thenetodesc * (19/100);
+      total = thenetodesc + iva_venta;
+$("#valorfactura").val(theneto);
+$("#neto").val(thenetodesc);
+$("#iva").val(iva_venta);
+$("#total").val(total);
 
-function clean() {
-  $('#name').val('');
-  $('#lastname').val('');
-  $('#name').focus();
 }
+
 
 
 function desabilitarcontroles() {
 
 $("#ndocumento").prop("readonly",true);
+$("#Comentarios").prop("readonly",true);
 $("#proveedorrut").prop("readonly",true);
 $("#combo_tipocompra").prop("disabled",true);
 $("#buscarproducto").prop("readonly",true);
@@ -528,3 +555,18 @@ $("#formGuardar").submit(function (event){
       }
     });
   });
+
+
+
+ $(document.body).delegate(".delRowBtn", "click", function(){
+
+   $(this).closest("tr").remove(); 
+        calculartotal()  
+           
+  swal("Producto eliminado de la lista!", "Registro eliminado.", "success");
+
+});
+
+
+       
+
