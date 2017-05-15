@@ -12,6 +12,7 @@ setTimeout("mostrarhora()",1000);
 
  $("#msg-error").hide();
   $("#msg-error2").hide();
+  $("#lblneto").hide();
  }
 
 function mostrarhora(){ 
@@ -41,7 +42,7 @@ var anio = d.getFullYear();
 
 var fechatotal = dia + "/"+ mes +"/" + anio;
 
-$("#fechaingreso").html('fechatotal');
+$("#fechavencimiento").html('fechatotal');
 alert(fechatotal);
 
 
@@ -190,7 +191,7 @@ function mostrarProveedores(){
 			filas = "";
 			filas2="";
 			$.each(response.proveedor,function(key,item){
-				filas2+='<option value="'+item.nombre_proveedor+'" />'+item.rut_proveedor+'';
+				filas2+='<option id="'+item.rut_proveedor+'" value="'+item.nombre_proveedor+'" />'+item.rut_proveedor+'';
 			});
 
         var my_list2=document.getElementById("misproveedores2");
@@ -263,8 +264,17 @@ $(function(){
 function multiplicar() {
  n1 =  $("#recepcionado").val();
   n2 = $("#valorunidad").val();
+  if (n1=="") {
+ $("#recepcionado").val(0);
+  }else if (n2==""){
+   $("#valorunidad").val(0);	
+  }
+  if (n1==""||n2=="") {
+  	  $("#valortotal").val(0);
+  }else {
   total= parseInt(n1) * parseFloat(n2);
     $("#valortotal").val(parseFloat(total));
+}
  }
 
 
@@ -291,7 +301,7 @@ function cerrarModal() {
   function addProductotabla(e) {
   var micodigoarticulo=	$('#codigoarticulo').val();
   var milote=	$('#lote').val();
-  var mifecha=$('#fechaingreso').val();
+  var mifecha=$('#fechavencimiento').val();
   var mirecepcionado= $('#recepcionado').val();
   var mivalorunidad=$('#valorunidad').val();
   var mivalortotal=$('#valortotal').val();
@@ -320,7 +330,7 @@ if (micodigoarticulo==="") {
     codigobarra: $('#codigobarra').val(),
     nombre: $('#nombreproducto').val(),
     lote:$('#lote').val(),
-    vencimiento:$('#fechaingreso').val(),
+    vencimiento:$('#fechavencimiento').val(),
     cantidad:$('#recepcionado').val(),
     valorunitario:$('#valorunidad').val(),
     valortotal:$('#valortotal').val(),
@@ -366,6 +376,7 @@ function calculartotal() {
      var descuento= $("#descuento").val();
   if(descuento===""){
   	swal("Error", "Agrege decuento valido", "error");
+  	$("#descuento").val(0);
  descuento=0;
   }
   thenetodesc=theneto-descuento;
@@ -375,6 +386,24 @@ $("#valorfactura").val(theneto);
 $("#neto").val(thenetodesc);
 $("#iva").val(iva_venta);
 $("#total").val(total);
+var mivalor=$("#agregardesc").val();
+
+if (mivalor=="desactivar") {
+$("#descuento").prop("readonly",true);
+$("#agregardesc").val("activar");
+}else
+{
+$("#descuento").prop("readonly",false);
+$("#agregardesc").val("desactivar");
+}
+
+if (theneto==thenetodesc) {
+  $("#lblneto").hide();
+}else{
+
+  $("#lblneto").show();
+
+}
 
 }
 
@@ -427,10 +456,12 @@ $("#buscarproducto").prop("readonly",false);
 $("#Agregandogrilla").prop("disabled",false);
 $("#agreganuevo").prop("disabled",false);
 }
-
-
-
 }
+
+
+
+
+
 
 $("select[name=combo_tipocompra]").change(function(){
 	   var porNombre=document.getElementsByName("combo_tipocompra")[0].value;
@@ -569,4 +600,63 @@ $("#formGuardar").submit(function (event){
 
 
        
+
+function guardaringreso() {
+/*var porNombre=document.getElementsByName("combo_tipoingreso")[0].value;	
+var ndocumento= $("#ndocumento").value();
+var nfolio= $("#folio").value();
+var portipocompra=document.getElementsByName("combo_tipocompra")[0].value;	
+var minombreproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('value');
+var mirutproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('id');
+var fecha= $("#datetimepicker1").value();
+var hora= $("#hora").value();
+ var minombreprod= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
+ var micodbarraprod= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('id');
+ var micorrelativoprod=$("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
+var comentarios= $("#Comentarios").value();
+var descuento= $("#descuento").value();
+var valorfactura= $("#valorfactura").value();
+var neto= $("#neto").value();
+var iva = $("#iva").value();
+var total= $("#total").value(); */
+
+  $("#tbproductos tbody tr").each(function (index) 
+        {
+            var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;
+            $(this).children("td").each(function (index2) 
+            {
+                switch (index2) 
+                {
+                    case 0: micodinterno = $(this).text();
+                            break;
+                    case 1: micodbarra = $(this).text();
+                            break;
+                    case 2: minombre = $(this).text();
+                            break;
+                    case 3: milote = $(this).text();
+                            break;
+                    case 4: mifechavenc = $(this).text();
+                            break;
+                    case 5: micantidad = $(this).text();
+                            break;
+                    case 6: mivalor = $(this).text();
+                            break;
+                    case 7: mitotal = $(this).text();
+                            break;
+                }
+               
+            })
+var datostabla={datos:[{codinterno :''},{codbarra:''},{nombre:''},{lote:''},{fechavenc:''},{cantidad:''},{valor:''},{total:''}]};
+         var obj = JSON.parse(JSON.stringify(datostabla));
+         //  var obj = JSON.parse('[datostabla]');
+              obj['datos'].push({"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
+ 
+alert(JSON.stringify(obj));
+            //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
+        })
+
+}
+
+
+
 

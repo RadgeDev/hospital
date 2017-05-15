@@ -189,34 +189,42 @@
 
   
               <div class="form-group form-inline col-lg-4 col-sm-4 " ">
-               <label style=" float: right;">Descuento :
-             <input type="text" id="descuento" value="0" class="form-control">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
+               <label  style=" float: right;">Descuento :
+             <input type="text" id="descuento" style="text-align:right;" value="0" class="form-control">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
           				 <span class="glyphicon glyphicon-plus"></span> Desc.
           				</button>				</label>
            </div>
 
               <div class="form-group form-inline col-lg-4 col-sm-4 " ">
                <label style=" float: right;" >Valor factura :
-            <input type="text"  id="valorfactura" class="form-control" readonly  placeholder="VALOR FACTURA" name="Comentarios"/></label>
+            <input type="text"  id="valorfactura" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="Comentarios"/></label>
            </div>
+
            <div class="form-group form-inline col-lg-4 col-sm-4 ">
-      
+        
               <label style=" float: right;">NETO :
-          <input type="text"  id="neto" class="form-control" readonly placeholder="NETO" name="neto"/>
+          <input type="text" style="text-align:right;" id="neto" class="form-control" readonly placeholder="NETO" name="neto">
                 </label>
+           <label id="lblneto" style=" float: right;Color:red;">Descuento Aplicado +  </label>
             </div>
            <div class="form-group form-inline col-lg-8 col-sm-8 ">
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
               <label style=" float: right;">I.V.A :
-            <input type="text"  id="iva" class="form-control" readonly placeholder="IVA" name="iva"/>
+            <input type="text" style="text-align:right;" id="iva" class="form-control" readonly placeholder="IVA" name="iva">
              </label>
             </div>
-                   <div class="form-group form-inline col-lg-8 col-sm-8 ">
+              <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+              <div class="form-group form-inline col-lg-4 col-sm-4 ">
+             <button type="button" id="limpiaringreso" class="btn btn-danger" > Limpiar Campos </button> 
+             <button type="button" id="imprimiringreso" class="btn btn-info" disabled > Imprimir Ingreso </button>  
+             <button type="button" id="guardaringreso" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
+         
+              
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
              <label style=" float: right;">TOTAL :
-            <input type="text" id="total"   class="form-control" readonly placeholder="TOTAL" name="total"/>
+            <input type="text" id="total" style="text-align:right;"  class="form-control" readonly placeholder="TOTAL" name="total"/>
              </label>
             </div>
            </div>
@@ -320,52 +328,52 @@
          <form  id="ingresararticulo" onsubmit="addProductotabla(event)">
             <div class="col-lg-6 col-sm-6">
                 <label>Codigo Articulo</label>
-                <input id="codigoarticulo" name="codigoarticulo" type="text" readonly class="form-control">
+                <input id="codigoarticulo"  name="codigoarticulo" type="text" readonly class="form-control">
             </div>
           <div class="col-lg-6 col-sm-6">
             <label>Codigo Barra</label>
-                <input id="codigobarra" name="codigobarra" type="text" readonly class="form-control">
+                <input id="codigobarra"  name="codigobarra" type="text" readonly class="form-control">
         
             </div>
 
             <div class="col-lg-12 col-sm-12">
             <br>
                <label>Nombre</label>
-                <input id="nombreproducto" name="nombreproducto" type="text" readonly class="form-control">
+                <input id="nombreproducto"  name="nombreproducto" type="text" readonly class="form-control">
             </div>
 
             <div class="col-lg-4 col-sm-4">
             <br>
                 <label>Lote</label>
-                <input type="text" id="lote" name="lote"  class="form-control">
+                <input type="text" id="lote" name="lote" style="text-align:right;"  class="form-control">
             </div>
          
               <div class="col-lg-4 col-sm-4">
               <br>
-              <label>Fecha</label>
+              <label>Fecha Vencimiento</label>
     		     <div class='input-group date' >
-                    <input type='date' id='fechaingreso' name="fechaingreso" class="form-control" />
+                    <input type='date' id='fechavencimiento' name="fechavencimiento" class="form-control" />
                 </div>
             </div>
 
             <div class="col-lg-4 col-sm-4">
             <br>
-                <label>Recepcionado</label>
-                <input type="text" id="recepcionado" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
+                <label>Valor Unidad</label>
+               <input type="text" id="valorunidad" style="text-align:right;" name="valorunidad" onChange="multiplicar();" value="0" class="form-control">
             </div>
              <div class="col-lg-8 col-sm-8">
              </div>
             <div class="col-lg-4 col-sm-4">
             <br>
-                <label>Valor Unidad</label>
-                <input type="text" id="valorunidad" name="valorunidad" onChange="multiplicar();" value="0" class="form-control">
+                <label>Cantidad Recepcionado</label>
+                <input type="text" id="recepcionado" style="text-align:right;" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
             </div>
             <div class="col-lg-8 col-sm-8">
              </div>
                 <div class="col-lg-4 col-sm-4">
             <br>
                 <label>Valor Total</label>
-                <input type="text" id="valortotal" name="valortotal" value="0" readonly class="form-control">
+                <input type="text" id="valortotal" style="text-align:right;" name="valortotal" value="0" readonly class="form-control">
             </div>
 
 
@@ -374,8 +382,7 @@
 
       <div class="modal-footer">
       <br>
-        <button type="button" class="btn btn-default" onclick="cerrarModal();" data-dismiss="modal">Cerrar</button>
-           <button type="button" class="btn btn-danger">Eliminar fila</button>
+        <button type="button" class="btn btn-danger" onclick="cerrarModal();" data-dismiss="modal">Cerrar</button>
               <button type="submit" class="btn btn-success">Agregar fila</button>
       </div>
       </form>
