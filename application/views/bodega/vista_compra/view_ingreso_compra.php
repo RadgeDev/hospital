@@ -141,7 +141,7 @@
             <div class="col-lg-2 col-sm-2">
                 <label>Producto a la lista</label>
                 <div class='input-group ' >
-          				<button type="button" id="Agregandogrilla" class="btn btn-success"  class="btn btn-success"  data-toggle='modal' data-target='#largeModal'>
+          				<button type="button" id="Agregandogrilla" class="btn btn-success"  class="btn btn-success"  onclick="listarproductos();">
           				 <span class="glyphicon glyphicon-plus"></span> Agregar Lista
           				</button>				
             </div>
@@ -190,14 +190,14 @@
   
               <div class="form-group form-inline col-lg-4 col-sm-4 " ">
                <label  style=" float: right;">Descuento :
-             <input type="text" id="descuento" style="text-align:right;" value="0" class="form-control">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
+             <input type="text" id="descuento" style="text-align:right;" value="0" class="form-control"  onBlur="calculartotal();">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
           				 <span class="glyphicon glyphicon-plus"></span> Desc.
           				</button>				</label>
            </div>
 
               <div class="form-group form-inline col-lg-4 col-sm-4 " ">
                <label style=" float: right;" >Valor factura :
-            <input type="text"  id="valorfactura" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="Comentarios"/></label>
+            <input type="text"  id="valorfactura" onblur="habilitando();" onChange="habilitando();" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="valorfactura"/></label>
            </div>
 
            <div class="form-group form-inline col-lg-4 col-sm-4 ">
@@ -207,7 +207,8 @@
                 </label>
            <label id="lblneto" style=" float: right;Color:red;">Descuento Aplicado +  </label>
             </div>
-           <div class="form-group form-inline col-lg-8 col-sm-8 ">
+        <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+              <div class="form-group form-inline col-lg-4 col-sm-4 ">
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
               <label style=" float: right;">I.V.A :
@@ -227,6 +228,17 @@
             <input type="text" id="total" style="text-align:right;"  class="form-control" readonly placeholder="TOTAL" name="total"/>
              </label>
             </div>
+             <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+              <div class="form-group form-inline col-lg-4 col-sm-4 ">
+              	  <div class="alert alert-danger" id="msg-error3" style="text-align:left;">
+                  <strong>¡Error!</strong> Intentelo mas tarde.
+                  <div class="list-errors3"></div>
+                  </div>
+                  <div class="alert alert-success" id="msg-bien" style="text-align:left;">
+                  <strong>¡Ingreso Correcto!</strong> Datos Guardados.
+                  <div class="list-errors4"></div>
+              </div>
+                <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
            </div>
   <!-- Row end -->
             </div>

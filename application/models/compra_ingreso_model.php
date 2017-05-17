@@ -29,11 +29,12 @@ class Compra_ingreso_model extends CI_Model {
 	}
 
 	function guardar($data) {
-		$this->db->insert("producto",$data);
+		$this->db->insert("compra",$data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
 		else{
+				$this->db->_error_message(); 
 			return false;
 		}
 	}	
@@ -45,6 +46,7 @@ class Compra_ingreso_model extends CI_Model {
 			return true;
 		}
 		else{
+
 			return false;
 		}
 	}
@@ -66,13 +68,15 @@ public function editando($codselec){
 		return $q->result();
 		}
 
-	public function obtenercorrelativo($codselec){
+	public function obtenerfolio(){
 
-		$this->db->where('cod_bodegas',$codselec);
-		
-		$q= $this->db->get('bodegas');
-		return $q->result();
-
+               $query = $this->db-> query('SELECT max(cod_compra) AS codcompra FROM compra');
+               if ($query->num_rows() > 0) {
+               return $query->result();
+                }else
+                       {
+	             return "error";
+                        }
 		}
 
 

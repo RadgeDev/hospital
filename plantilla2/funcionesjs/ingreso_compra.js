@@ -6,13 +6,17 @@
 function main(){
   setInterval(obtenerCorrelativo, 400);
 var now = new Date();
-$( "#datetimepicker1" ).datepicker({dateFormat:"dd/mm/yy"}).datepicker("setDate",new Date());
+$( "#datetimepicker1" ).datepicker({dateFormat:"dd-mm-yy"}).datepicker("setDate",new Date());
 
 setTimeout("mostrarhora()",1000); 
-
+numerofolio();
  $("#msg-error").hide();
   $("#msg-error2").hide();
+    $("#msg-error3").hide();
+      $("#msg-bien").hide();
   $("#lblneto").hide();
+  var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("fechavencimiento")[0].setAttribute('min', today);
  }
 
 function mostrarhora(){ 
@@ -340,9 +344,7 @@ if (micodigoarticulo==="") {
     $('#ingresararticulo').get(0).reset();//resetea  los campos del formulario
    $('#largeModal').modal('hide');
     calculartotal();
-    $("#descuento").prop("readonly",false);
-    $("#agregardesc").prop("disabled",false);
-    $("#Comentarios").prop("readonly",false);
+  habilitando();
   
 }
 }
@@ -361,10 +363,11 @@ function createRow(data) {
        `<td>${data.cantidad}</td>` +
        `<td>${data.valorunitario}</td>` +
        `<td>${data.valortotal}</td>` +
-       `<td><button   id='eliminando'  onclick='' class='btn btn-danger delRowBtn' >X</button></td>` +
+       `<td><button   id='eliminando'     class='btn btn-danger delRowBtn' >X</button></td>` +
     `</tr>`
   );
 }
+
 function calculartotal() {
 	 var theneto = 0;
     $("td:nth-child(8)").each(function () {
@@ -378,7 +381,12 @@ function calculartotal() {
   	swal("Error", "Agrege decuento valido", "error");
   	$("#descuento").val(0);
  descuento=0;
+  }else if (descuento>theneto) {
+  	swal("Error", "El decuento es mayor al valor total", "error");
+  	descuento=0;
+      	$("#descuento").val(0);
   }
+
   thenetodesc=theneto-descuento;
      iva_venta = thenetodesc * (19/100);
       total = thenetodesc + iva_venta;
@@ -396,6 +404,8 @@ $("#agregardesc").val("activar");
 $("#descuento").prop("readonly",false);
 $("#agregardesc").val("desactivar");
 }
+
+
 
 if (theneto==thenetodesc) {
   $("#lblneto").hide();
@@ -421,6 +431,8 @@ $("#agregarprov").prop("disabled",true);
 $("#agreganuevo").prop("disabled",true);
 $("#agregardesc").prop("disabled",true);
 $("#Agregandogrilla").prop("disabled",true);
+$("#guardaringreso").prop("disabled",true);
+$("#imprimiringreso").prop("disabled",true);
 }
 
 
@@ -456,6 +468,26 @@ $("#buscarproducto").prop("readonly",false);
 $("#Agregandogrilla").prop("disabled",false);
 $("#agreganuevo").prop("disabled",false);
 }
+var valorfactura=$("#valorfactura").val();
+if (valorfactura==0 || valorfactura==="") {
+$("#neto").val(0);
+$("#iva").val(0);
+$("#total").val(0);
+$("#descuento").val(0);
+$("#guardaringreso").prop("disabled",true);
+$("#agregardesc").prop("disabled",true);
+$("#descuento").prop("readonly",true);
+$("#Comentarios").prop("readonly",true);
+
+}else{
+$("#descuento").val(0);
+$("#guardaringreso").prop("disabled",false);
+$("#agregardesc").prop("disabled",false);
+$("#descuento").prop("readonly",false);
+$("#Comentarios").prop("readonly",false);
+
+}
+
 }
 
 
@@ -592,35 +624,141 @@ $("#formGuardar").submit(function (event){
  $(document.body).delegate(".delRowBtn", "click", function(){
 
    $(this).closest("tr").remove(); 
-        calculartotal()  
+        calculartotal() ;
+        habilitando() ;
            
   swal("Producto eliminado de la lista!", "Registro eliminado.", "success");
 
 });
 
+function numerofolio(){
+$.ajax({
+		url : "http://localhost/hospital/control_compra_ingreso/devolverfolio",
+		type: "POST",
+		dataType:"json",
+		success:function(response){
+			
+		
+			var filas2="";
+			$.each(response.folio,function(key,item){
+				filas2+=item.codcompra;
+			});
 
-       
+          nuevofolio=parseInt(filas2) + 1;
+         $("#folio").val(nuevofolio);
+		}
+			});	
+}
+ function listarproductos(){
+     var text2 = document.getElementById("buscarproducto"),
+         element2 = document.getElementById("buscandoprod");
+        var comprobar2=""
+        
+
+      if(element2.querySelector("option[value='"+text2.value+"']")){
+             comprobar2="bien";
+           }
+      else{
+     	comprobar2="mal";
+         } 
+
+
+         if (comprobar2==="bien") {
+        $('#largeModal').modal('show');
+         }else{
+         	 $('#largeModal').modal('hide');
+         	 $('#buscarproducto').val("");
+       document.getElementById("buscarproducto").focus();
+      swal("Error!", "Vuelva ingresar el producto articulo", "error");
+      
+         }
+       }
 
 function guardaringreso() {
-/*var porNombre=document.getElementsByName("combo_tipoingreso")[0].value;	
-var ndocumento= $("#ndocumento").value();
-var nfolio= $("#folio").value();
-var portipocompra=document.getElementsByName("combo_tipocompra")[0].value;	
-var minombreproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('value');
-var mirutproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('id');
-var fecha= $("#datetimepicker1").value();
-var hora= $("#hora").value();
- var minombreprod= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
- var micodbarraprod= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('id');
- var micorrelativoprod=$("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
-var comentarios= $("#Comentarios").value();
-var descuento= $("#descuento").value();
-var valorfactura= $("#valorfactura").value();
-var neto= $("#neto").value();
-var iva = $("#iva").value();
-var total= $("#total").value(); */
 
-  $("#tbproductos tbody tr").each(function (index) 
+numerofolio();
+
+var tipoingresocod=document.getElementsByName("combo_tipoingreso")[0].value;	
+var tipoingresonombre = $("#combo_tipoingreso option:selected").text();
+var ndocumento= $("#ndocumento").val();
+var nfolio= $("#folio").val();
+var tipocompracod=document.getElementsByName("combo_tipocompra")[0].value;	
+var tipocompranombre = $("#combo_tipocompra option:selected").text();
+var nombreproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('value');
+var rutproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('id');
+var proveedortexto= $("#proveedorrut").val();
+var fecha= $("#datetimepicker1").val();
+var hora= $("#hora").val();
+var nombreproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
+var codbarraproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('id');
+var correlativoprod=$("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
+var productotexto= $("#buscarproducto").val();
+var comentarios= $("#Comentarios").val();
+var descuento= $("#descuento").val();
+var valorfactura= $("#valorfactura").val();
+var neto= $("#neto").val();
+var iva = $("#iva").val();
+var total= $("#total").val(); 
+var text = document.getElementById("proveedorrut"),
+    element = document.getElementById("misproveedores2");
+
+     var comprobar=""
+   
+   if(element.querySelector("option[value='"+text.value+"']")){
+  comprobar="bien";
+   }
+    else{
+     comprobar="mal";
+    }
+ 
+if (tipoingresocod==0) {
+swal("Error!", "Ingrese un tipo de ingreso", "error");
+}else if (ndocumento==="") {
+swal("Error!", "Ingrese un N° documento", "error");
+}else if (nfolio==="") {
+swal("Error!", "Ingrese un N° Folio", "error");
+}else if (tipocompracod==0) {
+swal("Error!", "Ingrese un tipo compra", "error");
+}else if (comprobar==="mal"||proveedortexto==="") {
+swal("Error!", "Ingrese un proveedor", "error");
+}else if (fecha==="") {
+swal("Error!", "Ingrese un fecha", "error");
+}else if (descuento===""||descuento<0) {
+swal("Error!", "Ingrese un decuento valido", "error");
+$("#descuento").val(0);
+}else if (valorfactura===""||valorfactura==0) {
+swal("Error!", "Ingrese un producto ala lista", "error");
+}else if (total===""||total==0) {
+swal("Error!", "Ingrese un producto ala lista", "error");
+}else{
+  event.preventDefault();
+$.ajax({
+
+    url:"http://localhost/hospital/control_compra_ingreso/guardaringreso",
+    type:"POST",
+    data:{minfolio:nfolio,mitipoingresocod:tipoingresocod,mitipoingresonombre:tipoingresonombre,mindocumento:ndocumento,minfolio:nfolio,mitipocompracod:tipocompracod,mitipocompranombre:tipocompranombre,minombreproveedor:nombreproveedor,mirutproveedor:rutproveedor,mifecha:fecha,minombreproduct:nombreproduct,micodbarraproduct:codbarraproduct,micorrelativoprod:correlativoprod,micomentarios:comentarios,midescuento:descuento,mineto:neto,miiva:iva,mitotal:total},
+    dataType:"json",
+    success:function(respuesta){
+                console.log(respuesta);
+
+       $("#msg-error3").hide();
+       $("#msg-bien").show();
+       swal("Exito!", "Ingreso guardado.", "success");
+       window.location.hash = '#msg-bien';
+
+            },
+           error:function(){
+              console.log('error');// solo ingresa a esta parte
+       $("#msg-error3").show();
+       $("#msg-bien").hide();
+       swal("Algo fallo!", "Intentelo mas tarde verifique su conexion.", "error");
+       window.location.hash = '#msg-error3';
+           }
+       });
+}
+}
+
+/*  $("#tbproductos tbody tr").each(function (index) 
         {
             var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;
             $(this).children("td").each(function (index2) 
@@ -646,16 +784,28 @@ var total= $("#total").value(); */
                 }
                
             })
-var datostabla={datos:[{codinterno :''},{codbarra:''},{nombre:''},{lote:''},{fechavenc:''},{cantidad:''},{valor:''},{total:''}]};
+var datostabla={datos:[]};
          var obj = JSON.parse(JSON.stringify(datostabla));
+         var nfolio= $("#folio").val();
          //  var obj = JSON.parse('[datostabla]');
-              obj['datos'].push({"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
+              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
  
-alert(JSON.stringify(obj));
+var miJSON = JSON.encode(obj);
             //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
         })
 
-}
+
+    $.ajax({
+    url:"http://localhost/hospital/control_compra_ingreso/datosdetalle",
+    type:"POST",
+    dataType:"json",
+    data: miJSON ,
+    success:function(respuesta){
+   
+  }
+  });
+
+*/
 
 
 

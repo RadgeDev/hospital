@@ -13,7 +13,8 @@ class Control_compra_ingreso extends CI_Controller {
 		$this->load->view("bodega/nav");
 		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
 		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
-			$datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
+	  $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
+	  
 		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra,$datoscorrelativo));
 		$this->load->view("bodega/vista_compra/footer2");
 	}
@@ -41,7 +42,13 @@ $datosproveedor = array(
 		);
 	echo json_encode($datosproveedor);
 }
-
+function devolverfolio() {
+$datosfolior = array(
+			"folio" => $this->Compra_ingreso_model->obtenerfolio()
+			
+		);
+	echo json_encode($datosfolior);
+}
 
 
 function devolverproductos() {
@@ -80,121 +87,67 @@ function obtenercorrelativo(){
             echo json_encode($data);
 		}
 	}
-	
-function guardar() {
+
+function guardaringreso() {
 		//El metodo is_ajax_request() de la libreria input permite verificar
 		//si se esta accediendo mediante el metodo AJAX 
-		if ($this->input->is_ajax_request()) {
+	if ($this->input->is_ajax_request()) {
 
-			$codigo = $this->input->post("codigo");
-			$ultimocorrelativo = $this->input->post("ultimocorrelativo");
-			$codbarra = $this->input->post("codigobarra");
-			$codbodega = $this->input->post("combocorrelativo");
-			$nombre = $this->input->post("nombre");
-			$cantidad = $this->input->post("cantidad");
-			$precio = $this->input->post("precio");
-            $unidad = $this->input->post("seleccion");
-            $stockcri = $this->input->post("stockcri");
-            $stockmin = $this->input->post("stockmin");
-            $stockmax = $this->input->post("stockmax");
+			$nfolio	= $this->input->post("minfolio");
+            $tipoingresocod	= $this->input->post("mitipoingresocod");
+            $tipoingresonombre= $this->input->post("mitipoingresonombre");
+            $ndocumento= $this->input->post("mindocumento");
+            $nfolio= $this->input->post("minfolio");
+            $tipocompracod= $this->input->post("mitipocompracod");
+            $tipocompranombre = $this->input->post("mitipocompranombre");
+            $nombreproveedor = $this->input->post("minombreproveedor");
+            $rutproveedor= $this->input->post("mirutproveedor");
+            $fecha= $this->input->post("mifecha");
+            $nombreproduct= $this->input->post("minombreproduct");
+            $codbarraproduct= $this->input->post("micodbarraproduct");
+            $correlativoprod= $this->input->post("micorrelativoprod");
+            $comentarios= $this->input->post("micomentarios");
+            $descuento= $this->input->post("midescuento");
+            $neto= $this->input->post("mineto");
+            $iva = $this->input->post("miiva");
+            $total= $this->input->post("mitotal");
 
-            $this->form_validation->set_rules('codigo','Codigo','required|min_length[1]|max_length[10]');
-			$this->form_validation->set_rules('codigobarra','Codigo Barra','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('combocorrelativo','Correlativo','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('cantidad','Cantidad','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('precio','Precio','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('seleccion','Unidad','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('stockcri','Stock Critico','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('stockmin','Stock Minimo','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('stockmax','Stock Maximo','required|min_length[1]|max_length[50]|numeric');
+			
 
-       if ($this->form_validation->run() === TRUE) {
+
+       	$usuario="17747579-3";
    			$datos = array(
-				"cod_interno_prod" => $codigo,
-				"codigo_barra" => $codbarra,
-				"cod_bodega" => $codbodega,
-				"nombre" => $nombre,
-				"cantidad" => $cantidad,
-				"precio" => $precio,
-				"unidad_medida" => $unidad,
-				"stock_critico" => $stockcri,
-				"stock_minimo" => $stockmin,
-				"stock_maximo" => $stockmax
+   				"cod_compra" => $nfolio,
+				"tipo_documento" => $tipoingresonombre,
+				"numero_documento" => $ndocumento,
+				"tipo_compra" => $tipocompracod,
+				"tipo_compra_nombre" => $tipocompranombre,
+				"rut_proveedor" => $rutproveedor,
+				"nombre_proveedor" => $nombreproveedor,
+				"fecha" => $fecha,
+				"neto" => $neto,
+				"iva" => $iva,
+				"total_compra" => $total,
+				"descuento" => $descuento,
+				"usuario" => $usuario,
+				"comentarios" => $comentarios
 				);
-   			$datosactualizar = array(
-				"ultimo_codigo" => $ultimocorrelativo
-				
-				);
-		if($this->Producto_model->guardar($datos)==true){
-         $this->Producto_model->actualizarcorrelativo($codbodega,$datosactualizar);
-				echo "Registro Guardado";
+   	
+		if($this->Compra_ingreso_model->guardar($datos)==true){
+  $data = array(
+			"miresultado" =>"bien"
+         	);
+		
 			}else{
-				echo "No se pudo guardar los datos";
-			}
-	}else
-	{
-				echo validation_errors('<li>','</li>');
-	}
-			
+				echo "error";
+		
+
 		}
-		else
-		{
-			show_404();
-		}
+		echo json_encode($data);
+}
 }
 
-function actualizar(){
-	
-		if ($this->input->is_ajax_request()) {
-			$codigo = $this->input->post("editcodigo");
-			$codbarra = $this->input->post("editcodigobarra");
-			$nombre = $this->input->post("editnombre");
-			$cantidad = $this->input->post("editcantidad");
-			$precio = $this->input->post("editprecio");
-            $unidad = $this->input->post("seleccion2");
-            $stockcri = $this->input->post("editstockcri");
-            $stockmin = $this->input->post("editstockmin");
-            $stockmax = $this->input->post("editstockmax");
 
-            $this->form_validation->set_rules('editcodigo','Codigo','required|min_length[1]|max_length[10]');
-			$this->form_validation->set_rules('editcodigobarra','Codigo Barra','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('editnombre','Nombre','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('editcantidad','Cantidad','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('editprecio','Precio','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('seleccion2','Unidad','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('editstockcri','Stock Critico','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('editstockmin','Stock Minimo','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('editstockmax','Stock Maximo','required|min_length[1]|max_length[50]|numeric');
-
-		if ($this->form_validation->run() === TRUE) {
-
-			$datos = array(
-				"codigo_barra" => $codbarra,
-				"nombre" => $nombre,
-				"cantidad" => $cantidad,
-				"precio" => $precio,
-				"unidad_medida" => $unidad,
-				"stock_critico" => $stockcri,
-				"stock_minimo" => $stockmin,
-				"stock_maximo" => $stockmax
-				);
-
-	if($this->Producto_model->actualizar($codigo,$datos)==true)
-				echo "Registro Guardado";
-			else
-				echo "No se pudo guardar los datos";
-	}else
-	{
-				echo validation_errors('<li>','</li>');
-	}
-			
-		}
-		else
-		{
-			show_404();
-		}
-}
 
 function editando() {
 
