@@ -145,5 +145,14 @@ function get_productos()
    
      }
 
-
+public function guardardetalle($data) {
+    $this->db->insert('detalle_compra', $data);
+    if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+				$this->db->_error_message(); 
+			return false;
+		}
+}
 }//fin de clase modelo

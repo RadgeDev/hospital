@@ -147,7 +147,42 @@ function guardaringreso() {
 }
 }
 
+function guardardetalle() {
 
+	
+ $data = json_decode($this->input->post('sendData'));
+   $this->db->trans_begin();
+
+
+
+          foreach($data->datos as $d) {
+            $filter_data = array(
+            "cod_compra" => $d->folio,
+            "cod_producto" => $d->codinterno,
+            "cod_barra" => $d->codbarra,
+             "nombre_prod" => $d->nombre,
+             "numero_lote" => $d->lote,
+              "fecha_vencimiento" => $d->fechavenc,
+              "cantidad" => $d->cantidad,
+              "precio" => $d->valor,
+               "total" => $d->total
+        );
+       //Call the save method
+       $this->Compra_ingreso_model->guardardetalle($filter_data);
+    }
+
+    if ($this->db->trans_status() === FALSE) {
+        $this->db->trans_rollback();
+        echo json_encode("Failed to Save Data");
+    } else {
+        $this->db->trans_commit();
+        echo json_encode("Success!");
+    }
+
+
+
+	
+	}
 
 function editando() {
 

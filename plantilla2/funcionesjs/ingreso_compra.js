@@ -739,12 +739,13 @@ $.ajax({
     data:{minfolio:nfolio,mitipoingresocod:tipoingresocod,mitipoingresonombre:tipoingresonombre,mindocumento:ndocumento,minfolio:nfolio,mitipocompracod:tipocompracod,mitipocompranombre:tipocompranombre,minombreproveedor:nombreproveedor,mirutproveedor:rutproveedor,mifecha:fecha,minombreproduct:nombreproduct,micodbarraproduct:codbarraproduct,micorrelativoprod:correlativoprod,micomentarios:comentarios,midescuento:descuento,mineto:neto,miiva:iva,mitotal:total},
     dataType:"json",
     success:function(respuesta){
-                console.log(respuesta);
-
+    	   guardardetalle();
+         console.log(respuesta);
        $("#msg-error3").hide();
        $("#msg-bien").show();
        swal("Exito!", "Ingreso guardado.", "success");
        window.location.hash = '#msg-bien';
+    
 
             },
            error:function(){
@@ -806,6 +807,53 @@ var miJSON = JSON.encode(obj);
   });
 
 */
+
+function guardardetalle(){
+
+alert("entro");
+var miJSON="";
+var datostabla={datos:[]};
+         var obj = JSON.parse(JSON.stringify(datostabla));
+	$("#tbproductos tbody tr").each(function (index) 
+        {
+            var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;
+            $(this).children("td").each(function (index2) 
+            {
+                switch (index2) 
+                {
+                    case 0: micodinterno = $(this).text();
+                            break;
+                    case 1: micodbarra = $(this).text();
+                            break;
+                    case 2: minombre = $(this).text();
+                            break;
+                    case 3: milote = $(this).text();
+                            break;
+                    case 4: mifechavenc = $(this).text();
+                            break;
+                    case 5: micantidad = $(this).text();
+                            break;
+                    case 6: mivalor = $(this).text();
+                            break;
+                    case 7: mitotal = $(this).text();
+                            break;
+                }
+               
+            })
+
+         var nfolio= $("#folio").val();
+         //  var obj = JSON.parse('[datostabla]');
+              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
+     
+//var miJSON = JSON.encode(obj);
+            //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
+        })
+
+$.post('http://localhost/hospital/control_compra_ingreso/guardardetalle', {sendData: JSON.stringify(obj)}, function(res) {
+    console.log(res);
+}, "json");
+   
+}
 
 
 
