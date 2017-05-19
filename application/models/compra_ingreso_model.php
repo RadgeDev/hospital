@@ -39,9 +39,9 @@ class Compra_ingreso_model extends CI_Model {
 		}
 	}	
 
-	function actualizarcorrelativo($codigo,$data){
-		$this->db->where('cod_bodegas', $codigo);
-		$this->db->update('bodegas', $data); 
+	function actualizarproducto($codigo,$data){
+		$this->db->where('cod_interno_prod', $codigo);
+		$this->db->update('producto', $data); 
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -144,6 +144,18 @@ function get_productos()
 
    
      }
+function get_cantidad($micod){
+$this->db->select('cantidad');
+
+$this->db->from('producto');
+
+$this->db->where('cod_interno_prod',$micod);
+
+$query=$this->db->get();
+
+   return $query->result();
+     }
+
 
 public function guardardetalle($data) {
     $this->db->insert('detalle_compra', $data);

@@ -745,7 +745,9 @@ $.ajax({
        $("#msg-bien").show();
        swal("Exito!", "Ingreso guardado.", "success");
        window.location.hash = '#msg-bien';
-    
+             desabilitarcontroles();
+       $("#imprimiringreso").prop("disabled",false);
+       $("#combo_tipoingreso").prop("disabled",true);
 
             },
            error:function(){
@@ -813,7 +815,7 @@ function guardardetalle(){
 alert("entro");
 var miJSON="";
 var datostabla={datos:[]};
-         var obj = JSON.parse(JSON.stringify(datostabla));
+ var obj = JSON.parse(JSON.stringify(datostabla));
 	$("#tbproductos tbody tr").each(function (index) 
         {
             var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;

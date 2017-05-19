@@ -161,15 +161,34 @@ function guardardetalle() {
             "cod_producto" => $d->codinterno,
             "cod_barra" => $d->codbarra,
              "nombre_prod" => $d->nombre,
-             "numero_lote" => $d->lote,
-              "fecha_vencimiento" => $d->fechavenc,
-              "cantidad" => $d->cantidad,
-              "precio" => $d->valor,
-               "total" => $d->total
+            "numero_lote" => $d->lote,
+             "fecha_vencimiento" => $d->fechavenc,
+             "cantidad" => $d->cantidad,
+             "precio" => $d->valor,
+             "total" => $d->total
         );
+            
        //Call the save method
        $this->Compra_ingreso_model->guardardetalle($filter_data);
     }
+
+foreach($data->datos as $d) {
+$micodigo=$d->codinterno;
+$cantidadactual= $this->Compra_ingreso_model->get_cantidad($micodigo);
+print_r($cantidadactual);
+$actual=0;
+foreach( $cantidadactual  as $r){
+   $actual = $r->cantidad;
+}
+$micantidadingresar=$d->cantidad;
+(int)$totalcantidad=(int)$micantidadingresar+(int)$actual;
+$datosactualizar = array(
+				"cantidad" =>$totalcantidad
+				
+
+			);	
+ $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
+			}	
 
     if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
