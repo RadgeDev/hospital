@@ -38,7 +38,8 @@ function guardar() {
 			$this->form_validation->set_rules('seleccion','Seleccion','required|min_length[3]|max_length[50]');
    if ($this->form_validation->run() === TRUE) {
    	$this->load->library('encrypt');
-   	$clave_encriptada = $this->encrypt->encode($clave);
+   	$clave_encriptada =  $this->encrypt->sha1($clave);
+
    			$datos = array(
 				"rut" => $rut,
 				"nombre" => $nombre,
@@ -63,7 +64,6 @@ function guardar() {
 		}
 }
 
-
 function actualizar(){
 		if ($this->input->is_ajax_request()) {
 
@@ -80,7 +80,7 @@ function actualizar(){
 		
 		if ($this->form_validation->run() === TRUE) {
 			$this->load->library('encrypt');
-   	       $clave_encriptada = $this->encrypt->encode($clave);
+   	       $clave_encriptada = $this->encrypt->sha1($clave);
 			$datos = array(
 				"nombre" => $nombres,
 				"login" => $login,
@@ -139,14 +139,7 @@ function validar(){
 	}
 
 
-	function claves() {
-		if ($this->input->is_ajax_request()) {
-			$claveselec = $this->input->post("id");
-		    $this->load->library('encrypt');
-	        $miclave=	$this->encrypt->decode($claveselec);	
-	        echo $miclave;
-}
-	}
+
 
 
 }

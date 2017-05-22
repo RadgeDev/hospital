@@ -642,10 +642,13 @@ $.ajax({
 			var filas2="";
 			$.each(response.folio,function(key,item){
 				filas2+=item.codcompra;
+
 			});
+ 
 
           nuevofolio=parseInt(filas2) + 1;
          $("#folio").val(nuevofolio);
+       
 		}
 			});	
 }
@@ -761,54 +764,6 @@ $.ajax({
 }
 }
 
-/*  $("#tbproductos tbody tr").each(function (index) 
-        {
-            var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;
-            $(this).children("td").each(function (index2) 
-            {
-                switch (index2) 
-                {
-                    case 0: micodinterno = $(this).text();
-                            break;
-                    case 1: micodbarra = $(this).text();
-                            break;
-                    case 2: minombre = $(this).text();
-                            break;
-                    case 3: milote = $(this).text();
-                            break;
-                    case 4: mifechavenc = $(this).text();
-                            break;
-                    case 5: micantidad = $(this).text();
-                            break;
-                    case 6: mivalor = $(this).text();
-                            break;
-                    case 7: mitotal = $(this).text();
-                            break;
-                }
-               
-            })
-var datostabla={datos:[]};
-         var obj = JSON.parse(JSON.stringify(datostabla));
-         var nfolio= $("#folio").val();
-         //  var obj = JSON.parse('[datostabla]');
-              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
- 
-var miJSON = JSON.encode(obj);
-            //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
-        })
-
-
-    $.ajax({
-    url:"http://localhost/hospital/control_compra_ingreso/datosdetalle",
-    type:"POST",
-    dataType:"json",
-    data: miJSON ,
-    success:function(respuesta){
-   
-  }
-  });
-
-*/
 
 function guardardetalle(){
 
@@ -858,5 +813,7 @@ $.post('http://localhost/hospital/control_compra_ingreso/guardardetalle', {sendD
 }
 
 
-
+function limpiar(){
+location.reload(true);
+}
 

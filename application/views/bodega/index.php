@@ -134,8 +134,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
              
-                     <?= print_r($this->session->userdata('username'));?>
-
+<h1>holaa</h1>
                     <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>

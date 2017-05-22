@@ -53,13 +53,14 @@
                         		<div class="form-top-left">
                         			<h3><strong>Ingreso al sistema</strong></h3>
                             		<p><strong>Ingrese su usuario y contraseña</strong></p>
+
                         		</div>
                         		<div class="form-top-right">
                         			<i class="fa fa-key"></i>
                         		</div>
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" action="" method="post" class="login-form">
+			                    <form id="milogin" role="form" action="<?= base_url('home/ingresar')?>" method="post" class="login-form">
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="form-username">Usuario</label>
 			                        	<input type="text" id ="username" name="username" placeholder="Usuario..." class="form-username form-control" id="form-username">
@@ -69,9 +70,12 @@
 			                        	<input type="password" id ="password" name="password" placeholder="Clave..." class="form-password form-control" id="form-password">
 			                        </div>
 			                        <button type="submit" class="btn">Ingresar</button>
-                                    
+                                  
 			                    </form>
-                                
+                                <br>
+                                    <div class="alert alert-danger" id="msg-error3">
+                                      <strong>¡Error!</strong> usuario  o clave incorrecta.
+                                     </div>
 		                    </div>
                         </div>
                     </div>
@@ -87,6 +91,8 @@
         <script src="<?= base_url()?>plantilla/assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="<?= base_url()?>plantilla/assets/js/jquery.backstretch.min.js"></script>
         <script src="<?= base_url()?>plantilla/assets/js/scripts.js"></script>
+         <script src="<?= base_url()?>plantilla2/funcionesjs/login.js"></script>
+
         
         <!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>

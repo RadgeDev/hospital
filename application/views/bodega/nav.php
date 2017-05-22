@@ -98,7 +98,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
              
-                     <?= print_r($this->session->userdata('username'));?>
+                     <?= $this->session->userdata('minombre');?>
 
                     <b class="caret"></b></a>
                     <ul class="dropdown-menu">

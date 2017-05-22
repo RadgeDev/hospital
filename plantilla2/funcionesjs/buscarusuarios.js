@@ -318,19 +318,7 @@ if (Fn.validaRut( $("#rut").val() )){
     }
 
 
-function desencriptar() {
-       var inputs = $('#seleclave2');
-      var clave = $(inputs).val();
 
-$.ajax({
-    url:"http://localhost/hospital/man_usuarios/claves",
-    type:"POST",
-    data:{id:clave},
-    success:function(respuesta){
-    document.getElementById('seleclave').value = respuesta;
- }
-  });
-   
 
-    }
+    
 

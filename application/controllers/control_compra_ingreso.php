@@ -111,11 +111,11 @@ function guardaringreso() {
             $neto= $this->input->post("mineto");
             $iva = $this->input->post("miiva");
             $total= $this->input->post("mitotal");
-
+            $usuario= $this->session->userdata('mirut');
 			
 
 
-       	$usuario="17747579-3";
+   
    			$datos = array(
    				"cod_compra" => $nfolio,
 				"tipo_documento" => $tipoingresonombre,

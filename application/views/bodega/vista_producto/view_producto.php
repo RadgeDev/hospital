@@ -60,8 +60,8 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Codigo Barra</th>
                   <th>Codigo Interno </th>
+                  <th>Codigo Barra</th>
                   <th>Codigo Bodega</th>
                   <th>Nombre</th>
                   <th>Cantidad</th>

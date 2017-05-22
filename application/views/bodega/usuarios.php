@@ -188,8 +188,8 @@
 
                              <div class="form-group">
                                 <label>Clave</label>
-                             <input type="password" class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave" ">
-                             <input type="hidden" class="form-control" id="seleclave2" name="seleclave2"  placeholder="Ingrese su Clave" readonly >
+                             <input type="text" class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave" ">
+                         
                             </div>
                             
                              <div  class="form-group">
