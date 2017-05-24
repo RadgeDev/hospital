@@ -817,3 +817,21 @@ function limpiar(){
 location.reload(true);
 }
 
+function reporte() {
+  var codseleccionado =$("#folio").val();
+    event.preventDefault();
+// alert(codseleccionado);
+ $.ajax({
+    url:"http://localhost/hospital/control_reporte/report",
+    type:"POST",
+    data:{micod:codseleccionado},
+    dataType:"json",
+    success:function(respuesta){
+         console.log(respuesta);
+            },
+           error:function(){
+              console.log('error');// solo ingresa a esta parte
+           }
+       });
+
+} 
