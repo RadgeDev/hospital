@@ -1,22 +1,22 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Control_compra_ingreso extends CI_Controller {
+class Control_pedido extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model("Compra_ingreso_model");
 			$this->load->model("Producto_model");
+				$this->load->model("Pedidos_model");
 	}
 
 	public function index(){
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
-		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
-		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
-	  $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
-	  
-		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra,$datoscorrelativo));
-		$this->load->view("bodega/vista_compra/footer2");
+		$datosdepto['arrayTipodepto'] = $this->Pedidos_model->get_depto();
+		$datospedido['arrayTipopedido'] = $this->Pedidos_model->get_pedido();
+	    $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
+		$this->load->view("bodega/vista_pedido/view_pedido",array_merge($datosdepto, $datospedido,$datoscorrelativo));
+		$this->load->view("bodega/vista_pedido/footer2");
 	}
 
 	public function mostrar()

@@ -27,5 +27,13 @@ $query=$this->db->get();
 return $query->result();
 }
 
+function getnombre($mirut)
+{
 
+$this->db->select('nombre');
+$this->db->from('usuarios');
+$this->db->where('rut',$mirut);
+$query=$this->db->get();
+return $query->result();
+}
 }

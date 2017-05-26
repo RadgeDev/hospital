@@ -14,6 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Ingresos
+
                             </li>
                         </ol>
                     </div>
@@ -48,7 +49,7 @@
 
             <div class="col-lg-4 col-sm-4">
                <label>N° Documento</label>
-                <input type="text" id="ndocumento" onblur="habilitando();" class="form-control">
+                <input type="text" id="ndocumento" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25">
             
             </div>
 
@@ -219,7 +220,7 @@
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
              <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
            
-             <button type="button" id="imprimiringreso" onclick="reporte();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
+             <button type="button" id="imprimiringreso" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
              <button type="button" id="guardaringreso" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
          
               
@@ -372,14 +373,14 @@
             <div class="col-lg-4 col-sm-4">
             <br>
                 <label>Valor Unidad</label>
-               <input type="text" id="valorunidad" style="text-align:right;" name="valorunidad" onChange="multiplicar();" value="0" class="form-control">
+               <input type="text" id="valorunidad" style="text-align:right;" onkeypress="return solonumeros(event)" name="valorunidad" onChange="multiplicar();" value="0" class="form-control">
             </div>
              <div class="col-lg-8 col-sm-8">
              </div>
             <div class="col-lg-4 col-sm-4">
             <br>
                 <label>Cantidad Recepcionado</label>
-                <input type="text" id="recepcionado" style="text-align:right;" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
+                <input type="text" id="recepcionado" style="text-align:right;" onkeypress="return solonumerosenteros(event)" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
             </div>
             <div class="col-lg-8 col-sm-8">
              </div>
@@ -467,7 +468,7 @@
 
                             <div class="form-group">
                             <label>Cantidad</label>
-                            <input class="form-control" id="cantidad" name="cantidad" value="0" onkeypress="return solonumeros(event)" readonly placeholder="Ingrese su cantidad">
+                            <input class="form-control" id="cantidad" name="cantidad" value="0" onkeypress="return solonumerosenteros(event)" readonly placeholder="Ingrese su cantidad">
                             </div>
                             <label>Precio</label>
                             <div class="input-group">

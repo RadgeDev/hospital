@@ -12,9 +12,8 @@ class Control_reporte extends CI_Controller {
 
 function report()
 {
- 
+    $cod=  $this->uri->segment(3);
 
-     $cod="3";
 
     $datos= $this->Model_reporte->getcompra($cod);
     $detalle= $this->Model_reporte->getcompradetalle($cod);
@@ -33,7 +32,7 @@ function report()
 <div class="right"> 
     <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
     </div>
-    ';
+    '; 
   foreach ($datos as $misdatos) {
  $html.='
 <div  class="left"><p style="text-align:right;padding-top:0mm;font-weight:bold;" >Folio:'.$misdatos->cod_compra.'</p> 
@@ -52,7 +51,7 @@ function report()
   </tr>
   <tr>
    <td style="width:20%;font-weight:bold;background:#eee;">Proveedor:</td>
-    <td COLSPAN="3" style="width:30%">'.$misdatos->rut_proveedor.'  '.$misdatos->nombre_proveedor.'</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->rut_proveedor.' '.$misdatos->nombre_proveedor.'</td>
     
   </tr>
   <tr>
@@ -141,7 +140,7 @@ $html.='
        ';
   foreach ($datos as $misdatos) {
  $html.='    
-<div id="cajon2" class="left"><h4>Recibido por: '.$misdatos->usuario.'</h4></div>
+<div id="cajon2" class="left"><h4>Recibido por: '.$misdatos->nombre_usuario.'</h4></div>
         </div>
             ';    }
 $html.='
