@@ -2,23 +2,155 @@
   //$(document).on("ready", desabilitarcontroles);
     
 function main(){
-  setInterval(obtenerCorrelativo, 400);
-var now = new Date();
-$( "#datetimepicker1" ).datepicker({dateFormat:"dd-mm-yy"}).datepicker("setDate",new Date());
+  $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
+    options.async = true;
+  });
 
-setTimeout("mostrarhora()",1000); 
+
+//setTimeout("mostrarhora()",1000); 
 numerofolio();
+
+
+    function horaserver() {
+      $.ajax({
+       type: 'POST',
+      url:"http://localhost/hospital/control_pedido/hora",
+       timeout: 1000,
+       success: function(data) {
+          $("#hora").val(data); 
+          window.setTimeout(horaserver, 1000);
+
+       }
+      });
+     }
+     horaserver();
+
+function fechaserver() {
+      $.ajax({
+       type: 'POST',
+      url:"http://localhost/hospital/control_pedido/fecha",
+       success: function(data) {
+       $( "#datetimepicker1" ).val(data);
+        
+
+       }
+      });
+     }
+fechaserver();
 
  $("#msg-error").hide();
   $("#msg-error2").hide();
     $("#msg-error3").hide();
       $("#msg-bien").hide();
 
-  $("#lblneto").hide();
-  var today = new Date().toISOString().split('T')[0];
-    document.getElementsByName("fechavencimiento")[0].setAttribute('min', today);
  }
 
+
+  $("#msg-error").hide();
+
+  
+ 
+  $("#combo_tipocompra").change(function(){
+    valorBuscar =  $("#combo_tipocompra option[value='" + $('#combo_tipocompra').val() + "']").attr('value');
+    alert(valorBuscar);
+    valoroption = $("#cantidadpag").val();
+      alert(valoroption);
+ 
+    mostrarDatos(valorBuscar,1,valoroption,"cod_bodega");
+  });
+
+  $("body").on("click",".paginacion li a",function(e){
+    e.preventDefault();
+    valorhref = $(this).attr("href");
+    valorBuscar =  $("#combo_tipocompra option[value='" + $('#combo_tipocompra').val() + "']").attr('value');
+    valoroption = $("#cantidadpag").val();
+    mostrarDatos(valorBuscar,valorhref,valoroption,"cod_bodega");
+  });
+
+  $("#cantidadpag").change(function(){
+    valoroption = $(this).val();
+    valorBuscar =  $("#combo_tipocompra option[value='" + $('#combo_tipocompra').val() + "']").attr('value');
+    mostrarDatos(valorBuscar,1,valoroption,"cod_bodega");
+  });
+
+function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
+
+  $.ajax({
+    url : "http://localhost/hospital/control_producto/mostrar2",
+    type: "POST",
+    data: {buscar:valorBuscar,nropagina:pagina,cantidad:cantidad,valorcombos:valorcombo},
+    dataType:"json",
+    success:function(response){
+      
+      filas = "";
+      $.each(response.obtener,function(key,item){
+        filas+="<tr class='active' ><td >"+item.cod_interno_prod+"</td><td>"+item.codigo_barra+"</td><td>"+item.nombre+"</td><td> <input class='form-control' style='width:100px;' type='text' id='ndocumento' maxlength='7' >  </td> <td> <button   id='eliminando' class='btn btn-danger' >X</button></td></tr>";
+      });
+
+      $("#tbproductos tbody").html(filas);
+      linkseleccionado = Number(pagina);
+      //total registros
+      totalregistros = response.totalregistros;
+      //cantidad de registros por pagina
+      cantidadregistros = response.cantidad;
+
+      numerolinks = Math.ceil(totalregistros/cantidadregistros);
+      paginador = "<ul class='pagination'>";
+      if(linkseleccionado>1)
+      {
+        paginador+="<li><a href='1'>&laquo;</a></li>";
+        paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
+
+      }
+      else
+      {
+        paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
+        paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
+      }
+      //muestro de los enlaces 
+      //cantidad de link hacia atras y adelante
+      cant = 2;
+      //inicio de donde se va a mostrar los links
+      pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
+      //condicion en la cual establecemos el fin de los links
+      if (numerolinks > cant)
+      {
+        //conocer los links que hay entre el seleccionado y el final
+        pagRestantes = numerolinks - linkseleccionado;
+        //defino el fin de los links
+        pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
+      }
+      else 
+      {
+        pagFin = numerolinks;
+      }
+
+      for (var i = pagInicio; i <= pagFin; i++) {
+        if (i == linkseleccionado)
+          paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
+        else
+          paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
+      }
+      //condicion para mostrar el boton sigueinte y ultimo
+      if(linkseleccionado<numerolinks)
+      {
+        paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
+        paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
+
+      }
+      else
+      {
+        paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
+        paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
+      }
+      
+      paginador +="</ul>";
+      $(".paginacion").html(paginador);
+
+    }
+  });
+}
+/*
 function mostrarhora(){ 
 momentoActual = new Date() ;
 hora = momentoActual.getHours() ;
@@ -51,7 +183,7 @@ alert(fechatotal);
 
 
 }
-
+*/
 
 
 

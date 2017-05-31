@@ -88,6 +88,16 @@ function obtenercorrelativo(){
 		}
 	}
 
+function hora(){
+  date_default_timezone_set("Chile/Continental");
+   echo date("H:i:s"); 
+}
+
+function fecha(){
+   date_default_timezone_set("Chile/Continental");
+   echo date("d-m-Y");
+}
+
 function guardaringreso() {
 		//El metodo is_ajax_request() de la libreria input permite verificar
 		//si se esta accediendo mediante el metodo AJAX 

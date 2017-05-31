@@ -19,7 +19,6 @@
                         </ol>
                     </div>
                 </div>
-
                 <!-- /.row -->
 
  
@@ -48,6 +47,7 @@
             </div>
 
             <div class="col-lg-2 col-sm-2">
+         
                <label>Horario Recepcion </label>
                 <input type="text" id="ndocumento" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Recepcion">
             
@@ -147,7 +147,13 @@
     
           <div class="col-lg-12 col-sm-12">
           <br>
-        
+          <p>
+              <strong>Mostrar por : </strong>
+              <select name="cantidadpag" id="cantidadpag">
+                <option value="10">10</option>
+                <option value="20">20</option>
+              </select>
+            </p>
             <table id="tbproductos" name="tbproductos" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
@@ -161,6 +167,9 @@
               <tbody>
               </tbody>
             </table>
+                 <div class="text-center paginacion ">
+              
+            </div>
             </div>
           </div>
         </div>
