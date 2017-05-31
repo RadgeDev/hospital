@@ -70,7 +70,7 @@ public function editando($codselec){
 
 	public function obtenerfolio(){
 
-               $query = $this->db-> query('SELECT max(cod_compra) AS codcompra FROM compra');
+               $query = $this->db-> query('SELECT max(folio) AS folio FROM pedidos');
                if ($query->num_rows() > 0) {
                return $query->result();
                 }else

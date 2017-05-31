@@ -39,12 +39,12 @@ public function mostrar2()
 		$numeropagina = $this->input->post("nropagina");
 		$cantidad = $this->input->post("cantidad");
 		$combobuscar= $this->input->post("valorcombos");
+		$bodega= $this->input->post("bodega");
 		$inicio = ($numeropagina -1)*$cantidad;
 		$data = array(
-			"obtener" => $this->Producto_model->buscar2($buscar,$inicio,$cantidad,$combobuscar),
+			"obtener" => $this->Producto_model->buscar2($buscar,$inicio,$cantidad,$combobuscar,$bodega),
 			"totalregistros" => count($this->Producto_model->buscar($buscar)),
-			"cantidad" =>$cantidad
-			
+			"cantidad" =>$cantidad		
 		);
 		echo json_encode($data);
 	}

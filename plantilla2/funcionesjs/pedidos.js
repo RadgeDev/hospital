@@ -44,112 +44,52 @@ fechaserver();
       $("#msg-bien").hide();
 
  }
+$("#combo_tipocompra").change(function(){
+		bodega = $(this).val();
+		valorBuscar = $("input[name=busqueda]").val();
+    valoroption = $("#cantidadpag").val();
+		mostrarDatos(valorBuscar,1,valoroption,"cod_interno_prod",bodega);
+	});
+
+	$("input[name=busqueda]").keyup(function(){
+		textobuscar = $(this).val();
+		valoroption = $("#cantidadpag").val();
+	    var valorcombo = $("#buscando").val();
+	   	bodega = $("#combo_tipocompra").val();
+		mostrarDatos(textobuscar,1,valoroption,valorcombo,bodega);
+	});
 
 
-  $("#msg-error").hide();
+
+	$("#cantidadpag").change(function(){
+		valoroption = $(this).val();
+		valorBuscar = $("input[name=busqueda]").val();
+    bodega = $("#combo_tipocompra").val();
+		mostrarDatos(valorBuscar,1,valoroption,"cod_interno_prod",bodega);
+	});
+
+function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo,mibodega){
+
+	$.ajax({
+		url : "http://localhost/hospital/control_producto/mostrar2",
+		type: "POST",
+		data: {buscar:valorBuscar,nropagina:pagina,cantidad:cantidad,valorcombos:valorcombo,bodega:mibodega},
+		dataType:"json",
+		success:function(response){
+			
+			filas = "";
+			$.each(response.obtener,function(key,item){
+				filas+="<tr class='active' ><td >"+item.cod_interno_prod+"</td><td>"+item.codigo_barra+"</td><td>"+item.nombre+"</td><td> <button href='"+item.cod_interno_prod+"'  id='agregar'  onclick='' class='btn btn-success'>Agregar</button></td></tr>";
+			});
+
+			$("#tbproductos tbody").html(filas);
+	
+
+		}
+	});
+}
 
   
- 
-  $("#combo_tipocompra").change(function(){
-    valorBuscar =  $("#combo_tipocompra option[value='" + $('#combo_tipocompra').val() + "']").attr('value');
-    alert(valorBuscar);
-    valoroption = $("#cantidadpag").val();
-      alert(valoroption);
- 
-    mostrarDatos(valorBuscar,1,valoroption,"cod_bodega");
-  });
-
-  $("body").on("click",".paginacion li a",function(e){
-    e.preventDefault();
-    valorhref = $(this).attr("href");
-    valorBuscar =  $("#combo_tipocompra option[value='" + $('#combo_tipocompra').val() + "']").attr('value');
-    valoroption = $("#cantidadpag").val();
-    mostrarDatos(valorBuscar,valorhref,valoroption,"cod_bodega");
-  });
-
-  $("#cantidadpag").change(function(){
-    valoroption = $(this).val();
-    valorBuscar =  $("#combo_tipocompra option[value='" + $('#combo_tipocompra').val() + "']").attr('value');
-    mostrarDatos(valorBuscar,1,valoroption,"cod_bodega");
-  });
-
-function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
-
-  $.ajax({
-    url : "http://localhost/hospital/control_producto/mostrar2",
-    type: "POST",
-    data: {buscar:valorBuscar,nropagina:pagina,cantidad:cantidad,valorcombos:valorcombo},
-    dataType:"json",
-    success:function(response){
-      
-      filas = "";
-      $.each(response.obtener,function(key,item){
-        filas+="<tr class='active' ><td >"+item.cod_interno_prod+"</td><td>"+item.codigo_barra+"</td><td>"+item.nombre+"</td><td> <input class='form-control' style='width:100px;' type='text' id='ndocumento' maxlength='7' >  </td> <td> <button   id='eliminando' class='btn btn-danger' >X</button></td></tr>";
-      });
-
-      $("#tbproductos tbody").html(filas);
-      linkseleccionado = Number(pagina);
-      //total registros
-      totalregistros = response.totalregistros;
-      //cantidad de registros por pagina
-      cantidadregistros = response.cantidad;
-
-      numerolinks = Math.ceil(totalregistros/cantidadregistros);
-      paginador = "<ul class='pagination'>";
-      if(linkseleccionado>1)
-      {
-        paginador+="<li><a href='1'>&laquo;</a></li>";
-        paginador+="<li><a href='"+(linkseleccionado-1)+"' '>&lsaquo;</a></li>";
-
-      }
-      else
-      {
-        paginador+="<li class='disabled'><a href='#'>&laquo;</a></li>";
-        paginador+="<li class='disabled'><a href='#'>&lsaquo;</a></li>";
-      }
-      //muestro de los enlaces 
-      //cantidad de link hacia atras y adelante
-      cant = 2;
-      //inicio de donde se va a mostrar los links
-      pagInicio = (linkseleccionado > cant) ? (linkseleccionado - cant) : 1;
-      //condicion en la cual establecemos el fin de los links
-      if (numerolinks > cant)
-      {
-        //conocer los links que hay entre el seleccionado y el final
-        pagRestantes = numerolinks - linkseleccionado;
-        //defino el fin de los links
-        pagFin = (pagRestantes > cant) ? (linkseleccionado + cant) :numerolinks;
-      }
-      else 
-      {
-        pagFin = numerolinks;
-      }
-
-      for (var i = pagInicio; i <= pagFin; i++) {
-        if (i == linkseleccionado)
-          paginador +="<li class='active'><a href='javascript:void(0)'>"+i+"</a></li>";
-        else
-          paginador +="<li><a href='"+i+"'>"+i+"</a></li>";
-      }
-      //condicion para mostrar el boton sigueinte y ultimo
-      if(linkseleccionado<numerolinks)
-      {
-        paginador+="<li><a href='"+(linkseleccionado+1)+"' >&rsaquo;</a></li>";
-        paginador+="<li><a href='"+numerolinks+"'>&raquo;</a></li>";
-
-      }
-      else
-      {
-        paginador+="<li class='disabled'><a href='#'>&rsaquo;</a></li>";
-        paginador+="<li class='disabled'><a href='#'>&raquo;</a></li>";
-      }
-      
-      paginador +="</ul>";
-      $(".paginacion").html(paginador);
-
-    }
-  });
-}
 /*
 function mostrarhora(){ 
 momentoActual = new Date() ;
@@ -635,7 +575,7 @@ $("#formGuardar").submit(function (event){
 
 function numerofolio(){
 $.ajax({
-		url : "http://localhost/hospital/control_compra_ingreso/devolverfolio",
+		url : "http://localhost/hospital/control_pedido/devolverfolio",
 		type: "POST",
 		dataType:"json",
 		success:function(response){
@@ -643,7 +583,7 @@ $.ajax({
 		
 			var filas2="";
 			$.each(response.folio,function(key,item){
-				filas2+=item.codcompra;
+     	filas2+=item.folio
 
 			});
  

@@ -43,11 +43,11 @@ $datosproveedor = array(
 	echo json_encode($datosproveedor);
 }
 function devolverfolio() {
-$datosfolior = array(
-			"folio" => $this->Compra_ingreso_model->obtenerfolio()
+$datosfolio = array(
+			"folio" => $this->Pedidos_model->obtenerfolio()
 			
 		);
-	echo json_encode($datosfolior);
+	echo json_encode($datosfolio);
 }
 
 

@@ -56,7 +56,7 @@ function guardar() {
 		
 
             $this->form_validation->set_rules('codigo','Codigo','required|min_length[1]|max_length[10]');
-			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|alpha');
+			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|');
 			
 
        if ($this->form_validation->run() === TRUE) {

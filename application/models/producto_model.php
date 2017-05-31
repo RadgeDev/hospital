@@ -15,18 +15,16 @@ class Producto_model extends CI_Model {
 		$consulta = $this->db->get("producto");
 		return $consulta->result();
 	}
-	public function buscar2($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE)
+	public function buscar2($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE,$bodega=FALSE)
 	{
-	
-			$cantidadregistro =1500;
-		$this->db->select("*");
-        $this->db->from('producto');
-        $this->db->where('cod_bodega',$buscar);
-        if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
-			$this->db->limit($cantidadregistro,$inicio);
+		if ($valorbuscar==""){
+			$valorbuscar="cod_interno_prod";	
 		}
-	    $query=$this->db->get();
-		return $query->result();
+		$this->db->where('cod_bodega',$bodega);
+		$this->db->like($valorbuscar,$buscar);
+	    $this->db->limit($cantidadregistro,$inicio);
+		$consulta = $this->db->get("producto");
+		return $consulta->result();
 	}
 
 	function validar( $rutsele){
