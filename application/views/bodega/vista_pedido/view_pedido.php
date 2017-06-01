@@ -111,7 +111,65 @@
     </div>
   </div>
   <!-- Row end -->
-  
+  <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+          <i class="icon-calendar"></i>
+          <h3 class="panel-title">Busqueda Articulo</h3>
+        </div>
+        
+        <div class="panel-body">
+          <div class="row">
+        <div class="col-lg-4 col-sm-4">
+    <select name="buscando" id ="buscando" class="form-control" >
+        <option value="nombre">Nombre</option>
+        <option value="cod_interno_prod">Codigo Interno</option>
+        <option value="codigo_barra">Codigo de barra </option>
+        </select>
+
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <div class="form-group has-feedback has-feedback-left">
+
+            <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
+            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+        </div>
+        
+      </div>
+         
+      <input  id="busqueda1"  onchange="agregando();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="datos para la tabla" />
+        <input type="hidden" id="busqueda2" placeholder="datos para la tabla" />
+         <input type="hidden" id="busqueda3" placeholder="datos para la tabla" />
+          <div class="col-lg-4 col-sm-4">
+
+              <strong>Mostrar por : </strong>
+              <select name="cantidadpag" id="cantidadpag">
+                <option value="5">5</option>
+                <option value="10">10</option>
+              </select>
+                   </div>
+            </p>
+
+            <table id="tbproductos" name="tbproductos" class="table table-striped  table-hover ">
+              <thead>
+                <tr class="success">
+                  <th>Codigo Interno </th>
+                  <th>Codigo Barra</th>
+                  <th>Nombre Articulo</th>
+                  <th>Agregar</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+                 <div class="text-center paginacion ">
+              
+            </div>
+            </div>
+          </div>
+        </div>
+   
   <!-- Row start -->
   <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -144,7 +202,7 @@
           <p>
        
             </p>
-            <table id="tbpedidos" name="tbproductos" class="table table-striped  table-hover ">
+            <table id="tbpedidos" name="tbpedidos" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
                   <th>Codigo Interno </th>
@@ -164,9 +222,7 @@
           </div>
         </div>
       </div>
-
-    <br>
-    <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+        <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
              <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
            
@@ -185,72 +241,12 @@
                   <div class="alert alert-success" id="msg-bien" style="text-align:left;">
                   <strong>¡Ingreso Correcto!</strong> Datos Guardados.
                   <div class="list-errors4"></div>
-              </div>
-
-
- </div>
- <div class="row">
-      <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="panel panel-primary">
-        <div class="panel-heading clearfix">
-          <i class="icon-calendar"></i>
-          <h3 class="panel-title">Busqueda Articulo</h3>
-        </div>
-        
-        <div class="panel-body">
-          <div class="row">
-        <div class="col-lg-4 col-sm-4">
-    <select name="buscando" id ="buscando" class="form-control" >
-        <option value="nombre">Nombre</option>
-        <option value="cod_interno_prod">Codigo Interno</option>
-        <option value="codigo_barra">Codigo de barra </option>
-        </select>
-
-      </div>
-      <div class="col-lg-4 col-sm-4">
-        <div class="form-group has-feedback has-feedback-left">
-
-            <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
-            <i class="glyphicon glyphicon-search form-control-feedback"></i>
-        </div>
-        
-      </div>
-         
-    
-          <div class="col-lg-4 col-sm-4">
-
-              <strong>Mostrar por : </strong>
-              <select name="cantidadpag" id="cantidadpag">
-                <option value="10">10</option>
-                <option value="20">20</option>
-              </select>
-                   </div>
-            </p>
-
-            <table id="tbproductos" name="tbproductos" class="table table-striped  table-hover ">
-              <thead>
-                <tr class="success">
-                  <th>Codigo Interno </th>
-                  <th>Codigo Barra</th>
-                  <th>Nombre Articulo</th>
-                  <th>Agregar</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-                 <div class="text-center paginacion ">
-              
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </div>   
     </div>
              
-           
+    </div>
           
-           
+      
 
   <!-- Row end -->
 

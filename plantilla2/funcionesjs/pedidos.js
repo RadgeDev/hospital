@@ -79,7 +79,7 @@ function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo,mibodega){
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active' ><td >"+item.cod_interno_prod+"</td><td>"+item.codigo_barra+"</td><td>"+item.nombre+"</td><td> <button href='"+item.cod_interno_prod+"'  id='agregar'  onclick='' class='btn btn-success'>Agregar</button></td></tr>";
+				filas+="<tr class='active' ><td >"+item.cod_interno_prod+"</td><td>"+item.codigo_barra+"</td><td>"+item.nombre+"</td><td> <button href='"+item.cod_interno_prod+"'  id='agregar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-success '  >Agregar</button></td></tr>";
 			});
 
 			$("#tbproductos tbody").html(filas);
@@ -126,13 +126,6 @@ alert(fechatotal);
 */
 
 
-
-  function cerrarModal() {
-  $("#msg-error").hide();
-    $("#msgerrorut").hide();
-   $('#proveedorGuardar').get(0).reset();//resetea  los campos del formulario
-      $('#formGuardar').get(0).reset();//resetea  los campos del formulario
-}
 
 
 
@@ -232,7 +225,7 @@ function cerrarModal() {
   });
 
 
-
+/*
 
 
   function addProductotabla(e) {
@@ -300,7 +293,7 @@ function createRow(data) {
     `</tr>`
   );
 }
-
+*/
 function calculartotal() {
 	 var theneto = 0;
     $("td:nth-child(8)").each(function () {
@@ -781,3 +774,61 @@ $("#nombre , #lote , #nombre").on('input', function(evt) {
         });
         input[0].selectionStart = input[0].selectionEnd = start;
       });
+
+ 
+ 
+
+
+
+ function addProductotabla(obj) {
+ codseleccionado = obj.getAttribute("href");
+
+  $.ajax({
+    url:"http://localhost/hospital/control_producto/editando",
+    type:"POST",
+    data:{id:codseleccionado},
+    dataType:"json",
+    success:function(respuesta){
+   $.each(respuesta.obtener,function(key,item){
+    $("#busqueda1").val(item.cod_interno_prod);
+    hola=item.cod_interno_prod;
+    alert(hola );
+    $("#busqueda2").val(item.codigo_barra);
+    $("#busqueda3").val(item.nombre);
+ 
+      });
+
+    }
+
+  });
+  //hola=$("#busqueda1").val();
+//alert(hola );
+  
+}
+
+$('#busqueda1').on('input',function(e){
+  agregando();
+    });
+
+function agregando() {
+   const row = createRow({
+    codigointerno:  $("#busqueda1").val(),
+    codigobarra: $("#busqueda2").val(),
+    nombre:  $("#busqueda3").val(),
+  });
+  $("#tbpedidos tbody").append(row);
+}
+
+
+function createRow(data) {
+  return (
+    `<tr class='active'>` +
+      `<td>${data.codigointerno}</td>` +
+      `<td>${data.codigobarra}</td>` +
+       `<td>${data.nombre}</td>` +
+       `<td><input type="text" class="form-control" name="cantidad" style="width:100px;" placeholder="Cantidad" /></td>` +
+       `<td><button   id='eliminando'  class='btn btn-danger delRowBtn' >X</button></td>` +
+    `</tr>`
+  );
+}
+
