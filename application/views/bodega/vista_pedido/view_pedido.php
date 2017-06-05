@@ -132,17 +132,13 @@
       <div class="col-lg-4 col-sm-4">
         <div class="form-group has-feedback has-feedback-left">
 
-            <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
+            <input type="text" class="form-control" name="busqueda" id="busqueda" placeholder="Buscar producto aqui" />
             <i class="glyphicon glyphicon-search form-control-feedback"></i>
         </div>
         
       </div>
-         
-      <input  id="busqueda1"  onchange="agregando();" onkeyup="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" placeholder="datos para la tabla" />
-        <input type="hidden" id="busqueda2" placeholder="datos para la tabla" />
-         <input type="hidden" id="busqueda3" placeholder="datos para la tabla" />
-          <div class="col-lg-4 col-sm-4">
 
+          <div class="col-lg-4 col-sm-4">
               <strong>Mostrar por : </strong>
               <select name="cantidadpag" id="cantidadpag">
                 <option value="5">5</option>
@@ -181,34 +177,16 @@
         
         <div class="panel-body">
           <div class="row">
-            <div class="col-lg-4 col-sm-4">
-        
-            </div>
-            </div>
-
-            <div class="col-lg-4 col-sm-4">
-                <label>Comentarios</label>
-                <input type="text" id="Comentarios"  class="form-control">
-            </div>
-
-        
-          <div class="col-lg-4 col-sm-4">
-           
-            </div>
-         
-    
           <div class="col-lg-12 col-sm-12">
-          <br>
-          <p>
-       
-            </p>
+    
+     
             <table id="tbpedidos" name="tbpedidos" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
                   <th>Codigo Interno </th>
                   <th>Codigo Barra</th>
                   <th>Nombre Articulo</th>
-                  <th>Cantidad Pedido</th>
+                  <th>Cantidad a Pedir</th>
                   <th>Borrar</th>
                 </tr>
               </thead>
@@ -230,6 +208,8 @@
              <button type="button" id="guardaringreso" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
+<input type="text" id="micomentario"  class="form-control" placeholder="Escriba una Observacion">
+            
             </div>
 
 
@@ -252,7 +232,6 @@
 
    <!-- modal empieza aca -->
    <!-- Modal -->
-
 
 
 

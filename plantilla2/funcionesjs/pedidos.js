@@ -4,6 +4,18 @@
 function main(){
   $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
     options.async = true;
+
+
+    //largo del div editable
+var textfields = document.getElementsByClassName("textfield"); 
+for(i=0; i<textfields.length; i++){
+    textfields[i].addEventListener("keypress", function(e) {
+        if(this.innerHTML.length >= this.getAttribute("max")){
+            e.preventDefault();
+            return false;
+        }
+    }, false);
+}
   });
 
 
@@ -562,7 +574,7 @@ $("#formGuardar").submit(function (event){
         calculartotal() ;
         habilitando() ;
            
-  swal("Producto eliminado de la lista!", "Registro eliminado.", "success");
+  swal("Producto eliminado de la lista!", "Registro eliminado.", "error");
 
 });
 
@@ -789,46 +801,28 @@ $("#nombre , #lote , #nombre").on('input', function(evt) {
     data:{id:codseleccionado},
     dataType:"json",
     success:function(respuesta){
+      filas="";
    $.each(respuesta.obtener,function(key,item){
-    $("#busqueda1").val(item.cod_interno_prod);
-    hola=item.cod_interno_prod;
-    alert(hola );
-    $("#busqueda2").val(item.codigo_barra);
-    $("#busqueda3").val(item.nombre);
- 
+				filas+="<tr class='active' ><td >"+item.cod_interno_prod+"</td><td>"+item.codigo_barra+"</td><td>"+item.nombre+"</td><td><div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);' ></div></td><td> <button   id='eleminando' onclick=''  class= 'delRowBtn btn btn-danger '>X</button></td></tr>";
+   
       });
-
+    $("#tbpedidos tbody").append(filas);
+    tabladuplicada();
     }
 
   });
-  //hola=$("#busqueda1").val();
-//alert(hola );
-  
+
 }
 
-$('#busqueda1').on('input',function(e){
-  agregando();
-    });
-
-function agregando() {
-   const row = createRow({
-    codigointerno:  $("#busqueda1").val(),
-    codigobarra: $("#busqueda2").val(),
-    nombre:  $("#busqueda3").val(),
-  });
-  $("#tbpedidos tbody").append(row);
-}
-
-
-function createRow(data) {
-  return (
-    `<tr class='active'>` +
-      `<td>${data.codigointerno}</td>` +
-      `<td>${data.codigobarra}</td>` +
-       `<td>${data.nombre}</td>` +
-       `<td><input type="text" class="form-control" name="cantidad" style="width:100px;" placeholder="Cantidad" /></td>` +
-       `<td><button   id='eliminando'  class='btn btn-danger delRowBtn' >X</button></td>` +
-    `</tr>`
-  );
-}
-
+function tabladuplicada(){
+var seen = {};
+$('#tbpedidos tr').each(function() {
+    var txt = $(this).children("td:eq(0)").text();
+    if (seen[txt]){
+        $(this).remove();
+           swal("Producto ya existe", "Producto ya esta agregado en el pedido.", "error");
+     } else{
+        seen[txt] = true;
+     }
+});
+    }

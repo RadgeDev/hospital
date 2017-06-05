@@ -227,5 +227,8 @@ ul.alert-dropdown {
 }
 
 .lblneto {
-    color:red;
+    color:blue;
 }
+
+#micomentario::-webkit-input-placeholder { color: green; font-weight: bold; }
+#busqueda::-webkit-input-placeholder { color: green; font-weight: bold; }
