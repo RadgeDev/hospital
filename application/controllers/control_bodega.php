@@ -84,9 +84,13 @@ function guardar() {
 
 			$codigo = $this->input->post("codigo");
 			$nombre = $this->input->post("nombre");
-            $correlativo = $this->input->post("correlativo");
+			$correlativo = $this->input->post("correlativo");
+            $pedido = $this->input->post("pedido");
+			$entrega = $this->input->post("entrega");
     $this->form_validation->set_rules('codigo','Codigo','required|min_length[1]|max_length[10]');
 	$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]|');
+	$this->form_validation->set_rules('pedido','Pedido','required|min_length[3]|max_length[50]|');
+	$this->form_validation->set_rules('entrega','Entrega','required|min_length[3]|max_length[50]|');
 	$this->form_validation->set_rules('correlativo','Correlativo','required|min_length[2]|max_length[50]|alpha');
 			
 
@@ -94,7 +98,9 @@ function guardar() {
    			$datos = array(
 				"cod_bodegas" => $codigo,
 				"nombre" => $nombre,
-				"correlativo" => $correlativo
+				"correlativo" => $correlativo,
+				"horario_recepcion" => $pedido,
+				"horario_entrega" => $entrega
 				);
 
 		if($this->Bodega_model->guardar($datos)==true)
@@ -122,14 +128,19 @@ function actualizar(){
 			$codselect = $this->input->post("seleccod");
 			$nombres = $this->input->post("selecnombre");
 			$correlativo = $this->input->post("seleccorrelativo");
+			$pedido = $this->input->post("selecpedido");
+			$entrega = $this->input->post("selecentrega");
 			$this->form_validation->set_rules('selecnombre','Nombre','required|min_length[3]|max_length[40]');
 			$this->form_validation->set_rules('seleccorrelativo','Correlativo','required|min_length[2]|max_length[40]');
-		
+		    $this->form_validation->set_rules('selecpedido','Pedido','required|min_length[3]|max_length[50]|');
+	        $this->form_validation->set_rules('selecentrega','Entrega','required|min_length[3]|max_length[50]|');
 		if ($this->form_validation->run() === TRUE) {
 	
 			$datos = array(
 				"nombre" => $nombres,
-                "correlativo" => $correlativo
+                "correlativo" => $correlativo,
+				"horario_recepcion" => $pedido,
+				"horario_entrega" => $entrega
 				);
 		
 			if($this->Bodega_model->actualizar($codselect,$datos) == true)

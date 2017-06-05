@@ -60,7 +60,8 @@
                   <th>Codigos Bodega</th>
                   <th>Nombres Bodega</th>
                   <th>Correlativo</th>
-                  <th>Ultimo Codigo</th>
+                  <th>Horario Pedido</th>
+                   <th>Horario Entrega</th>
                    <th>Acciones</th>
                 </tr>
               </thead>
@@ -113,11 +114,20 @@
 
                             <div class="form-group">
                                 <label>Nombre Bodega</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)" onkeypress="" ">
+                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event) ">
                             </div>
                               <div class="form-group">
                                 <label>Correlativo</label>
                             <input class="form-control" id="correlativo" name="correlativo"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)" onblur="validarCorrelativo();"   onKeyUp="this.value = this.value.toUpperCase();" >
+                            </div>
+                             <div class="form-group">
+                               <label>Horario Pedido</label>
+                                <input class="form-control" id="pedido" name="pedido" placeholder="Ingrese Codigo  " onblur="validarCodigo();" maxlength="50" >
+                            </div>
+                             <div class="form-group">
+                               <label>Horario Entrega</label>
+                                <input class="form-control" id="entrega" name="entrega" placeholder="Ingrese Codigo  " onblur="validarCodigo();" maxlength="50" >
+                            
                             </div>
             <div class="modal-footer">
                 <button type="button" id="cerrando" name="cerrando" class="btn btn-lg  btn-danger"
@@ -177,7 +187,16 @@
                                 <label>Correlativo</label>
                                 <input class="form-control" id="seleccorrelativo" name="seleccorrelativo"  placeholder="Ingrese Nombre" onkeypress="return soloLetras(event)" onblur="validarCorrelativo2(); " onKeyUp="this.value = this.value.toUpperCase();">
                             </div>
-                          
+                            <div class="form-group">
+                               <label>Horario Pedido</label>
+                                <input class="form-control" id="selecpedido" name="selecpedido" placeholder="Ingrese Codigo  " onblur="validarCodigo();" maxlength="50" >
+                           
+                            </div>
+                             <div class="form-group">
+                               <label>Horario Entrega</label>
+                                <input class="form-control" id="selecentrega" name="selecentrega" placeholder="Ingrese Codigo  " onblur="validarCodigo();" maxlength="50" >
+                   
+                            </div>
                             </div>
                            
             <div class="modal-footer">

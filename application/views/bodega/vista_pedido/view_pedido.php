@@ -49,12 +49,12 @@
             <div class="col-lg-2 col-sm-2">
          
                <label>Horario Recepcion </label>
-                <input type="text" id="ndocumento" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Recepcion">
+                <input type="text" id="recepcion" style="background:yellow;color:red;font-weight:bold;" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Recepcion">
             
             </div>
               <div class="col-lg-2 col-sm-2">
                <label>Horario Entrega </label>
-                <input type="text" id="ndocumento" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Entrega">
+                <input type="text" id="entrega" style="background:yellow;color:red;font-weight:bold;" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Entrega">
             
             </div>
 

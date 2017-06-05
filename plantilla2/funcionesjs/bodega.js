@@ -40,7 +40,7 @@ function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo){
 			
 			filas = "";
 			$.each(response.bodega,function(key,item){
-				filas+="<tr class='active' ><td >"+item.cod_bodegas+"</td><td>"+item.nombre+"</td><td>"+item.correlativo+"</td><td>"+item.ultimo_codigo+"</td><td> <button href='"+item.cod_bodegas+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.cod_bodegas+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
+				filas+="<tr class='active' ><td >"+item.cod_bodegas+"</td><td>"+item.nombre+"</td><td>"+item.correlativo+"</td><td>"+item.horario_recepcion+"</td><td>"+item.horario_entrega+"</td><td> <button href='"+item.cod_bodegas+"'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='"+item.cod_bodegas+"'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
 			});
 
 			$("#tbclientes tbody").html(filas);
@@ -265,6 +265,8 @@ function editandos(obj) {
     $("#seleccod").val(item.cod_bodegas);
     $("#selecnombre").val(item.nombre);
     $("#seleccorrelativo").val(item.correlativo);
+    $("#selecpedido").val(item.horario_recepcion);
+    $("#selecentrega").val(item.horario_entrega);
       });
 
     }

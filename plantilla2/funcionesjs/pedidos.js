@@ -433,9 +433,10 @@ $("#Comentarios").prop("readonly",false);
 
 
 
-$("select[name=combo_tipocompra]").change(function(){
-	   var porNombre=document.getElementsByName("combo_tipocompra")[0].value;
-       if (porNombre==0) {
+$("select[name=combo_pedido]").change(function(){
+	   var porNombre=document.getElementsByName("combo_pedido")[0].value;
+     alert(porNombre);
+    /*   if (porNombre==0) {
          $("#proveedorrut").prop("readonly",true);
          $("#agregarprov").prop("disabled",true);
          $("#proveedorrut").val("");
@@ -444,7 +445,22 @@ $("select[name=combo_tipocompra]").change(function(){
            $("#proveedorrut").prop("readonly",false);
            $("#agregarprov").prop("disabled",false);
 
-            }    
+            }    */
+ $.ajax({
+    url:"http://localhost/hospital/control_bodega/editando",
+    type:"POST",
+    dataType:"json",
+    data:{id:porNombre},
+    success:function(respuesta){
+    $.each(respuesta.obtener,function(key,item){
+     $("#recepcion").val(item.horario_recepcion);  
+     $("#entrega").val(item.horario_entrega);
+
+  });
+    }
+  });
+
+    
  
  });
 
