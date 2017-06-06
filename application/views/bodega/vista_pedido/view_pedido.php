@@ -14,7 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Pedidos
-
+     <button type="button"  id="" class="btn btn-danger" onclick="prueba();" > prrrr</button> 
                             </li>
                         </ol>
                     </div>
@@ -65,6 +65,16 @@
     
           <div class="col-lg-4 col-sm-4">
           <br>
+                <label>Tiempo de Pedido</label>
+                  <select name='combo_tiempo'  id ='combo_tiempo'  class='form-control' >
+                  <option value="0">Eliga un pedido</option>
+                     <option value="1">Semanal</option>
+                        <option value="2">Mensual</option>
+             </select >
+            </div>
+              <div class="col-lg-4 col-sm-4">
+          
+           <br>
                 <label>Tipo Pedido</label>
                   <select name='combo_pedido'  id ='combo_tipocompra'  class='form-control' >
                   <?php
@@ -74,16 +84,6 @@
                     echo '<option value="',$i,'">',$cod_bodegas,'</option>';
                   ?>
              </select >
-            </div>
-              <div class="col-lg-4 col-sm-4">
-             <br>
-                <label>Tiempo de Pedido</label>
-                  <select name='combo_tiempo'  id ='combo_tipocompra'  class='form-control' >
-                  <option value="0">Eliga un pedido</option>
-                     <option value="1">Mensual</option>
-                        <option value="2">Semanal</option>
-             </select >
-        
              </div>
   
        
@@ -202,10 +202,9 @@
       </div>
         <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
-             <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
-           
-             <button type="button" id="imprimiringreso" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
-             <button type="button" id="guardaringreso" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
+             <button type="button"  id="limpiarpedido" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
+             <button type="button" id="imprimirpedido" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
+             <button type="button" id="guardarpedido" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
 <input type="text" id="micomentario"  class="form-control" placeholder="Escriba una Observacion">

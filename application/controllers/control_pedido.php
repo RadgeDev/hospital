@@ -104,44 +104,33 @@ function guardaringreso() {
 	if ($this->input->is_ajax_request()) {
 
 			$nfolio	= $this->input->post("minfolio");
-            $tipoingresocod	= $this->input->post("mitipoingresocod");
-            $tipoingresonombre= $this->input->post("mitipoingresonombre");
-            $ndocumento= $this->input->post("mindocumento");
-            $nfolio= $this->input->post("minfolio");
+            $fecha	= $this->input->post("mifecha");
+            $hora= $this->input->post("mihora");
+            $deptocod= $this->input->post("mitipodeptocod");
+            $deptonombre= $this->input->post("mideptonombre");
             $tipocompracod= $this->input->post("mitipocompracod");
             $tipocompranombre = $this->input->post("mitipocompranombre");
-            $nombreproveedor = $this->input->post("minombreproveedor");
-            $rutproveedor= $this->input->post("mirutproveedor");
-            $fecha= $this->input->post("mifecha");
-            $nombreproduct= $this->input->post("minombreproduct");
-            $codbarraproduct= $this->input->post("micodbarraproduct");
-            $correlativoprod= $this->input->post("micorrelativoprod");
-            $comentarios= $this->input->post("micomentarios");
-            $descuento= $this->input->post("midescuento");
-            $neto= $this->input->post("mineto");
-            $iva = $this->input->post("miiva");
-            $total= $this->input->post("mitotal");
+            $codtiempo = $this->input->post("mitiempocod");
+            $nombretiempo= $this->input->post("mitiemponombre");
+            $pedidocod= $this->input->post("pedidocod");
+            $pedidonombre= $this->input->post("mipedidonombre");
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
 
 
    
    			$datos = array(
-   				"cod_compra" => $nfolio,
-				"tipo_documento" => $tipoingresonombre,
-				"numero_documento" => $ndocumento,
-				"tipo_compra" => $tipocompracod,
-				"tipo_compra_nombre" => $tipocompranombre,
-				"rut_proveedor" => $rutproveedor,
-				"nombre_proveedor" => $nombreproveedor,
+   				"folio" => $nfolio,
 				"fecha" => $fecha,
-				"neto" => $neto,
-				"iva" => $iva,
-				"total_compra" => $total,
-				"descuento" => $descuento,
-				"usuario" => $usuario,
-				"nombre_usuario" => $nombreusuario,
-				"comentarios" => $comentarios
+				"hora" => $hora,
+				"cod_depto" => $deptocod,
+				"depto" => $deptonombre,
+				"cod_tipo_pedido" => $rutproveedor,
+				"tipo_pedido" => $nombreproveedor,
+				"tiempo_pedido" => $nombretiempo,
+				"rut" => $usuario,
+				"nombre" => $nombreusuario,
+				"comentario"=> $micomentario
 				);
    	
 		if($this->Compra_ingreso_model->guardar($datos)==true){

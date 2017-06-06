@@ -1,5 +1,5 @@
   $(document).on("ready", main);
-  //$(document).on("ready", desabilitarcontroles);
+  $(document).on("ready", desabilitarcontroles);
     
 function main(){
   $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
@@ -19,7 +19,7 @@ for(i=0; i<textfields.length; i++){
   });
 
 
-//setTimeout("mostrarhora()",1000); 
+//setTimeout("prueba()",1000); 
 numerofolio();
 
 
@@ -81,7 +81,10 @@ $("#combo_tipocompra").change(function(){
 	});
 
 function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo,mibodega){
-
+var tiempo = $("#combo_tiempo").val();
+    if ( tiempo =="0") {  
+  $('#tbproductos').children( 'tr:not(:first)' ).remove();
+    }else {
 	$.ajax({
 		url : "http://localhost/hospital/control_producto/mostrar2",
 		type: "POST",
@@ -95,10 +98,12 @@ function mostrarDatos(valorBuscar,pagina,cantidad,valorcombo,mibodega){
 			});
 
 			$("#tbproductos tbody").html(filas);
-	
+
 
 		}
 	});
+    
+    }
 }
 
   
@@ -356,32 +361,36 @@ if (theneto==thenetodesc) {
 }
 
 
-/*
-function desabilitarcontroles() {
 
-$("#ndocumento").prop("readonly",true);
-$("#Comentarios").prop("readonly",true);
-$("#proveedorrut").prop("readonly",true);
+function desabilitarcontroles() {
+  //combos
+$("#combo_tiempo").prop("disabled",true);
 $("#combo_tipocompra").prop("disabled",true);
-$("#buscarproducto").prop("readonly",true);
-$("#descuento").prop("readonly",true);
-$("#agregarprov").prop("disabled",true);
-$("#agreganuevo").prop("disabled",true);
-$("#agregardesc").prop("disabled",true);
-$("#Agregandogrilla").prop("disabled",true);
-$("#guardaringreso").prop("disabled",true);
-$("#imprimiringreso").prop("disabled",true);
+$("#buscando").prop("disabled",true);
+//botones
+$("#guardarpedido").prop("disabled",true);
+$("#limpiarpedido").prop("disabled",true);
+$("#imprimirpedido").prop("disabled",true);
+$("#cantidadpag").prop("disabled",true);
+
+//inputs
+$("#busqueda").prop("readonly",true);
+$("#micomentario").prop("readonly",true);
+
+
 }
 
 
-$("select[name=combo_tipoingreso]").change(function(){
-    var porNombre=document.getElementsByName("combo_tipoingreso")[0].value;
+$("select[name=combo_depto]").change(function(){
+    var porNombre=document.getElementsByName("combo_depto")[0].value;
          if (porNombre==0) {
-         $("#ndocumento").prop("readonly",true);
-         $("#ndocumento").val("");
+       $("#combo_tiempo").prop("disabled",true);
+       $("#combo_tiempo").val('0');
+       $("#combo_tipocompra").prop("disabled",true);
+       $("#combo_tipocompra").val('0');
             } else{
             	      
-           $("#ndocumento").prop("readonly",false);
+          $("#combo_tiempo").prop("disabled",false);
 
             }    
  });
@@ -434,9 +443,45 @@ $("#Comentarios").prop("readonly",false);
 
 
 $("select[name=combo_pedido]").change(function(){
-	   var porNombre=document.getElementsByName("combo_pedido")[0].value;
-     alert(porNombre);
-    /*   if (porNombre==0) {
+	   var valorcombopedido=document.getElementsByName("combo_pedido")[0].value;
+       var tiempo = $("#combo_tiempo").val();
+  if ( tiempo =="1") {  
+ $.ajax({
+    url:"http://localhost/hospital/control_bodega/editando",
+    type:"POST",
+    dataType:"json",
+    data:{id:valorcombopedido},
+    success:function(respuesta){
+    $.each(respuesta.obtener,function(key,item){
+     $("#recepcion").val(item.horario_recepcion);  
+     $("#entrega").val(item.horario_entrega);
+  });
+    }
+  });
+  }else if(tiempo =="2") {
+$("#recepcion").val("Primeros 5 dias habiles");  
+$("#entrega").val("6 dia habil");
+}else{
+   swal("Error", "Eliga un tiempo de pedidos EJ:semanal", "error");
+   //  $('#tbproductos').children( 'tr:not(:first)' ).remove();
+   filas="";
+   		$("#tbproductos tbody").html(filas);
+}
+
+
+  if (valorcombopedido==0) {
+       $("#buscando").prop("disabled",true);
+       $("#buscando").val('nombre');
+        $("#busqueda").prop("readonly",true);
+         $("#busqueda").val("");
+            } else{
+           	      
+          $("#buscando").prop("disabled",false);
+            $("#busqueda").prop("readonly",false);
+            }    
+
+ });
+    /*   if (valorcombopedido==0) {
          $("#proveedorrut").prop("readonly",true);
          $("#agregarprov").prop("disabled",true);
          $("#proveedorrut").val("");
@@ -446,44 +491,23 @@ $("select[name=combo_pedido]").change(function(){
            $("#agregarprov").prop("disabled",false);
 
             }    */
- $.ajax({
-    url:"http://localhost/hospital/control_bodega/editando",
-    type:"POST",
-    dataType:"json",
-    data:{id:porNombre},
-    success:function(respuesta){
-    $.each(respuesta.obtener,function(key,item){
-     $("#recepcion").val(item.horario_recepcion);  
-     $("#entrega").val(item.horario_entrega);
-
-  });
-    }
-  });
-
-    
- 
- });
-
 
 
 
 ///guardar
-$("select[name=cod_combo]").change(function(){
-            $('input[name=combocorrelativo]').val($(this).val());  
-            var varieble = $("#combocorrelativo").val();
-            if (varieble==='Elige una opcion') {
-            $("#combocorrelativo").val("");  
+$("select[name=combo_tiempo]").change(function(){
+     var porNombre=document.getElementsByName("combo_tiempo")[0].value;
+         if (porNombre==0) {
+       $("#combo_tipocompra").prop("disabled",true);
+       $("#combo_tipocompra").val('0');
+            } else{
+            	      
+          $("#combo_tipocompra").prop("disabled",false);
+
             }    
  });
 
-$("select[name=medida]").change(function(){
-            $('input[name=seleccion]').val($(this).val());
-            var varieble = $("#seleccion").val();
-            if (varieble==='Seleccione una opcion') {
-            $("#seleccion").val("");
-             }
-   
- });
+
 
 $('#codigobarra').keypress(function(e){
     if(e.which == 13){
@@ -588,10 +612,7 @@ $("#formGuardar").submit(function (event){
 
    $(this).closest("tr").remove(); 
         calculartotal() ;
-        habilitando() ;
-           
   swal("Producto eliminado de la lista!", "Registro eliminado.", "error");
-
 });
 
 function numerofolio(){
@@ -640,69 +661,39 @@ $.ajax({
          }
        }
 
-function guardaringreso() {
+function guardarpedido() {
 
 numerofolio();
 
-var tipoingresocod=document.getElementsByName("combo_tipoingreso")[0].value;	
-var tipoingresonombre = $("#combo_tipoingreso option:selected").text();
-var ndocumento= $("#ndocumento").val();
-var nfolio= $("#folio").val();
-var tipocompracod=document.getElementsByName("combo_tipocompra")[0].value;	
-var tipocompranombre = $("#combo_tipocompra option:selected").text();
-var nombreproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('value');
-var rutproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('id');
-var proveedortexto= $("#proveedorrut").val();
-var fecha= $("#datetimepicker1").val();
+var tipodeptocod=document.getElementsByName("combo_depto")[0].value;	
+var deptonombre = $("#combo_depto option:selected").text();
 var hora= $("#hora").val();
-var nombreproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
-var codbarraproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('id');
-var correlativoprod=$("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
-var productotexto= $("#buscarproducto").val();
-var comentarios= $("#Comentarios").val();
-var descuento= $("#descuento").val();
-var valorfactura= $("#valorfactura").val();
-var neto= $("#neto").val();
-var iva = $("#iva").val();
-var total= $("#total").val(); 
-var text = document.getElementById("proveedorrut"),
-    element = document.getElementById("misproveedores2");
+var fecha= $("#datetimepicker1").val();
+var nfolio= $("#folio").val();
+var tiempocod=document.getElementsByName("combo_tiempo")[0].value;	
+var tiemponombre = $("#combo_tiempo option:selected").text();
+var pedidocod=document.getElementsByName("combo_pedido")[0].value;	
+var pedidonombre = $("#combo_tipocompra option:selected").text();
 
-     var comprobar=""
-   
-   if(element.querySelector("option[value='"+text.value+"']")){
-  comprobar="bien";
-   }
-    else{
-     comprobar="mal";
-    }
- 
-if (tipoingresocod==0) {
+if (tipodeptocod==0) {
 swal("Error!", "Ingrese un tipo de ingreso", "error");
-}else if (ndocumento==="") {
-swal("Error!", "Ingrese un N° documento", "error");
-}else if (nfolio==="") {
-swal("Error!", "Ingrese un N° Folio", "error");
-}else if (tipocompracod==0) {
+}else if (tipotiempocod==0) {
 swal("Error!", "Ingrese un tipo compra", "error");
-}else if (comprobar==="mal"||proveedortexto==="") {
-swal("Error!", "Ingrese un proveedor", "error");
+}else if (tipopedidocod==0) {
+swal("Error!", "Ingrese un tipo compra", "error");
+}else if (hora==="") {
+swal("Error!", "Ingrese un N° documento", "error");
 }else if (fecha==="") {
 swal("Error!", "Ingrese un fecha", "error");
-}else if (descuento===""||descuento<0) {
-swal("Error!", "Ingrese un decuento valido", "error");
-$("#descuento").val(0);
-}else if (valorfactura===""||valorfactura==0) {
-swal("Error!", "Ingrese un producto ala lista", "error");
-}else if (total===""||total==0) {
-swal("Error!", "Ingrese un producto ala lista", "error");
+}else if (nfolio==="") {
+swal("Error!", "Ingrese un fecha", "error");
 }else{
   event.preventDefault();
 $.ajax({
 
     url:"http://localhost/hospital/control_compra_ingreso/guardaringreso",
     type:"POST",
-    data:{minfolio:nfolio,mitipoingresocod:tipoingresocod,mitipoingresonombre:tipoingresonombre,mindocumento:ndocumento,minfolio:nfolio,mitipocompracod:tipocompracod,mitipocompranombre:tipocompranombre,minombreproveedor:nombreproveedor,mirutproveedor:rutproveedor,mifecha:fecha,minombreproduct:nombreproduct,micodbarraproduct:codbarraproduct,micorrelativoprod:correlativoprod,micomentarios:comentarios,midescuento:descuento,mineto:neto,miiva:iva,mitotal:total},
+    data:{minfolio:nfolio,mitipodeptocod:tipodeptocod,mideptonombre:deptonombre,mihora:hora,mifecha:fecha,mitiempocod:tiempocod,mitiemponombre:tiemponombre,mipedidocod:pedidocod,mipedidonombre:pedidonombre},
     dataType:"json",
     success:function(respuesta){
     	   guardardetalle();
@@ -809,8 +800,7 @@ $("#nombre , #lote , #nombre").on('input', function(evt) {
 
 
  function addProductotabla(obj) {
- codseleccionado = obj.getAttribute("href");
-
+  codseleccionado = obj.getAttribute("href");
   $.ajax({
     url:"http://localhost/hospital/control_producto/editando",
     type:"POST",
@@ -827,7 +817,7 @@ $("#nombre , #lote , #nombre").on('input', function(evt) {
     }
 
   });
-
+    
 }
 
 function tabladuplicada(){
@@ -842,3 +832,25 @@ $('#tbpedidos tr').each(function() {
      }
 });
     }
+function cambiacontenidotabla(){
+  var rowCount = $('#tbpedidos tr').length;
+  if(rowCount>1){
+$("#guardarpedido").prop("disabled",false);
+$("#limpiarpedido").prop("disabled",false);
+$("#cantidadpag").prop("disabled",false);
+$("#micomentario").prop("readonly",false);
+  }
+  else
+  {
+ $("#guardarpedido").prop("disabled",true);
+$("#limpiarpedido").prop("disabled",true);
+$("#imprimirpedido").prop("disabled",true);
+$("#cantidadpag").prop("disabled",true);
+$("#micomentario").prop("readonly",true);
+  }
+
+
+}
+$("#tbpedidos").bind("DOMSubtreeModified", function() {
+    cambiacontenidotabla();
+});
