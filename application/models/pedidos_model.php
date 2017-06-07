@@ -29,7 +29,7 @@ class Pedidos_model extends CI_Model {
 	}
 
 	function guardar($data) {
-		$this->db->insert("compra",$data);
+		$this->db->insert("pedidos",$data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -157,7 +157,7 @@ $query=$this->db->get();
 
 
 public function guardardetalle($data) {
-    $this->db->insert('detalle_compra', $data);
+    $this->db->insert('detalle_pedido', $data);
     if ($this->db->affected_rows() > 0) {
 			return true;
 		}

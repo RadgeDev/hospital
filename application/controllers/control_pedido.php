@@ -98,13 +98,14 @@ function fecha(){
    echo date("d-m-Y");
 }
 
-function guardaringreso() {
+function guardarpedido() {
 		//El metodo is_ajax_request() de la libreria input permite verificar
 		//si se esta accediendo mediante el metodo AJAX 
 	if ($this->input->is_ajax_request()) {
 
 			$nfolio	= $this->input->post("minfolio");
             $fecha	= $this->input->post("mifecha");
+			$mifecha= date('Y-m-d', strtotime($fecha));
             $hora= $this->input->post("mihora");
             $deptocod= $this->input->post("mitipodeptocod");
             $deptonombre= $this->input->post("mideptonombre");
@@ -112,28 +113,28 @@ function guardaringreso() {
             $tipocompranombre = $this->input->post("mitipocompranombre");
             $codtiempo = $this->input->post("mitiempocod");
             $nombretiempo= $this->input->post("mitiemponombre");
-            $pedidocod= $this->input->post("pedidocod");
+            $pedidocod= $this->input->post("mipedidocod");
             $pedidonombre= $this->input->post("mipedidonombre");
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
-
+            $comentario= $this->input->post("micomentario");
 
    
    			$datos = array(
    				"folio" => $nfolio,
-				"fecha" => $fecha,
+				"fecha" => $mifecha,
 				"hora" => $hora,
 				"cod_depto" => $deptocod,
 				"depto" => $deptonombre,
-				"cod_tipo_pedido" => $rutproveedor,
-				"tipo_pedido" => $nombreproveedor,
+				"cod_tipo_pedido" => $pedidocod,
+				"tipo_pedido" => $pedidonombre,
 				"tiempo_pedido" => $nombretiempo,
 				"rut" => $usuario,
 				"nombre" => $nombreusuario,
-				"comentario"=> $micomentario
+				"comentario"=> $comentario
 				);
    	
-		if($this->Compra_ingreso_model->guardar($datos)==true){
+		if($this->Pedidos_model->guardar($datos)==true){
   $data = array(
 			"miresultado" =>"bien"
          	);
@@ -157,50 +158,18 @@ function guardardetalle() {
 
           foreach($data->datos as $d) {
             $filter_data = array(
-            "cod_compra" => $d->folio,
+            "folio" => $d->folio,
             "cod_producto" => $d->codinterno,
             "cod_barra" => $d->codbarra,
-             "nombre_prod" => $d->nombre,
-            "numero_lote" => $d->lote,
-             "fecha_vencimiento" => $d->fechavenc,
-             "cantidad" => $d->cantidad,
-             "precio" => $d->valor,
-             "total" => $d->total
+            "nombre_prod" => $d->nombre,
+            "cantidad" => $d->cantidad 
         );
             
        //Call the save method
-       $this->Compra_ingreso_model->guardardetalle($filter_data);
-    }
-
-foreach($data->datos as $d) {
-$micodigo=$d->codinterno;
-$cantidadactual= $this->Compra_ingreso_model->get_cantidad($micodigo);
-print_r($cantidadactual);
-$actual=0;
-foreach( $cantidadactual  as $r){
-   $actual = $r->cantidad;
-}
-$micantidadingresar=$d->cantidad;
-(int)$totalcantidad=(int)$micantidadingresar+(int)$actual;
-$datosactualizar = array(
-				"cantidad" =>$totalcantidad
-				
-
-			);	
- $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
-			}	
-
-    if ($this->db->trans_status() === FALSE) {
-        $this->db->trans_rollback();
-        echo json_encode("Failed to Save Data");
-    } else {
-        $this->db->trans_commit();
-        echo json_encode("Success!");
+       $this->Pedidos_model->guardardetalle($filter_data);
     }
 
 
-
-	
 	}
 
 function editando() {

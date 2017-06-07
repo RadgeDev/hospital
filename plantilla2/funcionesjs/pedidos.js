@@ -43,9 +43,8 @@ function fechaserver() {
       url:"http://localhost/hospital/control_pedido/fecha",
        success: function(data) {
        $( "#datetimepicker1" ).val(data);
-        
 
-       }
+}       
       });
      }
 fechaserver();
@@ -394,52 +393,6 @@ $("select[name=combo_depto]").change(function(){
 
             }    
  });
-/*
-function habilitando() {
-var mitexto=$("#ndocumento").val();
-if (mitexto=="") {
-	$("#combo_tipocompra").val('0');
-	$("#combo_tipocompra").prop("disabled",true);
-}else{
-	$("#combo_tipocompra").prop("disabled",false);
-}
-
-var mitexto2=$("#proveedorrut").val();
-if (mitexto2=="") {
-$("#buscarproducto").val("");
-$("#buscarproducto").prop("readonly",true);
-$("#Agregandogrilla").prop("disabled",true);
-$("#agreganuevo").prop("disabled",true);
-}else{
-$("#buscarproducto").prop("readonly",false);
-$("#Agregandogrilla").prop("disabled",false);
-$("#agreganuevo").prop("disabled",false);
-}
-var valorfactura=$("#valorfactura").val();
-if (valorfactura==0 || valorfactura==="") {
-$("#neto").val(0);
-$("#iva").val(0);
-$("#total").val(0);
-$("#descuento").val(0);
-$("#guardaringreso").prop("disabled",true);
-$("#agregardesc").prop("disabled",true);
-$("#descuento").prop("readonly",true);
-$("#Comentarios").prop("readonly",true);
-
-}else{
-$("#descuento").val(0);
-$("#guardaringreso").prop("disabled",false);
-$("#agregardesc").prop("disabled",false);
-$("#descuento").prop("readonly",false);
-$("#Comentarios").prop("readonly",false);
-
-}
-
-}*/
-
-
-
-
 
 
 $("select[name=combo_pedido]").change(function(){
@@ -479,32 +432,25 @@ $("#entrega").val("6 dia habil");
           $("#buscando").prop("disabled",false);
             $("#busqueda").prop("readonly",false);
             }    
-
+        filas="";
+   		$("#tbpedidos tbody").html(filas);
  });
-    /*   if (valorcombopedido==0) {
-         $("#proveedorrut").prop("readonly",true);
-         $("#agregarprov").prop("disabled",true);
-         $("#proveedorrut").val("");
-            } else{
-            	      
-           $("#proveedorrut").prop("readonly",false);
-           $("#agregarprov").prop("disabled",false);
-
-            }    */
+   
 
 
 
-///guardar
+///horario mensual
 $("select[name=combo_tiempo]").change(function(){
      var porNombre=document.getElementsByName("combo_tiempo")[0].value;
          if (porNombre==0) {
        $("#combo_tipocompra").prop("disabled",true);
        $("#combo_tipocompra").val('0');
-            } else{
-            	      
+      }  else if(porNombre==2){ 
+      $("#recepcion").val("Primeros 5 dias habiles");  
+       $("#entrega").val("6 dia habil");
+       }else{  	      
           $("#combo_tipocompra").prop("disabled",false);
-
-            }    
+            }   
  });
 
 
@@ -669,6 +615,7 @@ var tipodeptocod=document.getElementsByName("combo_depto")[0].value;
 var deptonombre = $("#combo_depto option:selected").text();
 var hora= $("#hora").val();
 var fecha= $("#datetimepicker1").val();
+var comentarios= $("#micomentario").val();
 var nfolio= $("#folio").val();
 var tiempocod=document.getElementsByName("combo_tiempo")[0].value;	
 var tiemponombre = $("#combo_tiempo option:selected").text();
@@ -677,9 +624,9 @@ var pedidonombre = $("#combo_tipocompra option:selected").text();
 
 if (tipodeptocod==0) {
 swal("Error!", "Ingrese un tipo de ingreso", "error");
-}else if (tipotiempocod==0) {
+}else if (tiempocod==0) {
 swal("Error!", "Ingrese un tipo compra", "error");
-}else if (tipopedidocod==0) {
+}else if (pedidocod==0) {
 swal("Error!", "Ingrese un tipo compra", "error");
 }else if (hora==="") {
 swal("Error!", "Ingrese un N° documento", "error");
@@ -688,25 +635,31 @@ swal("Error!", "Ingrese un fecha", "error");
 }else if (nfolio==="") {
 swal("Error!", "Ingrese un fecha", "error");
 }else{
+
   event.preventDefault();
 $.ajax({
 
-    url:"http://localhost/hospital/control_compra_ingreso/guardaringreso",
+    url:"http://localhost/hospital/control_pedido/guardarpedido",
     type:"POST",
-    data:{minfolio:nfolio,mitipodeptocod:tipodeptocod,mideptonombre:deptonombre,mihora:hora,mifecha:fecha,mitiempocod:tiempocod,mitiemponombre:tiemponombre,mipedidocod:pedidocod,mipedidonombre:pedidonombre},
+    data:{minfolio:nfolio,mitipodeptocod:tipodeptocod,mideptonombre:deptonombre,mihora:hora,mifecha:fecha,mitiempocod:tiempocod,mitiemponombre:tiemponombre,mipedidocod:pedidocod,mipedidonombre:pedidonombre,micomentario:comentarios},
     dataType:"json",
     success:function(respuesta){
-    	   guardardetalle();
+    	  guardardetalle();
          console.log(respuesta);
        $("#msg-error3").hide();
        $("#msg-bien").show();
        swal("Exito!", "Ingreso guardado.", "success");
        window.location.hash = '#msg-bien';
-             desabilitarcontroles();
-       $("#imprimiringreso").prop("disabled",false);
-       $("#combo_tipoingreso").prop("disabled",true);
        $("#tbproductos").find("input,button,textarea,select").attr("disabled", "disabled");
-
+       $("#tbpedidos").find("input,button,textarea,select,div").attr("disabled", "disabled").off('click');
+    var editable_elements = document.querySelectorAll("[contenteditable=true]");
+      for(var i=0; i<editable_elements.length; i++)
+       editable_elements[i].setAttribute("contenteditable", false);
+      desabilitarcontroles();
+       $("#imprimirpedido").prop("disabled",false);
+       $("#combo_depto").prop("disabled",true);
+       $("#guardarpedido").prop("disabled",true);
+      
             },
            error:function(){
               console.log('error');// solo ingresa a esta parte
@@ -726,9 +679,9 @@ function guardardetalle(){
 var miJSON="";
 var datostabla={datos:[]};
  var obj = JSON.parse(JSON.stringify(datostabla));
-	$("#tbproductos tbody tr").each(function (index) 
+	$("#tbpedidos tbody tr").each(function (index) 
         {
-            var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;
+            var micodinterno, micodbarra, minombre,micantidad;
             $(this).children("td").each(function (index2) 
             {
                 switch (index2) 
@@ -739,29 +692,22 @@ var datostabla={datos:[]};
                             break;
                     case 2: minombre = $(this).text();
                             break;
-                    case 3: milote = $(this).text();
+                    case 3: micantidad = $(this).text();
                             break;
-                    case 4: mifechavenc = $(this).text();
-                            break;
-                    case 5: micantidad = $(this).text();
-                            break;
-                    case 6: mivalor = $(this).text();
-                            break;
-                    case 7: mitotal = $(this).text();
-                            break;
+                  
                 }
                
             })
 
          var nfolio= $("#folio").val();
          //  var obj = JSON.parse('[datostabla]');
-              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
+              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"cantidad":micantidad});
      
 //var miJSON = JSON.encode(obj);
             //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
         })
 
-$.post('http://localhost/hospital/control_compra_ingreso/guardardetalle', {sendData: JSON.stringify(obj)}, function(res) {
+$.post('http://localhost/hospital/control_pedido/guardardetalle', {sendData: JSON.stringify(obj)}, function(res) {
     console.log(res);
 }, "json");
    
@@ -854,3 +800,46 @@ $("#micomentario").prop("readonly",true);
 $("#tbpedidos").bind("DOMSubtreeModified", function() {
     cambiacontenidotabla();
 });
+
+
+
+
+function prueba(){
+
+ var midia  ="";
+ //hora
+
+
+var iniciopedido = new Date();
+iniciopedido.setHours(9,40,0); // 5.30 pm
+alert(iniciopedido);
+var finpedido = new Date();
+finpedido.setHours(23,59,0); // 6.30 pm
+
+
+    //fecha
+    var date = $("#datetimepicker1").val();
+    var dateParts = date.split("-");
+    var date = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+    switch(date.getDay()){
+    case 1:  midia="lunes"; break;
+    case 2:  midia="martes"; break;
+    case 3:  midia="miercoles"; break;
+    case 4:  midia="jueves"; break;
+    case 5:  midia="viernes"; break;
+    default: midia="nopermitir";
+  }//fin switch
+  alert(midia);
+ var mihora = $("#hora").val();
+var miii = new Date();
+miii.setHours(23,59,0); // 6.30 pm
+ 
+    alert(mihora);
+if(mihora >= iniciopedido && mihora < finpedido && midia=="viernes"){
+  alert("yes!");
+}else{
+   alert("nope, sorry! ");
+}
+
+
+}//fin clase bloquear personal

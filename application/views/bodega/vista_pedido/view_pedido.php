@@ -49,12 +49,12 @@
             <div class="col-lg-2 col-sm-2">
          
                <label>Horario Recepcion </label>
-                <input type="text" id="recepcion" style="background:yellow;color:red;font-weight:bold;" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Recepcion">
+                <input type="text" id="recepcion" style="background:yellow;color:red;font-weight:bold;"   class="form-control" maxlength="25" readonly="" placeholder="Horario Recepcion">
             
             </div>
               <div class="col-lg-2 col-sm-2">
                <label>Horario Entrega </label>
-                <input type="text" id="entrega" style="background:yellow;color:red;font-weight:bold;" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25" readonly="" placeholder="Horario Entrega">
+                <input type="text" id="entrega" style="background:yellow;color:red;font-weight:bold;"   class="form-control" maxlength="25" readonly="" placeholder="Horario Entrega">
             
             </div>
 
@@ -204,7 +204,7 @@
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
              <button type="button"  id="limpiarpedido" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
              <button type="button" id="imprimirpedido" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
-             <button type="button" id="guardarpedido" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
+             <button type="button" id="guardarpedido" onclick="guardarpedido();" class="btn btn-success" > Guardar Ingreso </button>  
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
 <input type="text" id="micomentario"  class="form-control" placeholder="Escriba una Observacion">
