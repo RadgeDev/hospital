@@ -7,35 +7,40 @@ class Control_salida extends CI_Controller {
 		$this->load->model("Compra_ingreso_model");
 		$this->load->model("Salida_model");
 	    $this->load->model("Producto_model");
+		 $this->load->model("Pedidos_model");
 	}
 
 	public function index(){
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
-		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
-		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
+		$datosdepto['arrayTipodepto'] = $this->Pedidos_model->get_depto();
 	  $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
 	  
-		$this->load->view("bodega/vista_salida/view_salidas",array_merge($datostipoingreso, $datostipocompra,$datoscorrelativo));
+		$this->load->view("bodega/vista_salida/view_salidas",array_merge($datosdepto,$datoscorrelativo));
 		$this->load->view("bodega/vista_salida/footer2");
 	}
 
-	public function mostrar()
+	public function mostrarpedido()
 	{	
 		//valor a Buscar
 		$buscar = $this->input->post("buscar");
-		$numeropagina = $this->input->post("nropagina");
-		$cantidad = $this->input->post("cantidad");
-		$combobuscar= $this->input->post("valorcombos");
-		$inicio = ($numeropagina -1)*$cantidad;
 		$data = array(
-			"obtener" => $this->Producto_model->buscar($buscar,$inicio,$cantidad,$combobuscar),
-			"totalregistros" => count($this->Producto_model->buscar($buscar)),
-			"cantidad" =>$cantidad
-			
+			"obtener" => $this->Salida_model->buscar($buscar)
 		);
 		echo json_encode($data);
 	}
+
+		public function cargartabla()
+	{	
+		//valor a Buscar
+		$buscar = $this->input->post("buscar");
+		$data = array(
+			"obtener" => $this->Salida_model->cargartabla($buscar)
+		);
+		echo json_encode($data);
+	}
+
+
 function devolverarray() {
 $datosproveedor = array(
 			"proveedor" => $this->Compra_ingreso_model->get_proveedor()
@@ -45,7 +50,7 @@ $datosproveedor = array(
 }
 function devolverfolio() {
 $datosfolior = array(
-			"folio" => $this->Compra_ingreso_model->obtenerfolio()
+			"folio" => $this->Salida_model->obtenerfolio()
 			
 		);
 	echo json_encode($datosfolior);

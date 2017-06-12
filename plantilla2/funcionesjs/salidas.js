@@ -1,10 +1,10 @@
     $(document).on("ready", main);
-   $(document).on("ready", mostrarProveedores);
-   $(document).on("ready", mostrarProductos);
-      $(document).on("ready", desabilitarcontroles);
+ //  $(document).on("ready", mostrarProveedores);
+ //  $(document).on("ready", mostrarProductos);
+   //   $(document).on("ready", desabilitarcontroles);
     
 function main(){
-  setInterval(obtenerCorrelativo, 400);
+  //setInterval(obtenerCorrelativo, 400);
 var now = new Date();
 $( "#datetimepicker1" ).datepicker({dateFormat:"dd-mm-yy"}).datepicker("setDate",new Date());
 
@@ -51,39 +51,66 @@ alert(fechatotal);
 
 
 }
+$("select[name=combo_depto]").change(function(){
+ var depto = $("#combo_depto").val();
+mostrarDatos(depto);     
+ });
 
+function mostrarDatos(valorBuscar){
 
-$("#proveedorGuardar").submit(function (event){
+    if ( valorBuscar =="0") {  
+  $('#tbpedidos').children( 'tr:not(:first)' ).remove();
+    }else {
+	$.ajax({
+		url : "http://localhost/hospital/control_salida/mostrarpedido",
+		type: "POST",
+		data: {buscar:valorBuscar},
+		dataType:"json",
+		success:function(response){
+			
+			filas = "";
+			$.each(response.obtener,function(key,item){
+				filas+="<tr class='active' ><td >"+item.depto+"</td><td>"+item.comentario+"</td><td>"+item.estado+"</td><td>"+item.fecha+"</td><td>"+item.hora+"</td><td><button href='"+item.folio+"'  id='agregar' onclick='Agregarpedidotabla(this);'  class= 'addBtn  btn btn-success '  >+</button></td><td> <button href='"+item.folio+"'  id='eliminar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+			});
 
-    event.preventDefault();
-
-    $.ajax({
-      url:$("#proveedorGuardar").attr("action"),
-      type:$("#proveedorGuardar").attr("method"),
-      data:$("#proveedorGuardar").serialize(),
-      success:function(respuesta){
-       
-        if (respuesta === "Registro Guardado") {
+			$("#tbpedidos tbody").html(filas);
          
-           $('#myModalproveedor').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
-           $('#proveedorGuardar').get(0).reset();//resetea  los campos del formulario
-        } else if (respuesta === "No se pudo guardar los datos") {
-          swal("Error", "Error revise si los datos estan correctos", "error");
-        }
-        else
-        {
+
+		}
+	});
     
-          $("#msg-error").show();
-          $(".list-errors").html(respuesta);
-        }
-borrardatalist();
-mostrarProveedores();
+    }
+       $('#modal_pedidos').modal('show');
+}
 
-      }
-    });
-  });
 
+function Agregarpedidotabla(obj){
+valorBuscar = obj.getAttribute("href");
+alert(valorBuscar);
+    if ( valorBuscar =="0") {  
+  $('#tbproductos').children( 'tr:not(:first)' ).remove();
+    }else {
+	$.ajax({
+		url : "http://localhost/hospital/control_salida/cargartabla",
+		type: "POST",
+		data: {buscar:valorBuscar},
+		dataType:"json",
+		success:function(response){
+			
+			filas = "";
+			$.each(response.obtener,function(key,item){
+				filas+="<tr class='active' ><td >"+item.depto+"</td><td>"+item.comentario+"</td><td>"+item.estado+"</td><td>"+item.fecha+"</td><td>"+item.hora+"</td><td><button href='"+item.folio+"'  id='agregar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-success '  >+</button></td><td> <button href='"+item.folio+"'  id='eliminar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+			});
+
+			$("#tbpedidos tbody").html(filas);
+         
+
+		}
+	});
+    
+    }
+       $('#modal_pedidos').modal('show');
+}
   function cerrarModal() {
   $("#msg-error").hide();
     $("#msgerrorut").hide();
@@ -420,7 +447,7 @@ if (theneto==thenetodesc) {
 
 
 function desabilitarcontroles() {
-
+/*
 $("#ndocumento").prop("readonly",true);
 $("#Comentarios").prop("readonly",true);
 $("#proveedorrut").prop("readonly",true);
@@ -433,6 +460,7 @@ $("#agregardesc").prop("disabled",true);
 $("#Agregandogrilla").prop("disabled",true);
 $("#guardaringreso").prop("disabled",true);
 $("#imprimiringreso").prop("disabled",true);
+*/
 }
 
 
@@ -448,47 +476,7 @@ $("select[name=combo_tipoingreso]").change(function(){
             }    
  });
 
-function habilitando() {
-var mitexto=$("#ndocumento").val();
-if (mitexto=="") {
-	$("#combo_tipocompra").val('0');
-	$("#combo_tipocompra").prop("disabled",true);
-}else{
-	$("#combo_tipocompra").prop("disabled",false);
-}
 
-var mitexto2=$("#proveedorrut").val();
-if (mitexto2=="") {
-$("#buscarproducto").val("");
-$("#buscarproducto").prop("readonly",true);
-$("#Agregandogrilla").prop("disabled",true);
-$("#agreganuevo").prop("disabled",true);
-}else{
-$("#buscarproducto").prop("readonly",false);
-$("#Agregandogrilla").prop("disabled",false);
-$("#agreganuevo").prop("disabled",false);
-}
-var valorfactura=$("#valorfactura").val();
-if (valorfactura==0 || valorfactura==="") {
-$("#neto").val(0);
-$("#iva").val(0);
-$("#total").val(0);
-$("#descuento").val(0);
-$("#guardaringreso").prop("disabled",true);
-$("#agregardesc").prop("disabled",true);
-$("#descuento").prop("readonly",true);
-$("#Comentarios").prop("readonly",true);
-
-}else{
-$("#descuento").val(0);
-$("#guardaringreso").prop("disabled",false);
-$("#agregardesc").prop("disabled",false);
-$("#descuento").prop("readonly",false);
-$("#Comentarios").prop("readonly",false);
-
-}
-
-}
 
 
 
@@ -542,7 +530,7 @@ $('#codigobarra').keypress(function(e){
     }
   });
 
-
+/*
 function obtenerCorrelativo() {
 var porId=document.getElementById("cod_combo").value;
 if (porId==0) {
@@ -575,7 +563,7 @@ $("#codigo").val("");
   }
   }
 
-
+*/
 function solonumeros(e){
        key = e.keyCode || e.which;
        tecla = String.fromCharCode(key).toLowerCase();
@@ -597,36 +585,6 @@ function solonumerosenteros(e){
             return false;
         }
     }
-$("#formGuardar").submit(function (event){
-
-    event.preventDefault();
-
-    $.ajax({
-      url:$("#formGuardar").attr("action"),
-      type:$("#formGuardar").attr("method"),
-      data:$("#formGuardar").serialize(),
-      success:function(respuesta){
-       
-        if (respuesta === "Registro Guardado") {
-         
-           $('#myModalguardar').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
-           $('#formGuardar').get(0).reset();//resetea  los campos del formulario
-             $("#msg-error2").hide();
-        } else if (respuesta === "No se pudo guardar los datos") {
-          swal("Error", "Error revise si los datos estan correctos", "error");
-        }
-        else
-        {
-    
-          $("#msg-error2").show();
-          $(".list-errors2").html(respuesta);
-        }
-     borrardatalist2();
-  mostrarProductos();
-      }
-    });
-  });
 
 
 
@@ -642,7 +600,7 @@ $("#formGuardar").submit(function (event){
 
 function numerofolio(){
 $.ajax({
-		url : "http://localhost/hospital/control_compra_ingreso/devolverfolio",
+		url : "http://localhost/hospital/control_salida/devolverfolio",
 		type: "POST",
 		dataType:"json",
 		success:function(response){
@@ -650,17 +608,18 @@ $.ajax({
 		
 			var filas2="";
 			$.each(response.folio,function(key,item){
-				filas2+=item.codcompra;
+				filas2+=item.codsalida;
 
 			});
  
 
           nuevofolio=parseInt(filas2) + 1;
-         $("#folio").val(nuevofolio);
+         $("#nsalida").val(nuevofolio);
        
 		}
 			});	
 }
+
  function listarproductos(){
      var text2 = document.getElementById("buscarproducto"),
          element2 = document.getElementById("buscandoprod");

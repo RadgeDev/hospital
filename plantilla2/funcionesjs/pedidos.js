@@ -496,6 +496,7 @@ $.ajax({
 
 
 function guardardetalle(){
+  alert("hola");
 var miJSON="";
 var datostabla={datos:[]};
  var obj = JSON.parse(JSON.stringify(datostabla));

@@ -118,7 +118,7 @@ function guardarpedido() {
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
             $comentario= $this->input->post("micomentario");
-
+            $estado="activo";
    
    			$datos = array(
    				"folio" => $nfolio,
@@ -131,7 +131,8 @@ function guardarpedido() {
 				"tiempo_pedido" => $nombretiempo,
 				"rut" => $usuario,
 				"nombre" => $nombreusuario,
-				"comentario"=> $comentario
+				"comentario"=> $comentario,
+				"estado"=>$estado
 				);
    	
 		if($this->Pedidos_model->guardar($datos)==true){

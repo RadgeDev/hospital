@@ -3,17 +3,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Salida_model extends CI_Model {
 
-	public function buscar($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE)
+	Public function buscar($buscar)
 	{
-		if ($valorbuscar==""){
-			$valorbuscar="cod_interno_prod";
-		}
-		$this->db->like($valorbuscar,$buscar);
-		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
-			$this->db->limit($cantidadregistro,$inicio);
-		}
-		$consulta = $this->db->get("producto");
-		return $consulta->result();
+$this->db->select('*');
+$this->db->from('pedidos');
+$this->db->where('cod_depto',$buscar)->where("(estado='Activo')");
+$query=$this->db->get();
+return $query->result();
+	}
+
+Public function cargartabla($buscar)
+	{
+$this->db->select('*');
+$this->db->from('pedidos');
+$this->db->where('folio',$buscar);
+$query=$this->db->get();
+return $query->result();
 	}
 
 
@@ -70,7 +75,7 @@ public function editando($codselec){
 
 	public function obtenerfolio(){
 
-               $query = $this->db-> query('SELECT max(cod_compra) AS codcompra FROM compra');
+               $query = $this->db-> query('SELECT max(cod_salida) AS codsalida FROM salidas');
                if ($query->num_rows() > 0) {
                return $query->result();
                 }else
