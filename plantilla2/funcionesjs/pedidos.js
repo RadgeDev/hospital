@@ -102,52 +102,6 @@ var tiempo = $("#combo_tiempo").val();
     
     }
 }
-
-  
-/*
-function mostrarhora(){ 
-momentoActual = new Date() ;
-hora = momentoActual.getHours() ;
-minuto = momentoActual.getMinutes() ;
-segundo = momentoActual.getSeconds() ;
-if (segundo<10) {
-	segundo="0"+segundo
-}
-if (minuto<10) {
-	minuto="0"+minuto
-}
-horaImprimible = hora + " : " + minuto + " : " + segundo ;
-$("#hora").val(horaImprimible);
-setTimeout("mostrarhora()",1000); 
-}
-
-
-
-function mostrarfecha() {
-var d= new Date();
-
-var dia = d.getDate(); 
-var mes =  ("0" + (d.getMonth() + 1));
-var anio = d.getFullYear(); 
-
-var fechatotal = dia + "/"+ mes +"/" + anio;
-
-$("#fechavencimiento").html('fechatotal');
-alert(fechatotal);
-
-
-}
-*/
-
-
-
-
-
-
-
-
-
-
  function soloLetras(e){
        key = e.keyCode || e.which;
        tecla = String.fromCharCode(key).toLowerCase();
@@ -166,32 +120,6 @@ alert(fechatotal);
             return false;
         }
     }
-
-  
-
-
-function borrardatalist(){
- 
-        var parent = document.getElementById("misproveedores2");
-        var childArray = parent.children;
-        var cL = childArray.length;
-        while(cL > 0) {
-            cL--;
-            parent.removeChild(childArray[cL]);
-        }
-}
-
-
-function borrardatalist2(){
- 
-        var parent = document.getElementById("buscandoprod");
-        var childArray = parent.children;
-        var cL = childArray.length;
-        while(cL > 0) {
-            cL--;
-            parent.removeChild(childArray[cL]);
-        }
-}
 
 
 $(function(){
@@ -285,6 +213,38 @@ $("select[name=combo_depto]").change(function(){
             }    
  });
 
+function desabilitarcontroles2() {
+  //combos
+$("#combo_tiempo").prop("disabled",true);
+$("#combo_tipocompra").prop("disabled",true);
+$("#buscando").prop("disabled",true);
+
+//botones
+$("#guardarpedido").prop("disabled",true);
+$("#limpiarpedido").prop("disabled",true);
+$("#imprimirpedido").prop("disabled",true);
+$("#cantidadpag").prop("disabled",true);
+
+//inputs
+$("#busqueda").prop("readonly",true);
+$("#micomentario").prop("readonly",true);
+
+}
+
+
+$("select[name=combo_depto]").change(function(){
+    var porNombre=document.getElementsByName("combo_depto")[0].value;
+         if (porNombre==0) {
+       $("#combo_tiempo").prop("disabled",true);
+       $("#combo_tiempo").val('0');
+       $("#combo_tipocompra").prop("disabled",true);
+       $("#combo_tipocompra").val('0');
+            } else{
+            	      
+          $("#combo_tiempo").prop("disabled",false);
+
+            }    
+ });
 
 $("select[name=combo_pedido]").change(function(){
 	   var valorcombopedido=document.getElementsByName("combo_pedido")[0].value;
@@ -517,7 +477,7 @@ $.ajax({
     var editable_elements = document.querySelectorAll("[contenteditable=true]");
       for(var i=0; i<editable_elements.length; i++)
        editable_elements[i].setAttribute("contenteditable", false);
-      desabilitarcontroles();
+      desabilitarcontroles2();
        $("#imprimirpedido").prop("disabled",false);
        $("#combo_depto").prop("disabled",true);
        $("#guardarpedido").prop("disabled",true);
@@ -536,8 +496,6 @@ $.ajax({
 
 
 function guardardetalle(){
-
-
 var miJSON="";
 var datostabla={datos:[]};
  var obj = JSON.parse(JSON.stringify(datostabla));

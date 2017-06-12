@@ -14,7 +14,6 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Pedidos
-     <button type="button"  id="click" class="btn btn-danger" onclick="probando();" > prrrr</button> 
     
                             </li>
                         </ol>
@@ -205,8 +204,8 @@
         <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
              <button type="button"  id="limpiarpedido" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
-             <button type="button" id="imprimirpedido" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
-             <button type="button" id="guardarpedido" onclick="guardarpedido();" class="btn btn-success" > Guardar Ingreso </button>  
+             <button type="button" id="imprimirpedido" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Pedido </button>  
+             <button type="button" id="guardarpedido" onclick="guardarpedido();" class="btn btn-success" > Enviar Pedido </button>  
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">
 <input type="text" id="micomentario"  class="form-control" placeholder="Escriba una Observacion">

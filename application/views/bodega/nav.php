@@ -159,7 +159,7 @@
                         <a href="<?= base_url('control_pedido') ?>"><i class="fa fa-fw fa-edit"></i>Pedidos</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-credit-card"></i>  Egreso/Salidas</a>
+                        <a href="<?= base_url('control_salida') ?>"><i class="fa fa-credit-card"></i>  Egreso/Salidas</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
