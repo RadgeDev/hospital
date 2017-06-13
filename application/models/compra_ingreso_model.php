@@ -167,4 +167,16 @@ public function guardardetalle($data) {
 			return false;
 		}
 }
+
+public function guardarlote($data) {
+    $this->db->insert('lotes', $data);
+    if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+				$this->db->_error_message(); 
+			return false;
+		}
+}
+
 }//fin de clase modelo

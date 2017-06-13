@@ -150,14 +150,14 @@ function guardaringreso() {
 
 function guardardetalle() {
 
-	
+	 	$estado="Activo"; 
  $data = json_decode($this->input->post('sendData'));
-   $this->db->trans_begin();
+
 
 
 
           foreach($data->datos as $d) {
-            $filter_data = array(
+            $array_detalle = array(
             "cod_compra" => $d->folio,
             "cod_producto" => $d->codinterno,
             "cod_barra" => $d->codbarra,
@@ -168,10 +168,21 @@ function guardardetalle() {
              "precio" => $d->valor,
              "total" => $d->total
         );
+		$lote_array = array(
+			"lote" => $d->lote,
+            "cod_producto" => $d->codinterno,
+             "nombre" => $d->nombre,
+             "fecha_vencimiento" => $d->fechavenc,
+             "cantidad" => $d->cantidad,
+             "precio" => $d->valor,
+             "estado" =>$estado
+        );
             
        //Call the save method
-       $this->Compra_ingreso_model->guardardetalle($filter_data);
+       $this->Compra_ingreso_model->guardardetalle($array_detalle);   
+       $this->Compra_ingreso_model->guardarlote($lote_array);
     }
+
 
 foreach($data->datos as $d) {
 $micodigo=$d->codinterno;
