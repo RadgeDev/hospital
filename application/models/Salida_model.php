@@ -15,7 +15,7 @@ return $query->result();
 Public function cargartabla($buscar)
 	{
 $this->db->select('*');
-$this->db->from('pedidos');
+$this->db->from('detalle_pedido');
 $this->db->where('folio',$buscar);
 $query=$this->db->get();
 return $query->result();

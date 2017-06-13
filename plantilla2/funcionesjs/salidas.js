@@ -17,6 +17,7 @@ numerofolio();
   $("#lblneto").hide();
   var today = new Date().toISOString().split('T')[0];
     document.getElementsByName("fechavencimiento")[0].setAttribute('min', today);
+      $('#modal_pedidos').modal('hide');  
  }
 
 function mostrarhora(){ 
@@ -53,7 +54,13 @@ alert(fechatotal);
 }
 $("select[name=combo_depto]").change(function(){
  var depto = $("#combo_depto").val();
-mostrarDatos(depto);     
+ alert(depto);
+ if(depto==0){
+   
+ }else{
+   mostrarDatos(depto);   
+ }
+  
  });
 
 function mostrarDatos(valorBuscar){
@@ -70,23 +77,23 @@ function mostrarDatos(valorBuscar){
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active' ><td >"+item.depto+"</td><td>"+item.comentario+"</td><td>"+item.estado+"</td><td>"+item.fecha+"</td><td>"+item.hora+"</td><td><button href='"+item.folio+"'  id='agregar' onclick='Agregarpedidotabla(this);'  class= 'addBtn  btn btn-success '  >+</button></td><td> <button href='"+item.folio+"'  id='eliminar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+				filas+="<tr class='active' ><td >"+item.depto+"</td><td>"+item.comentario+"</td><td>"+item.estado+"</td><td>"+item.fecha+"</td><td>"+item.hora+"</td><td><button href='"+item.folio+"'  type='button' onclick='Agregarpedidotabla(this);'  id='agregartabla'   class= '  btn btn-success '  >+</button></td><td> <button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
 			});
 
 			$("#tbpedidos tbody").html(filas);
-         
 
 		}
 	});
     
     }
        $('#modal_pedidos').modal('show');
+
 }
 
 
 function Agregarpedidotabla(obj){
-valorBuscar = obj.getAttribute("href");
-alert(valorBuscar);
+valorBuscar= obj.getAttribute("href");
+$('#npedido').val(valorBuscar);
     if ( valorBuscar =="0") {  
   $('#tbproductos').children( 'tr:not(:first)' ).remove();
     }else {
@@ -99,18 +106,19 @@ alert(valorBuscar);
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active' ><td >"+item.depto+"</td><td>"+item.comentario+"</td><td>"+item.estado+"</td><td>"+item.fecha+"</td><td>"+item.hora+"</td><td><button href='"+item.folio+"'  id='agregar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-success '  >+</button></td><td> <button href='"+item.folio+"'  id='eliminar' onclick='addProductotabla(this);'  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+				filas+="<tr class='active' ><td >"+item.cod_producto+"</td><td>"+item.cod_barra+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
 			});
 
-			$("#tbpedidos tbody").html(filas);
+			$("#tbproductos tbody").html(filas);
          
 
 		}
 	});
     
     }
-       $('#modal_pedidos').modal('show');
+    $('#modal_pedidos').modal('hide');  
 }
+
   function cerrarModal() {
   $("#msg-error").hide();
     $("#msgerrorut").hide();
@@ -118,6 +126,11 @@ alert(valorBuscar);
       $('#formGuardar').get(0).reset();//resetea  los campos del formulario
 }
 
+$('#modal_pedidos').modal({
+    backdrop: 'static',
+    keyboard: false ,
+
+});
 
 var Fn = {
   // Valida el rut con su cadena completa "XXXXXXXX-X"
@@ -328,7 +341,7 @@ function cerrarModal() {
 
 
 
-
+/*
   function addProductotabla(e) {
   var micodigoarticulo=	$('#codigoarticulo').val();
   var milote=	$('#lote').val();
@@ -377,7 +390,7 @@ if (micodigoarticulo==="") {
 }
 
 
-
+*/
 
 function createRow(data) {
   return (

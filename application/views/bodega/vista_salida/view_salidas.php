@@ -14,7 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Salidas
-<button data-toggle='modal' data-target='#modal_pedidos' >aaaaaa</button>
+<button href="5" onclick="Agregarpedidotabla(this);" >aaaaaa</button>
                             </li>
                         </ol>
                     </div>
@@ -37,7 +37,7 @@
             <div class="col-lg-4 col-sm-4">
           <label>Tipo Salida</label>
                <select name='combo_salida' id ='combo_salida' class='form-control' >
-               <option value="0">Eliga una opcion</option>
+               <option selected="selected" value="0">Eliga una opcion</option>
              <option value="1">Pedidos</option>
             <option value="2">Ajustes de Stock</option>
              </select >
@@ -46,22 +46,22 @@
 
             <div class="col-lg-4 col-sm-4">
                <label>N°Pedido</label>
-                <input type="text" id="npedido" onblur="habilitando();"  class="form-control">
+                <input type="text" id="npedido" onblur=""  readonly class="form-control">
             
             </div>
 
             <div class="col-lg-4 col-sm-4">
-                <label>N°Salida</label>
+                <label>N°Egreso</label>
                 <input type="text" id="nsalida" readonly class="form-control">
             </div>
     
           <div class="col-lg-4 col-sm-4">
           <br>
                 <label>Depto./Servicio</label>
-                  <select name='combo_depto'  id ='combo_depto'  class='form-control' >
+                  <select name='combo_depto'  id ='combo_depto'   class='form-control' >
               <?php
                  $elige="Elige una opcion";
-                   echo '  <option value="',0,'">', $elige ,'</option>';
+                   echo '  <option selected="selected" value="',0,'">', $elige ,'</option>';
                     foreach ($arrayTipodepto as $i => $cod_depto)
                     echo '<option value="',$i,'" >',$cod_depto,'</option>';
                              ?>
@@ -111,7 +111,7 @@
             <div class="col-lg-4 col-sm-4">
        
                 <label>Buscar Articulos</label>
-                 <input type="text" id="buscarproducto" onblur="habilitando();" list="buscandoprod" class="form-control" placeholder="Buscar Producto">
+                 <input type="text" id="buscarproducto" onblur="" list="buscandoprod" class="form-control" placeholder="Buscar Producto">
                   <datalist id="buscandoprod">
         
                        </datalist>

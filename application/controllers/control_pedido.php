@@ -154,7 +154,6 @@ function guardardetalle() {
 	
  $data = json_decode($this->input->post('sendData'));
  
-
           foreach($data->datos as $d) {
             $filter_data = array(
             "folio" => $d->folio,
