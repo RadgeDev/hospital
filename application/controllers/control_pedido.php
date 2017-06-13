@@ -153,9 +153,7 @@ function guardardetalle() {
 
 	
  $data = json_decode($this->input->post('sendData'));
-   $this->db->trans_begin();
-
-
+ 
 
           foreach($data->datos as $d) {
             $filter_data = array(
@@ -167,10 +165,21 @@ function guardardetalle() {
         );
             
        //Call the save method
-       $this->Pedidos_model->guardardetalle($filter_data);
+	   if($this->Pedidos_model->guardardetalle($filter_data)==true){
+                $data = array(
+			"miresultado" =>"bien"
+         	);
+		
+			}else{
+				echo "error";
+		
+
+		}
+	
+       
     }
 
-
+	echo json_encode($data);
 	}
 
 function editando() {

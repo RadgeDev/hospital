@@ -377,7 +377,6 @@ function solonumerosenteros(e){
  $(document.body).delegate(".delRowBtn", "click", function(){
 
    $(this).closest("tr").remove(); 
-        calculartotal() ;
   swal("Producto eliminado de la lista!", "Registro eliminado.", "error");
 });
 
@@ -466,8 +465,8 @@ $.ajax({
     data:{minfolio:nfolio,mitipodeptocod:tipodeptocod,mideptonombre:deptonombre,mihora:hora,mifecha:fecha,mitiempocod:tiempocod,mitiemponombre:tiemponombre,mipedidocod:pedidocod,mipedidonombre:pedidonombre,micomentario:comentarios},
     dataType:"json",
     success:function(respuesta){
-    	  guardardetalle();
          console.log(respuesta);
+         	  guardardetalle();
        $("#msg-error3").hide();
        $("#msg-bien").show();
        swal("Exito!", "Ingreso guardado.", "success");

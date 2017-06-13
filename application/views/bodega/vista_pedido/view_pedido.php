@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <h2 >
-            Pedidos
+                        Pedidos
                         </h2>
                         <ol class="breadcrumb">
                             <li>
@@ -14,7 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Pedidos
-    
+                                 <button onclick="guardardetalle();">aaaaaa</button>
                             </li>
                         </ol>
                     </div>
