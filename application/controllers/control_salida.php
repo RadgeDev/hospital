@@ -39,7 +39,15 @@ class Control_salida extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
-
+		public function cargarlotes()
+	{	
+		//valor a Buscar
+		$buscar = $this->input->post("buscar");
+		$data = array(
+			"obtener" => $this->Salida_model->cargarlote($buscar)
+		);
+		echo json_encode($data);
+	}
 
 function devolverarray() {
 $datosproveedor = array(

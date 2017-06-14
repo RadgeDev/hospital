@@ -20,6 +20,14 @@ $this->db->where('folio',$buscar);
 $query=$this->db->get();
 return $query->result();
 	}
+	Public function cargarlote($buscar)
+	{
+$this->db->select('*');
+$this->db->from('lotes');
+$this->db->where('cod_producto',$buscar)->where("(estado='Activo')");
+$query=$this->db->get();
+return $query->result();
+	}
 
 
 	function validar( $rutsele){

@@ -14,10 +14,12 @@ numerofolio();
   $("#msg-error2").hide();
     $("#msg-error3").hide();
       $("#msg-bien").hide();
+      /*
   $("#lblneto").hide();
   var today = new Date().toISOString().split('T')[0];
-    document.getElementsByName("fechavencimiento")[0].setAttribute('min', today);
+    document.getElementsByName("fechavencimiento")[0].setAttribute('min', today);*/
       $('#modal_pedidos').modal('hide');  
+    $('#largeModal').modal('show');  
  }
 
 function mostrarhora(){ 
@@ -90,7 +92,7 @@ function mostrarDatos(valorBuscar){
 
 }
 
-
+ 
 function Agregarpedidotabla(obj){
 valorBuscar= obj.getAttribute("href");
 $('#npedido').val(valorBuscar);
@@ -106,18 +108,53 @@ $('#npedido').val(valorBuscar);
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active' ><td >"+item.cod_producto+"</td><td>"+item.cod_barra+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+				filas+="<tr class='active' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
 			});
 
 			$("#tbproductos tbody").html(filas);
-         
+   
 
 		}
 	});
     
     }
     $('#modal_pedidos').modal('hide');  
+
 }
+
+//evento click  en tabla productos obtene primer valor
+$('#tbproductos').on('click', 'tr', function() {
+    var values = $(this).find('td').map(function() {
+        return $(this).text();
+    });
+    
+   valorcod=values[0]; // cod  td
+   cantpedido=values[4]; // cantidad td
+
+   if ( valorcod =="0") {  
+  $('#tbproductos').children( 'tr:not(:first)' ).remove();
+    }else {
+	$.ajax({
+		url : "http://localhost/hospital/control_salida/cargarlotes",
+		type: "POST",
+		data: {buscar:valorcod},
+		dataType:"json",
+		success:function(response){
+			
+			filas = "";
+			$.each(response.obtener,function(key,item){
+				filas+="<tr class='active' ><td >"+item.lote+"</td><td>"+item.cod_producto+"</td><td>"+item.nombre+"</td><td>"+item.fecha_vencimiento+"</td><td>"+item.cantidad+"</td><td><div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);' ></div></td></tr>";
+			});
+
+			$("#tblotes tbody").html(filas);
+   
+
+		}
+	});
+    
+    }
+     $('#modal_lotes').modal('show');
+});
 
   function cerrarModal() {
   $("#msg-error").hide();
@@ -218,7 +255,7 @@ function validar(mirut){
             return false;
         }
     }
-
+ 
 
 
 

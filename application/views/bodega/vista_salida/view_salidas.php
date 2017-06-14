@@ -14,7 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Salidas
-<button href="5" onclick="Agregarpedidotabla(this);" >aaaaaa</button>
+<button class='btn btn-success' data-toggle='modal' data-target='#modal_lotes' >aaaaaa</button>
                             </li>
                         </ol>
                     </div>
@@ -141,11 +141,11 @@
               <thead>
                 <tr class="success">
                   <th>Codigo Interno </th>
-                  <th>Codigo Barra</th>
                   <th>Nombre Articulo</th>
                   <th>Lote</th>
                   <th>F.de venc</th>
-                  <th>Cantidad</th>
+                  <th>Cant.Pedido</th>
+                  <th>Cant.Entrega</th>
                   <th>Valor Unitario.</th>
                   <th>Borrar</th>
                 </tr>
@@ -191,7 +191,7 @@
    <!-- modal empieza aca -->
    <!-- Modal -->
 
-<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+<div class="modal fade" id="modal_lotes" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       
@@ -199,69 +199,36 @@
           <div class="panel panel-primary">
         <div class="panel-heading clearfix">
           <i class="icon-calendar"></i>
-          <h3 class="panel-title">Ingresar Articulos</h3>
+            <h3 class="panel-title">Seleccionar Lotes</h3>
         </div>
-          <div class="panel-body">
+          <div class="panel-body"  >
           <div class="row">
-         <form  id="ingresararticulo" onsubmit="addProductotabla(event)">
-            <div class="col-lg-6 col-sm-6">
-                <label>Codigo Articulo</label>
-                <input id="codigoarticulo"  name="codigoarticulo" type="text" readonly class="form-control">
-            </div>
-          <div class="col-lg-6 col-sm-6">
-            <label>Codigo Barra</label>
-                <input id="codigobarra"  name="codigobarra" type="text" readonly class="form-control">
+         <form   >
+       
+   <div class="col-lg-12 col-sm-12">
+          <br>
         
+            <table id="tblotes" name="tblotes" class="table table-striped-responsive table-sm  table-hover ">
+              <thead>
+                <tr class="success">
+                  <th>Lotes</th>
+                  <th>Cod.Producto</th>
+                  <th>Nombre</th>
+                  <th>Fecha Venc.</th>
+                  <th>Stock</th>
+                  <th>Ingresar Cant.</th>
+               
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
             </div>
-
-            <div class="col-lg-12 col-sm-12">
-            <br>
-               <label>Nombre</label>
-                <input id="nombreproducto"  name="nombreproducto" type="text" readonly class="form-control">
-            </div>
-
-            <div class="col-lg-4 col-sm-4">
-            <br>
-                <label>Lote</label>
-                <input type="text" id="lote" name="lote" style="text-align:right;"  class="form-control">
-            </div>
-         
-              <div class="col-lg-4 col-sm-4">
-              <br>
-              <label>Fecha Vencimiento</label>
-    		     <div class='input-group date' >
-                    <input type='date' id='fechavencimiento' name="fechavencimiento" class="form-control" />
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-sm-4">
-            <br>
-                <label>Valor Unidad</label>
-               <input type="text" id="valorunidad" style="text-align:right;" onkeypress="return solonumeros(event)" name="valorunidad" onChange="multiplicar();" value="0" class="form-control">
-            </div>
-             <div class="col-lg-8 col-sm-8">
-             </div>
-            <div class="col-lg-4 col-sm-4">
-            <br>
-                <label>Cantidad Recepcionado</label>
-                <input type="text" id="recepcionado" style="text-align:right;" onkeypress="return solonumerosenteros(event)" name="recepcionado" onChange="multiplicar();" value="0" class="form-control">
-            </div>
-            <div class="col-lg-8 col-sm-8">
-             </div>
-                <div class="col-lg-4 col-sm-4">
-            <br>
-                <label>Valor Total</label>
-                <input type="text" id="valortotal" style="text-align:right;" name="valortotal" value="0" readonly class="form-control">
-            </div>
-
-
-          </div>
         </div>
 
       <div class="modal-footer">
       <br>
         <button type="button" class="btn btn-danger" onclick="cerrarModal();" data-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-success">Agregar fila</button>
       </div>
       </form>
             </div>
@@ -269,7 +236,7 @@
     </div>
   </div>
 </div>
-
+</div>
 
 <div class="modal fade" id="modal_pedidos" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
