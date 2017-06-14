@@ -14,7 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Pedidos
-     <!-- <button type="button"  id="click" class="btn btn-danger" onclick="bloqueosdias();" > prrrr</button> -->
+     <button type="button"  id="click" class="btn btn-danger" onclick="probando();" > prrrr</button> 
     
                             </li>
                         </ol>

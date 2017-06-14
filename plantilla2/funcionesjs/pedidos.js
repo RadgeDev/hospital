@@ -1,6 +1,6 @@
   $(document).on("ready", main);
   $(document).on("ready", desabilitarcontroles);
-
+var estadocantabla="";
 
 function main(){
   $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
@@ -481,7 +481,7 @@ var tiempocod=document.getElementsByName("combo_tiempo")[0].value;
 var tiemponombre = $("#combo_tiempo option:selected").text();
 var pedidocod=document.getElementsByName("combo_pedido")[0].value;	
 var pedidonombre = $("#combo_tipocompra option:selected").text();
-
+verificartablapedidos();
 if (tipodeptocod==0) {
 swal("Error!", "Ingrese un Departamento", "error");
 }else if (tiempocod==0) {
@@ -494,6 +494,8 @@ swal("Error!", "No hay hora", "error");
 swal("Error!", "No hay fecha", "error");
 }else if (nfolio==="") {
 swal("Error!", "N° Folio", "error");
+}else if (estadocantabla==="vacio") {
+swal("Error!", "Cantidad de pedido vacias", "error");
 }else{
 
   event.preventDefault();
@@ -742,3 +744,18 @@ $("#box").append(div);
 }
 
 }//fin clase bloquear personal
+
+
+function verificartablapedidos(){
+estadocantabla="";
+$('#tbpedidos td div').each(function() {
+  if(!$(this).text().trim().length){
+      $(this).css('border', '1px solid red');
+ estadocantabla="vacio";
+  }else
+  {
+    $(this).css('border', '1px solid yellow');
+     estadocantabla="lleno";
+  }
+});
+}
