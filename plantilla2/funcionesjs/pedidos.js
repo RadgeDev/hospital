@@ -1,12 +1,13 @@
   $(document).on("ready", main);
   $(document).on("ready", desabilitarcontroles);
-    
+
+
 function main(){
   $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
     options.async = true;
 
 
-    //largo del div editable
+    //largo del div editable de la tabla pedidos
 var textfields = document.getElementsByClassName("textfield"); 
 for(i=0; i<textfields.length; i++){
     textfields[i].addEventListener("keypress", function(e) {
@@ -18,25 +19,7 @@ for(i=0; i<textfields.length; i++){
 }
   });
 
-
-//setTimeout("prueba()",1000); 
 numerofolio();
-
-
-    function horaserver() {
-      $.ajax({
-       type: 'POST',
-      url:"http://localhost/hospital/control_pedido/hora",
-       timeout: 1000,
-       success: function(data) {
-          $("#hora").val(data); 
-          window.setTimeout(horaserver, 1000);
-
-       }
-      });
-     }
-     horaserver();
-
 function fechaserver() {
       $.ajax({
        type: 'POST',
@@ -49,12 +32,27 @@ function fechaserver() {
      }
 fechaserver();
 
+function horaserver() {
+      $.ajax({
+       type: 'POST',
+      url:"http://localhost/hospital/control_pedido/hora",
+       timeout: 1000,
+       success: function(data) {
+          $("#hora").val(data); 
+          window.setTimeout(horaserver, 1000);
+       
+       }
+      });
+     }
+     horaserver();
  $("#msg-error").hide();
   $("#msg-error2").hide();
     $("#msg-error3").hide();
       $("#msg-bien").hide();
 
+
  }
+
 $("#combo_tipocompra").change(function(){
 		bodega = $(this).val();
 		valorBuscar = $("input[name=busqueda]").val();
@@ -241,123 +239,6 @@ function cerrarModal() {
   });
 
 
-/*
-
-
-  function addProductotabla(e) {
-  var micodigoarticulo=	$('#codigoarticulo').val();
-  var milote=	$('#lote').val();
-  var mifecha=$('#fechavencimiento').val();
-  var mirecepcionado= $('#recepcionado').val();
-  var mivalorunidad=$('#valorunidad').val();
-  var mivalortotal=$('#valortotal').val();
-if (micodigoarticulo==="") {
-   swal("Error", "Error vuelva agregar el articulo", "error");
-     e.preventDefault();
-}else if(milote==="") {
- swal("Error", "Agrege un lote valido", "error");
-   e.preventDefault();
-}else if(mifecha==="") {
- swal("Error", "Agrege un fecha valida", "error");
-   e.preventDefault();
-}else if(mirecepcionado==0 || mirecepcionado===""  ) {
- swal("Error", "Agrege la cantidad recepcionada valida", "error");
-   e.preventDefault();
-}else if(mivalorunidad==0 || mivalorunidad==="") {
- swal("Error", "Agrege la valor unidad valida", "error");
-   e.preventDefault();
-}else if(mivalortotal==0 || mivalortotal==="") {
- swal("Error", "Agrege la cantidad recepcionada y  valor unidad ", "error");
-   e.preventDefault();
-}else {
-   e.preventDefault();
-  const row = createRow({
-    codigointerno: $('#codigoarticulo').val(),
-    codigobarra: $('#codigobarra').val(),
-    nombre: $('#nombreproducto').val(),
-    lote:$('#lote').val(),
-    vencimiento:$('#fechavencimiento').val(),
-    cantidad:$('#recepcionado').val(),
-    valorunitario:$('#valorunidad').val(),
-    valortotal:$('#valortotal').val(),
-  });
-  $("#tbproductos tbody").append(row);
-
-    $('#ingresararticulo').get(0).reset();//resetea  los campos del formulario
-   $('#largeModal').modal('hide');
-    calculartotal();
-  habilitando();
-  
-}
-}
-
-
-
-
-function createRow(data) {
-  return (
-    `<tr class='active'>` +
-      `<td>${data.codigointerno}</td>` +
-      `<td>${data.codigobarra}</td>` +
-       `<td>${data.nombre}</td>` +
-       `<td>${data.lote}</td>` +
-       `<td>${data.vencimiento}</td>` +
-       `<td>${data.cantidad}</td>` +
-       `<td>${data.valorunitario}</td>` +
-       `<td>${data.valortotal}</td>` +
-       `<td><button   id='eliminando'  class='btn btn-danger delRowBtn' >X</button></td>` +
-    `</tr>`
-  );
-}
-*/
-function calculartotal() {
-	 var theneto = 0;
-    $("td:nth-child(8)").each(function () {
-        var val = $(this).text().replace(" ", "").replace(",-", "");
-        theneto += parseFloat(val);
-    });
-    var iva_venta=0;
-     var total=0;
-     var descuento= $("#descuento").val();
-  if(descuento===""){
-  	swal("Error", "Agrege decuento valido", "error");
-  	$("#descuento").val(0);
- descuento=0;
-  }else if (descuento>theneto) {
-  	swal("Error", "El decuento es mayor al valor total", "error");
-  	descuento=0;
-      	$("#descuento").val(0);
-  }
-
-  thenetodesc=theneto-descuento;
-     iva_venta = parseFloat(thenetodesc * (19/100));
-      total =parseFloat( thenetodesc + iva_venta);
-$("#valorfactura").val(theneto);
-$("#neto").val(thenetodesc);
-$("#iva").val(iva_venta);
-$("#total").val(total);
-var mivalor=$("#agregardesc").val();
-
-if (mivalor=="desactivar") {
-$("#descuento").prop("readonly",true);
-$("#agregardesc").val("activar");
-}else
-{
-$("#descuento").prop("readonly",false);
-$("#agregardesc").val("desactivar");
-}
-
-
-
-if (theneto==thenetodesc) {
-  $("#lblneto").hide();
-}else{
-
-  $("#lblneto").show();
-
-}
-
-}
 
 
 
@@ -366,6 +247,9 @@ function desabilitarcontroles() {
 $("#combo_tiempo").prop("disabled",true);
 $("#combo_tipocompra").prop("disabled",true);
 $("#buscando").prop("disabled",true);
+ $("#combo_tipocompra").val('0');
+ $("#combo_tiempo").val('0');
+  $("#combo_depto").val('0');
 //botones
 $("#guardarpedido").prop("disabled",true);
 $("#limpiarpedido").prop("disabled",true);
@@ -375,8 +259,15 @@ $("#cantidadpag").prop("disabled",true);
 //inputs
 $("#busqueda").prop("readonly",true);
 $("#micomentario").prop("readonly",true);
-
-
+ //tablas
+    $("#tbproductos").find("input,button,textarea,select").attr("disabled", "disabled");
+       $("#tbpedidos").find("input,button,textarea,select,div").attr("disabled", "disabled").off('click');
+    var editable_elements = document.querySelectorAll("[contenteditable=true]");
+      for(var i=0; i<editable_elements.length; i++)
+       editable_elements[i].setAttribute("contenteditable", false);
+       var filas="";
+ 	$("#tbpedidos tbody").html(filas);
+  $("#tbproductos tbody").html(filas);
 }
 
 
@@ -521,37 +412,6 @@ function solonumerosenteros(e){
             return false;
         }
     }
-$("#formGuardar").submit(function (event){
-
-    event.preventDefault();
-
-    $.ajax({
-      url:$("#formGuardar").attr("action"),
-      type:$("#formGuardar").attr("method"),
-      data:$("#formGuardar").serialize(),
-      success:function(respuesta){
-       
-        if (respuesta === "Registro Guardado") {
-         
-           $('#myModalguardar').modal('hide');//esconde formulario modal
-           swal("Genial!", "Datos ingresados Correctamente", "success");// a trves swift una libreria permite crear mensajes bonitos
-           $('#formGuardar').get(0).reset();//resetea  los campos del formulario
-             $("#msg-error2").hide();
-        } else if (respuesta === "No se pudo guardar los datos") {
-          swal("Error", "Error revise si los datos estan correctos", "error");
-        }
-        else
-        {
-    
-          $("#msg-error2").show();
-          $(".list-errors2").html(respuesta);
-        }
-     borrardatalist2();
-  mostrarProductos();
-      }
-    });
-  });
-
 
 
  $(document.body).delegate(".delRowBtn", "click", function(){
@@ -623,17 +483,17 @@ var pedidocod=document.getElementsByName("combo_pedido")[0].value;
 var pedidonombre = $("#combo_tipocompra option:selected").text();
 
 if (tipodeptocod==0) {
-swal("Error!", "Ingrese un tipo de ingreso", "error");
+swal("Error!", "Ingrese un Departamento", "error");
 }else if (tiempocod==0) {
-swal("Error!", "Ingrese un tipo compra", "error");
+swal("Error!", "Ingrese un Tiempo pedido", "error");
 }else if (pedidocod==0) {
-swal("Error!", "Ingrese un tipo compra", "error");
+swal("Error!", "Ingrese un Tipo Pedido", "error");
 }else if (hora==="") {
-swal("Error!", "Ingrese un N° documento", "error");
+swal("Error!", "No hay hora", "error");
 }else if (fecha==="") {
-swal("Error!", "Ingrese un fecha", "error");
+swal("Error!", "No hay fecha", "error");
 }else if (nfolio==="") {
-swal("Error!", "Ingrese un fecha", "error");
+swal("Error!", "N° Folio", "error");
 }else{
 
   event.preventDefault();
@@ -802,22 +662,15 @@ $("#tbpedidos").bind("DOMSubtreeModified", function() {
 });
 
 
-
-
-function prueba(){
-
- var midia  ="";
+function bloqueosdias(){
  //hora
-
-
-var iniciopedido = new Date();
-iniciopedido.setHours(9,40,0); // 5.30 pm
-alert(iniciopedido);
-var finpedido = new Date();
-finpedido.setHours(23,59,0); // 6.30 pm
-
-
+ $("#alerta").remove();
+   var iniciopedido = new Date();(9,40,0);
+   iniciopedido.setHours(00,00,0); // 5.30 pm
+   var finpedido = new Date();
+   finpedido.setHours(9,40,0); // 6.30 pm
     //fecha
+    var midia="";
     var date = $("#datetimepicker1").val();
     var dateParts = date.split("-");
     var date = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
@@ -829,17 +682,63 @@ finpedido.setHours(23,59,0); // 6.30 pm
     case 5:  midia="viernes"; break;
     default: midia="nopermitir";
   }//fin switch
-  alert(midia);
  var mihora = $("#hora").val();
-var miii = new Date();
-miii.setHours(23,59,0); // 6.30 pm
- 
-    alert(mihora);
-if(mihora >= iniciopedido && mihora < finpedido && midia=="viernes"){
-  alert("yes!");
-}else{
-   alert("nope, sorry! ");
+ mihora = new Date();
+//bloqueo semanal por dia viernes a partir de las 9.40  y fines de semana
+if(midia=="nopermitir"){
+  desabilitarcontroles();
+  $("#combo_depto").prop("disabled",true);
+  var div = $("<div id='alerta' class='alert alert-danger'  style='text-align:left;'><strong>¡Error!</strong>Su plazo de entrega a expirado.</div>");
+$("#box").append(div);
+
+}else if( mihora > finpedido && midia=="viernes"){
+  desabilitarcontroles();
+  $("#combo_depto").prop("disabled",true);
+  var div = $("<div id='alerta' class='alert alert-danger'  style='text-align:left;'><strong>¡Error!</strong>Su plazo de entrega a expirado.</div>");
+$("#box").append(div);
+ } else{
+  $("#combo_depto").prop("disabled",false);
 }
 
+}//fin clase bloquear personal
+
+
+
+function bloqueoservicios(){
+ //hora
+ // var iniciopedido = new Date();(9,40,0);
+ //iniciopedido.setHours(00,00,0); // 5.30 pm
+   var finpedido = new Date();
+   finpedido.setHours(12,30,0); // 6.30 pm
+    //fecha
+    var date = $("#datetimepicker1").val();
+    var dateParts = date.split("-");
+    var date = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+    switch(date.getDay()){
+    case 1:  midia="lunes"; break;
+    case 2:  midia="martes"; break;
+    case 3:  midia="miercoles"; break;
+    case 4:  midia="jueves"; break;
+    default: midia="nopermitir";
+  }//fin switch
+ var mihora = $("#hora").val();
+ mihora = new Date();
+ var deptocod=document.getElementsByName("combo_depto")[0].value;	
+//bloqueo semanal por dia viernes a partir de las 9.40  y fines de semana
+if(midia=="nopermitir" && deptocod=="1"){
+var div = $("<div id='alerta' class='alert alert-danger'  style='text-align:left;'><strong>¡Error!</strong>Su plazo de entrega a expirado.</div>");
+$("#box").append(div);
+  $("#combo_depto").prop("disabled",true);
+    desabilitarcontroles();
+ $("#combo_depto").prop("disabled",true);
+}else if( mihora > finpedido && midia=="jueves" && deptocod=="1"){
+var div = $("<div id='alerta' class='alert alert-danger'  style='text-align:left;'><strong>¡Error!</strong>Su plazo de entrega a expirado.</div>");
+$("#box").append(div);
+  desabilitarcontroles();
+  $("#combo_depto").prop("disabled",true);
+  
+ } else{
+  $("#combo_depto").prop("disabled",false);
+}
 
 }//fin clase bloquear personal

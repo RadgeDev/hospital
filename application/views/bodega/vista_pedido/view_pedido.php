@@ -4,7 +4,7 @@
 
                 <!-- Page Heading -->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-4">
                         <h2 >
             Pedidos
                         </h2>
@@ -14,10 +14,12 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Pedidos
-     <button type="button"  id="" class="btn btn-danger" onclick="prueba();" > prrrr</button> 
+     <!-- <button type="button"  id="click" class="btn btn-danger" onclick="bloqueosdias();" > prrrr</button> -->
+    
                             </li>
                         </ol>
                     </div>
+                     <div class="col-lg-4 md-offset-4" id="box"></div>
                 </div>
                 <!-- /.row -->
 
@@ -35,12 +37,12 @@
           <div class="row">
             <div class="col-lg-4 col-sm-4">
           <label>Departamento</label>
-               <select name='combo_depto' id ='combo_depto' class='form-control' >
+               <select name='combo_depto' id ='combo_depto' class='form-control' onBlur="bloqueosdias(),bloqueoservicios();" >
              <?php
                  $elige="Elige una opcion";
                    echo '  <option value="',0,'">', $elige ,'</option>';
                     foreach ($arrayTipodepto as $i => $cod_depto)
-                    echo '<option value="',$i,'">',$cod_depto,'</option>';
+                    echo '<option value="',$i,'" >',$cod_depto,'</option>';
                              ?>
              </select >
         
