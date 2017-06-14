@@ -187,19 +187,31 @@ function guardardetalle() {
 foreach($data->datos as $d) {
 $micodigo=$d->codinterno;
 $cantidadactual= $this->Compra_ingreso_model->get_cantidad($micodigo);
-print_r($cantidadactual);
 $actual=0;
 foreach( $cantidadactual  as $r){
    $actual = $r->cantidad;
 }
 $micantidadingresar=$d->cantidad;
 (int)$totalcantidad=(int)$micantidadingresar+(int)$actual;
-$datosactualizar = array(
+            $datosactualizar = array(
 				"cantidad" =>$totalcantidad
-				
-
-			);	
- $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
+			                         );	
+			$datosbincard = array(
+                "cod_producto" => $d->codinterno,
+				"nombre"  => $d->nombre,
+				"cod_depto" =>"0",
+				"seccion" =>"N/N",
+				"proveedor"=> $d->proveedor,
+				"entrada"=> $d->cantidad,
+			    "salida" =>"0",
+				"saldo" =>$totalcantidad,
+			    "fecha" => $d->fecha,
+                "cod_compra"=> $d->folio,
+                "cod_salida" =>"0"
+                 );	
+				  //Call the save method
+    $this->Compra_ingreso_model->guardarbincard($datosbincard);   
+    $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
 			}	
 
     if ($this->db->trans_status() === FALSE) {

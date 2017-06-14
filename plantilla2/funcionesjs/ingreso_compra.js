@@ -809,8 +809,10 @@ var datostabla={datos:[]};
             })
 
          var nfolio= $("#folio").val();
+          var actfecha= $("#datetimepicker1").val();
+          var nombreproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('value');
          //  var obj = JSON.parse('[datostabla]');
-              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
+              obj['datos'].push({"folio":nfolio,"fecha":actfecha,"proveedor":nombreproveedor,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
      
 //var miJSON = JSON.encode(obj);
             //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);

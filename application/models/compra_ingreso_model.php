@@ -178,5 +178,15 @@ public function guardarlote($data) {
 			return false;
 		}
 }
+public function guardarbincard($data) {
+    $this->db->insert('bincard', $data);
+    if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+				$this->db->_error_message(); 
+			return false;
+		}
+}
 
 }//fin de clase modelo
