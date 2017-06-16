@@ -15,6 +15,7 @@
                             <li class="active">
                                 <i class="fa fa-edit"></i> Salidas
 <button class='btn btn-success' data-toggle='modal' data-target='#modal_lotes' >aaaaaa</button>
+<div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);' >jojo</div>
                             </li>
                         </ol>
                     </div>
@@ -153,6 +154,7 @@
               <tbody>
               </tbody>
             </table>
+            
             </div>
           </div>
         </div>
@@ -193,7 +195,7 @@
 
 <div class="modal fade" id="modal_lotes" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content" style="width:1000px;">
       
       <div class="modal-body">
           <div class="panel panel-primary">
@@ -204,26 +206,34 @@
           <div class="panel-body"  >
           <div class="row">
          <form   >
-       
+           <div class="col-lg-8 col-sm-8">
+           <label style=" text-align: right;">Cantidad Total Stock:  </label>
+           </div>
+           <div class="col-lg-4 col-sm-4">
+             <label style=" text-align: right;">Cantidad Solicitada:  </label><label id="cantped" ></label>
+          <button type="button" onclick="agregarlotes();">  validar </button>
+             </div>
    <div class="col-lg-12 col-sm-12">
           <br>
         
             <table id="tblotes" name="tblotes" class="table table-striped-responsive table-sm  table-hover ">
               <thead>
                 <tr class="success">
+                 <th>Seleccionar</th>
                   <th>Lotes</th>
                   <th>Cod.Producto</th>
                   <th>Nombre</th>
                   <th>Fecha Venc.</th>
+                  <th>Precio</th>
                   <th>Stock</th>
                   <th>Ingresar Cant.</th>
-               
                 </tr>
               </thead>
               <tbody>
               </tbody>
             </table>
             </div>
+            
         </div>
 
       <div class="modal-footer">
@@ -270,6 +280,7 @@
               </tbody>
             </table>
             </div>
+            
         </div>
 
       <div class="modal-footer">

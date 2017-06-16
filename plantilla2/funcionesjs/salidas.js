@@ -20,6 +20,9 @@ numerofolio();
     document.getElementsByName("fechavencimiento")[0].setAttribute('min', today);*/
       $('#modal_pedidos').modal('hide');  
     $('#largeModal').modal('show');  
+
+
+    
  }
 
 function mostrarhora(){ 
@@ -129,8 +132,9 @@ $('#tbproductos').on('click', 'tr', function() {
     });
     
    valorcod=values[0]; // cod  td
-   cantpedido=values[4]; // cantidad td
-
+   var cantpedido=values[4]; // cantidad td
+   $("#cantped").empty();
+	$("#cantped").append(cantpedido);
    if ( valorcod =="0") {  
   $('#tbproductos').children( 'tr:not(:first)' ).remove();
     }else {
@@ -143,7 +147,7 @@ $('#tbproductos').on('click', 'tr', function() {
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active' ><td >"+item.lote+"</td><td>"+item.cod_producto+"</td><td>"+item.nombre+"</td><td>"+item.fecha_vencimiento+"</td><td>"+item.cantidad+"</td><td><div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);' ></div></td></tr>";
+				filas+="<tr class='active' ><td >  <input type='checkbox'  class='case' name='case[]' value="+ item.id +"></td><td >"+item.lote+"</td><td>"+item.cod_producto+"</td><td>"+item.nombre+"</td><td>"+item.fecha_vencimiento+"</td><td>"+item.precio+"</td><td>"+item.cantidad+"</td><td><div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);'></div></td></tr>";
 			});
 
 			$("#tblotes tbody").html(filas);
@@ -154,8 +158,61 @@ $('#tbproductos').on('click', 'tr', function() {
     
     }
      $('#modal_lotes').modal('show');
+    
+    
 });
+//validar cheackbox
+function agregarlotes(){
+  cantidad=$("#cantped").text();
+    var searchString="";
+   var values = "";
+       $.each($("input[name='case[]']:checked"), function(index,value) {
+           var data = $(this).parents('tr:eq(0)');
+           if(index > 0)
+               values += " ";
+           
+           values += "<tr class='active'><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(6)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";           
+          searchString = $(data).find('td:eq(2)').text();
+      });
+  
+$("#tbproductos tr td:contains('" + searchString + "')").each(function() {
+    if ($(this).text() == searchString) {
+        $(this).parent().remove();
+    }
+});
+  $('#tbproductos tbody').append(values)     ;  
 
+}
+
+
+//validar lotes
+function calcularlotes(){
+    var theTotal = 0;
+    $("#tblotes td:nth-child(6)").each(function () {
+        var val = $(this).text().replace(" ", "").replace(",-", "");
+        if (val==""){
+         val=0;
+        }
+        theTotal += parseInt(val);
+    });
+   alert(theTotal);
+}
+/*
+ $('#tblotes').on('click', 'tr', function() {
+   validarcantidad();
+    });
+//validar cantidad de los lotes para ingresar al pedido
+function validarcantidad(){
+ var cont;
+ $("div [contenteditable=true]").blur(function() {
+        if ($(this).html()!=cont) {
+       var hola=$(this).html()
+        alert(hola) ;  //Here you can write the code to run when the content change
+        }           
+    });
+}  
+*/
+// cerrar modal
   function cerrarModal() {
   $("#msg-error").hide();
     $("#msgerrorut").hide();
@@ -163,10 +220,10 @@ $('#tbproductos').on('click', 'tr', function() {
       $('#formGuardar').get(0).reset();//resetea  los campos del formulario
 }
 
+//dejar estatico  el modal
 $('#modal_pedidos').modal({
     backdrop: 'static',
     keyboard: false ,
-
 });
 
 var Fn = {
