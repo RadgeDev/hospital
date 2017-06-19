@@ -207,11 +207,10 @@
           <div class="row">
          <form   >
            <div class="col-lg-8 col-sm-8">
-           <label style=" text-align: right;">Cantidad Total Stock:  </label>
            </div>
            <div class="col-lg-4 col-sm-4">
              <label style=" text-align: right;">Cantidad Solicitada:  </label><label id="cantped" ></label>
-          <button type="button" onclick="agregarlotes();">  validar </button>
+        
              </div>
    <div class="col-lg-12 col-sm-12">
           <br>
@@ -238,6 +237,7 @@
 
       <div class="modal-footer">
       <br>
+        <button type="button" class="btn btn-success" onclick="agregarlotes();">  Agregar pedido </button>
         <button type="button" class="btn btn-danger" onclick="cerrarModal();" data-dismiss="modal">Cerrar</button>
       </div>
       </form>

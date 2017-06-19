@@ -229,6 +229,13 @@ ul.alert-dropdown {
 .lblneto {
     color:blue;
 }
-
+.tdcolordanger{
+  font-weight: bold;
+color: red;
+}
+.tdcolor{
+  font-weight: bold;
+color: green;
+}
 #micomentario::-webkit-input-placeholder { color: green; font-weight: bold; }
 #busqueda::-webkit-input-placeholder { color: green; font-weight: bold; }

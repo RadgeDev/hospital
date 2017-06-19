@@ -102,53 +102,37 @@ function obtenercorrelativo(){
 		}
 	}
 
-function guardaringreso() {
+function guardarsalida() {
 		//El metodo is_ajax_request() de la libreria input permite verificar
 		//si se esta accediendo mediante el metodo AJAX 
 	if ($this->input->is_ajax_request()) {
 
-			$nfolio	= $this->input->post("minfolio");
-            $tipoingresocod	= $this->input->post("mitipoingresocod");
-            $tipoingresonombre= $this->input->post("mitipoingresonombre");
-            $ndocumento= $this->input->post("mindocumento");
-            $nfolio= $this->input->post("minfolio");
-            $tipocompracod= $this->input->post("mitipocompracod");
-            $tipocompranombre = $this->input->post("mitipocompranombre");
-            $nombreproveedor = $this->input->post("minombreproveedor");
-            $rutproveedor= $this->input->post("mirutproveedor");
+			$nsalida = $this->input->post("minsalida");
+			$npedido = $this->input->post("minpedido");
+            $tiposalidacod	= $this->input->post("mitiposalidacod");
+            $tiposalidanombre= $this->input->post("mitiposalidanombre");
+            $tipodeptocod= $this->input->post("mitipodeptocod");
+            $tipodeptonombre= $this->input->post("mitipodeptonombre");
             $fecha= $this->input->post("mifecha");
-            $nombreproduct= $this->input->post("minombreproduct");
-            $codbarraproduct= $this->input->post("micodbarraproduct");
-            $correlativoprod= $this->input->post("micorrelativoprod");
-            $comentarios= $this->input->post("micomentarios");
-            $descuento= $this->input->post("midescuento");
-            $neto= $this->input->post("mineto");
-            $iva = $this->input->post("miiva");
-            $total= $this->input->post("mitotal");
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
-
+            $micomentario=$this->input->post("micomentario");
 
    
    			$datos = array(
-   				"cod_compra" => $nfolio,
-				"tipo_documento" => $tipoingresonombre,
-				"numero_documento" => $ndocumento,
-				"tipo_compra" => $tipocompracod,
-				"tipo_compra_nombre" => $tipocompranombre,
-				"rut_proveedor" => $rutproveedor,
-				"nombre_proveedor" => $nombreproveedor,
+   				"cod_salida" => $nsalida,
+				"cod_tiposalida" => $tiposalidacod,
+				"nombre_salida" => $tiposalidanombre,
+				"cod_depto" => $tipodeptocod,
+				"nombre_depto" => $tipodeptonombre,
+				"num_pedido" => $npedido,
 				"fecha" => $fecha,
-				"neto" => $neto,
-				"iva" => $iva,
-				"total_compra" => $total,
-				"descuento" => $descuento,
 				"usuario" => $usuario,
-				"nombre_usuario" => $nombreusuario,
-				"comentarios" => $comentarios
+				"nombre" => $nombreusuario,
+				"comentarios" => $micomentario
 				);
    	
-		if($this->Compra_ingreso_model->guardar($datos)==true){
+		if($this->Salida_model->guardarsalida($datos)==true){
   $data = array(
 			"miresultado" =>"bien"
          	);
@@ -166,27 +150,21 @@ function guardardetalle() {
 
 	
  $data = json_decode($this->input->post('sendData'));
-   $this->db->trans_begin();
-
-
-
           foreach($data->datos as $d) {
-            $filter_data = array(
-            "cod_compra" => $d->folio,
+            $detalle_salida = array(
+            "cod_salida" => $d->nsalida,
             "cod_producto" => $d->codinterno,
-            "cod_barra" => $d->codbarra,
-             "nombre_prod" => $d->nombre,
-            "numero_lote" => $d->lote,
-             "fecha_vencimiento" => $d->fechavenc,
-             "cantidad" => $d->cantidad,
-             "precio" => $d->valor,
-             "total" => $d->total
+            "nombre_prod" => $d->nombre,
+            "lote" => $d->lote,
+            "fecha_vencimiento" => $d->fechavenc,
+            "cantidad" => $d->entrega,
+            "valor" => $d->valor
         );
             
        //Call the save method
-       $this->Compra_ingreso_model->guardardetalle($filter_data);
+       $this->Salida_model->guardardetalle($detalle_salida);
     }
-
+/*
 foreach($data->datos as $d) {
 $micodigo=$d->codinterno;
 $cantidadactual= $this->Compra_ingreso_model->get_cantidad($micodigo);
@@ -213,7 +191,7 @@ $datosactualizar = array(
         echo json_encode("Success!");
     }
 
-
+*/
 
 	
 	}

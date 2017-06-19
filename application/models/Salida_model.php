@@ -41,8 +41,8 @@ return $query->result();
 		}
 	}
 
-	function guardar($data) {
-		$this->db->insert("compra",$data);
+	function guardarsalida($data) {
+		$this->db->insert("salidas",$data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -171,7 +171,7 @@ $query=$this->db->get();
 
 
 public function guardardetalle($data) {
-    $this->db->insert('detalle_compra', $data);
+    $this->db->insert('detalle_salida', $data);
     if ($this->db->affected_rows() > 0) {
 			return true;
 		}

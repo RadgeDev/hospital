@@ -111,7 +111,7 @@ $('#npedido').val(valorBuscar);
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+				filas+="<tr class='active tdcolordanger' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
 			});
 
 			$("#tbproductos tbody").html(filas);
@@ -163,6 +163,25 @@ $('#tbproductos').on('click', 'tr', function() {
 });
 //validar cheackbox
 function agregarlotes(){
+ mitotal = 0;
+    $("#tblotes td:nth-child(8)").each(function () {
+        var val = $(this).text().replace(" ", "").replace(",-", "");
+        if (val==""){
+         val=0;
+        }
+        mitotal += parseInt(val);
+    });
+    var final =mitotal;
+     var checked = $("#tblotes input:checked").length > 0;
+
+   if (final=="0"){
+	      swal("Error!", "Escriba una cantidad valida", "error");// a trves swift una libreria permite crear mensajes bonitos   
+
+   }else if (!checked){
+       	swal("Error!", "Seleccione un lote", "error");// a trves swift una libreria permite crear mensajes bonitos    
+
+    }else{
+
   cantidad=$("#cantped").text();
     var searchString="";
    var values = "";
@@ -171,8 +190,9 @@ function agregarlotes(){
            if(index > 0)
                values += " ";
            
-           values += "<tr class='active'><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(6)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";           
+           values += "<tr class='active tdcolor' ><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(7)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";           
           searchString = $(data).find('td:eq(2)').text();
+      
       });
   
 $("#tbproductos tr td:contains('" + searchString + "')").each(function() {
@@ -180,23 +200,15 @@ $("#tbproductos tr td:contains('" + searchString + "')").each(function() {
         $(this).parent().remove();
     }
 });
-  $('#tbproductos tbody').append(values)     ;  
+  $('#tbproductos tbody').append(values)     ; 
 
+  $('#modal_lotes').modal('hide');
+    }
+   
 }
 
 
 //validar lotes
-function calcularlotes(){
-    var theTotal = 0;
-    $("#tblotes td:nth-child(6)").each(function () {
-        var val = $(this).text().replace(" ", "").replace(",-", "");
-        if (val==""){
-         val=0;
-        }
-        theTotal += parseInt(val);
-    });
-   alert(theTotal);
-}
 /*
  $('#tblotes').on('click', 'tr', function() {
    validarcantidad();
@@ -752,74 +764,42 @@ $.ajax({
          }
        }
 
-function guardaringreso() {
+function guardarsalida() {
 
 numerofolio();
 
-var tipoingresocod=document.getElementsByName("combo_tipoingreso")[0].value;	
-var tipoingresonombre = $("#combo_tipoingreso option:selected").text();
-var ndocumento= $("#ndocumento").val();
-var nfolio= $("#folio").val();
-var tipocompracod=document.getElementsByName("combo_tipocompra")[0].value;	
-var tipocompranombre = $("#combo_tipocompra option:selected").text();
-var nombreproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('value');
-var rutproveedor= $("#misproveedores2 option[value='" + $('#proveedorrut').val() + "']").attr('id');
-var proveedortexto= $("#proveedorrut").val();
+var tiposalidacod=document.getElementsByName("combo_salida")[0].value;	
+var tiposalidanombre = $("#combo_salida option:selected").text();
+var npedido= $("#npedido").val();
+var nsalida= $("#nsalida").val();
+var tipodeptocod=document.getElementsByName("combo_depto")[0].value;	
+var tipodeptonombre = $("#combo_depto option:selected").text();
 var fecha= $("#datetimepicker1").val();
 var hora= $("#hora").val();
-var nombreproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
-var codbarraproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('id');
-var correlativoprod=$("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
-var productotexto= $("#buscarproducto").val();
-var comentarios= $("#Comentarios").val();
-var descuento= $("#descuento").val();
-var valorfactura= $("#valorfactura").val();
-var neto= $("#neto").val();
-var iva = $("#iva").val();
-var total= $("#total").val(); 
-var text = document.getElementById("proveedorrut"),
-    element = document.getElementById("misproveedores2");
-
-     var comprobar=""
-   
-   if(element.querySelector("option[value='"+text.value+"']")){
-  comprobar="bien";
-   }
-    else{
-     comprobar="mal";
-    }
+var comentarios=$("#Comentarios").val();
  
-if (tipoingresocod==0) {
+if (tiposalidacod==0) {
 swal("Error!", "Ingrese un tipo de ingreso", "error");
-}else if (ndocumento==="") {
+}else if (npedido==="") {
 swal("Error!", "Ingrese un N° documento", "error");
-}else if (nfolio==="") {
+}else if (nsalida==="") {
 swal("Error!", "Ingrese un N° Folio", "error");
-}else if (tipocompracod==0) {
+}else if (tipodeptocod==0) {
 swal("Error!", "Ingrese un tipo compra", "error");
-}else if (comprobar==="mal"||proveedortexto==="") {
-swal("Error!", "Ingrese un proveedor", "error");
 }else if (fecha==="") {
 swal("Error!", "Ingrese un fecha", "error");
-}else if (descuento===""||descuento<0) {
-swal("Error!", "Ingrese un decuento valido", "error");
-$("#descuento").val(0);
-}else if (valorfactura===""||valorfactura==0) {
-swal("Error!", "Ingrese un producto ala lista", "error");
-}else if (total===""||total==0) {
-swal("Error!", "Ingrese un producto ala lista", "error");
 }else{
   event.preventDefault();
 $.ajax({
 
-    url:"http://localhost/hospital/control_compra_ingreso/guardaringreso",
+    url:"http://localhost/hospital/control_salida/guardarsalida",
     type:"POST",
-    data:{minfolio:nfolio,mitipoingresocod:tipoingresocod,mitipoingresonombre:tipoingresonombre,mindocumento:ndocumento,minfolio:nfolio,mitipocompracod:tipocompracod,mitipocompranombre:tipocompranombre,minombreproveedor:nombreproveedor,mirutproveedor:rutproveedor,mifecha:fecha,minombreproduct:nombreproduct,micodbarraproduct:codbarraproduct,micorrelativoprod:correlativoprod,micomentarios:comentarios,midescuento:descuento,mineto:neto,miiva:iva,mitotal:total},
+    data:{minsalida:nsalida,minpedido:npedido,mitiposalidacod:tiposalidacod,mitiposalidanombre:tiposalidanombre,mitipodeptocod:tipodeptocod,mitipodeptonombre:tipodeptonombre,mifecha:fecha,micomentario:comentarios},
     dataType:"json",
     success:function(respuesta){
-    	   guardardetalle();
+      guardardetalle();
          console.log(respuesta);
-       $("#msg-error3").hide();
+     /*  $("#msg-error3").hide();
        $("#msg-bien").show();
        swal("Exito!", "Ingreso guardado.", "success");
        window.location.hash = '#msg-bien';
@@ -834,7 +814,7 @@ $.ajax({
        $("#msg-error3").show();
        $("#msg-bien").hide();
        swal("Algo fallo!", "Intentelo mas tarde verifique su conexion.", "error");
-       window.location.hash = '#msg-error3';
+       window.location.hash = '#msg-error3';*/
            }
        });
 }
@@ -842,47 +822,44 @@ $.ajax({
 
 
 function guardardetalle(){
-
-
 var miJSON="";
 var datostabla={datos:[]};
  var obj = JSON.parse(JSON.stringify(datostabla));
 	$("#tbproductos tbody tr").each(function (index) 
         {
-            var micodinterno, micodbarra, minombre,milote,mifechavenc,micantidad,mivalor,mitotal;
+            var micodinterno, minombre,milote,mifechavenc,micantidad,mivalor,micantentreg;
             $(this).children("td").each(function (index2) 
             {
                 switch (index2) 
                 {
                     case 0: micodinterno = $(this).text();
                             break;
-                    case 1: micodbarra = $(this).text();
+                    case 1: minombre = $(this).text();
                             break;
-                    case 2: minombre = $(this).text();
+                    case 2: milote = $(this).text();
                             break;
-                    case 3: milote = $(this).text();
+                    case 3: mifechavenc = $(this).text();
                             break;
-                    case 4: mifechavenc = $(this).text();
+                    case 4: micantidad = $(this).text();
                             break;
-                    case 5: micantidad = $(this).text();
+                    case 5: micantentreg = $(this).text();
                             break;
                     case 6: mivalor = $(this).text();
                             break;
-                    case 7: mitotal = $(this).text();
-                            break;
+                  
                 }
                
             })
 
-         var nfolio= $("#folio").val();
+         var nsalida= $("#nsalida").val();
          //  var obj = JSON.parse('[datostabla]');
-              obj['datos'].push({"folio":nfolio,"codinterno":micodinterno,"codbarra":micodbarra,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"total":mitotal});
+              obj['datos'].push({"nsalida":nsalida,"codinterno":micodinterno,"nombre":minombre,"lote":milote,"fechavenc":mifechavenc,"cantidad":micantidad,"valor":mivalor,"entrega":micantentreg});
      
 //var miJSON = JSON.encode(obj);
             //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
         })
 
-$.post('http://localhost/hospital/control_compra_ingreso/guardardetalle', {sendData: JSON.stringify(obj)}, function(res) {
+$.post('http://localhost/hospital/control_salida/guardardetalle', {sendData: JSON.stringify(obj)}, function(res) {
     console.log(res);
 }, "json");
    
