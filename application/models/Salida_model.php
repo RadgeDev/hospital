@@ -180,4 +180,34 @@ public function guardardetalle($data) {
 			return false;
 		}
 }
+
+function get_cantidadlotes($lote,$codprod){
+$this->db->select('cantidad');
+$this->db->from('lotes');
+  $this->db->where('lote',$lote)->where("(cod_producto='" .$codprod."')");
+$query=$this->db->get();
+return $query->result();
+}
+
+function actualizarlotes($lote,$codprod,$data){
+
+        $this->db->where('lote',$lote)->where("(cod_producto='" .$codprod."')");
+		$this->db->update('lotes', $data); 
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		}
+		else{
+				$this->db->_error_message(); 
+			return $this->db->_error_message(); 
+		}
+	}
+
+
+Public function desactivarlote()
+	{
+    $this->db-> query('UPDATE lotes SET Estado="Desact" WHERE cantidad="0"');
+    
+
+	}
+
 }//fin de clase modelo

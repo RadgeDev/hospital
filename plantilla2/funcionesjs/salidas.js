@@ -10,7 +10,9 @@ $( "#datetimepicker1" ).datepicker({dateFormat:"dd-mm-yy"}).datepicker("setDate"
 
 setTimeout("mostrarhora()",1000); 
 numerofolio();
- $("#msg-error").hide();
+ 
+      
+      $("#msg-error").hide();
   $("#msg-error2").hide();
     $("#msg-error3").hide();
       $("#msg-bien").hide();
@@ -351,7 +353,19 @@ function mostrarProveedores(){
 
 }
 
+function cambiarlote(){
 
+	$.ajax({
+		url : "http://localhost/hospital/control_salida/lotes",
+		type: "POST",
+		dataType:"json",
+		success:function(response){
+			
+
+		}
+			});
+
+}
 
 
 function mostrarProductos(){
@@ -566,20 +580,13 @@ if (theneto==thenetodesc) {
 
 
 function desabilitarcontroles() {
-/*
 $("#ndocumento").prop("readonly",true);
 $("#Comentarios").prop("readonly",true);
-$("#proveedorrut").prop("readonly",true);
-$("#combo_tipocompra").prop("disabled",true);
 $("#buscarproducto").prop("readonly",true);
-$("#descuento").prop("readonly",true);
-$("#agregarprov").prop("disabled",true);
-$("#agreganuevo").prop("disabled",true);
-$("#agregardesc").prop("disabled",true);
+$("#combo_salida").prop("disabled",true);
+$("#combo_depto").prop("disabled",true);
 $("#Agregandogrilla").prop("disabled",true);
-$("#guardaringreso").prop("disabled",true);
-$("#imprimiringreso").prop("disabled",true);
-*/
+$("#guardarsalida").prop("disabled",true);
 }
 
 
@@ -779,13 +786,11 @@ var hora= $("#hora").val();
 var comentarios=$("#Comentarios").val();
  
 if (tiposalidacod==0) {
-swal("Error!", "Ingrese un tipo de ingreso", "error");
-}else if (npedido==="") {
-swal("Error!", "Ingrese un N° documento", "error");
+swal("Error!", "Ingrese un tipo de salida", "error");
 }else if (nsalida==="") {
 swal("Error!", "Ingrese un N° Folio", "error");
 }else if (tipodeptocod==0) {
-swal("Error!", "Ingrese un tipo compra", "error");
+swal("Error!", "Ingrese un Depto", "error");
 }else if (fecha==="") {
 swal("Error!", "Ingrese un fecha", "error");
 }else{
@@ -799,13 +804,13 @@ $.ajax({
     success:function(respuesta){
       guardardetalle();
          console.log(respuesta);
-     /*  $("#msg-error3").hide();
+      $("#msg-error3").hide();
        $("#msg-bien").show();
        swal("Exito!", "Ingreso guardado.", "success");
        window.location.hash = '#msg-bien';
-             desabilitarcontroles();
-       $("#imprimiringreso").prop("disabled",false);
-       $("#combo_tipoingreso").prop("disabled",true);
+          desabilitarcontroles();
+       $("#imprimirsalida").prop("disabled",false);
+       $("#combo_salida").prop("disabled",true);
        $("#tbproductos").find("input,button,textarea,select").attr("disabled", "disabled");
 
             },
@@ -814,7 +819,7 @@ $.ajax({
        $("#msg-error3").show();
        $("#msg-bien").hide();
        swal("Algo fallo!", "Intentelo mas tarde verifique su conexion.", "error");
-       window.location.hash = '#msg-error3';*/
+       window.location.hash = '#msg-error3';
            }
        });
 }

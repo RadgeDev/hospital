@@ -14,8 +14,8 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Salidas
-<button class='btn btn-success' data-toggle='modal' data-target='#modal_lotes' >aaaaaa</button>
-<div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);' >jojo</div>
+<button class='btn btn-success' onclick="cambiarlote();" >aaaaaa</button>
+
                             </li>
                         </ol>
                     </div>
@@ -169,24 +169,18 @@
              <button type="button" id="imprimirsalida" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Egreso </button>  
              <button type="button" id="guardarsalida" onclick="guardarsalida();" class="btn btn-success" > Guardar Egreso </button>  
          
-              
-           </div>
-            <div class="form-group form-inline col-lg-4 col-sm-4">
-            </div>
-             <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
-              <div class="form-group form-inline col-lg-4 col-sm-4 ">
+         
+    </div>
+                <div class="form-group form-inline col-lg-4 col-sm-offset-4 ">
               	  <div class="alert alert-danger" id="msg-error3" style="text-align:left;">
                   <strong>¡Error!</strong> Intentelo mas tarde.
                   <div class="list-errors3"></div>
                   </div>
                   <div class="alert alert-success" id="msg-bien" style="text-align:left;">
-                  <strong>¡Egreso Correcto!</strong> Datos Guardados.
+                  <strong>¡Ingreso Correcto!</strong> Datos Guardados.
                   <div class="list-errors4"></div>
-              </div>
-                <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
-           </div>
-  <!-- Row end -->
-            </div>
+              </div>     
+    </div>
 
 
 

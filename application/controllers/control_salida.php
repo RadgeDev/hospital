@@ -150,6 +150,11 @@ function guardardetalle() {
 
 	
  $data = json_decode($this->input->post('sendData'));
+ $micodigo=0;
+ $obtenerstock=0;
+ $stockactual=0;
+ $stockactualote=0;
+ 
           foreach($data->datos as $d) {
             $detalle_salida = array(
             "cod_salida" => $d->nsalida,
@@ -160,41 +165,50 @@ function guardardetalle() {
             "cantidad" => $d->entrega,
             "valor" => $d->valor
         );
-            
-       //Call the save method
-       $this->Salida_model->guardardetalle($detalle_salida);
-    }
-/*
-foreach($data->datos as $d) {
-$micodigo=$d->codinterno;
-$cantidadactual= $this->Compra_ingreso_model->get_cantidad($micodigo);
-print_r($cantidadactual);
-$actual=0;
-foreach( $cantidadactual  as $r){
-   $actual = $r->cantidad;
-}
-$micantidadingresar=$d->cantidad;
-(int)$totalcantidad=(int)$micantidadingresar+(int)$actual;
-$datosactualizar = array(
-				"cantidad" =>$totalcantidad
-				
-
-			);	
- $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
-			}	
-
-    if ($this->db->trans_status() === FALSE) {
-        $this->db->trans_rollback();
-        echo json_encode("Failed to Save Data");
-    } else {
-        $this->db->trans_commit();
-        echo json_encode("Success!");
-    }
-
-*/
-
 	
+  	        $stockactual=0;
+			$stockactualote=0;
+			$totalcantidad=0;
+			$totalcantidadlote=0;
+			$mientrega= $d->entrega;
+			$milote= $d->lote;
+			echo json_encode($milote);
+		    $micodigo=$d->codinterno;
+
+		    $obtenerstock= $this->Compra_ingreso_model->get_cantidad($micodigo);
+	        foreach( $obtenerstock  as $r){
+            $stockactual = $r->cantidad;
+            }
+			(int)$totalcantidad=(int)$stockactual-(int)$mientrega;
+              $datosactualizar = array(
+				"cantidad" =>$totalcantidad
+			);	
+			
+		    $stockactualote=0;
+			$totalcantidadlote=0;
+            $obtenerstocklote= $this->Salida_model->get_cantidadlotes($milote,$micodigo);
+	        foreach( $obtenerstocklote  as $r){
+            $stockactualote = $r->cantidad;
+            } 
+			
+			(int)$totalcantidadlote=(int)$stockactualote-(int)$mientrega;
+            $datosactualizarlote = array(
+				"cantidad" =>$totalcantidadlote
+			);	
+	
+           //Call the save method
+		   	$this->Salida_model->actualizarlotes($milote,$micodigo,$datosactualizarlote);
+           $this->Salida_model->guardardetalle($detalle_salida);
+		   $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
+		  	$this->Salida_model->desactivarlote();
+		  
+    }
+
 	}
+
+function lotes() {
+
+}
 
 function editando() {
 
