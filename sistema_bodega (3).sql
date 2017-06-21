@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-06-2017 a las 22:57:09
+-- Tiempo de generación: 21-06-2017 a las 23:02:27
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -49,7 +49,8 @@ INSERT INTO `bincard` (`idbincard`, `cod_producto`, `nombre`, `cod_depto`, `secc
 (1, 'DSS0002', 'kill', 1, 'urgencia', '', 100, 0, 1500, '2017-06-14', 5, 0),
 (2, 'ECO0146', 'CARPETA CUADRADA BYSTRECH', 0, 'N/N', '', 10, 0, 20, '14-06-2017', 33, 0),
 (3, 'ECO2', 'tremex', 0, 'N/N', '', 10, 0, 218, '14-06-2017', 33, 0),
-(4, 'ECO2', 'tremex', 0, 'N/N', 'FABIOLA CONTRERAS', 10, 0, 228, '14-06-2017', 34, 0);
+(4, 'ECO2', 'tremex', 0, 'N/N', 'FABIOLA CONTRERAS', 10, 0, 228, '14-06-2017', 34, 0),
+(5, 'ECO1', 'Mr.Musculo 450ml', 0, 'N/N', 'JAIME CIFUENTES YAÑEZ', 2, 0, 89, '19-06-2017', 35, 0);
 
 -- --------------------------------------------------------
 
@@ -139,7 +140,8 @@ INSERT INTO `compra` (`cod_compra`, `tipo_documento`, `numero_documento`, `tipo_
 (31, 'Factura', '46456', 1, 'Cenabast', '12782277-8', 'VICTOR DUQUE JARA', '13-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
 (32, 'Canje', '54645', 1, 'Cenabast', '12413501-K', 'JESSICA', '13-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
 (33, 'Factura', '2515654564', 3, 'Compra Directa', '6432664-3', 'FARMACIA LOURDES', '14-06-2017', 2000, 380, 2380, 0, '11111111-1', 'Edgardo Avila', ''),
-(34, 'Factura', '5464654', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '14-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', '');
+(34, 'Factura', '5464654', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '14-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
+(35, 'Factura', '2564554', 2, 'Chile Compra', '10953742-K', 'JAIME CIFUENTES YAÑEZ', '19-06-2017', 4000, 760, 4760, 0, '11111111-1', 'Edgardo Avila', '');
 
 -- --------------------------------------------------------
 
@@ -239,7 +241,8 @@ INSERT INTO `detalle_compra` (`detalle_compra`, `cod_compra`, `cod_producto`, `c
 (50, 32, 'FCM0069', '', 'METILFENIDATO 10MG', 'ISOKA123', '2017-06-24', 10, 100, 1000),
 (51, 33, 'ECO0146', '', 'CARPETA CUADRADA BYSTRECH', 'FILO123', '2017-06-16', 10, 100, 1000),
 (52, 33, 'ECO2', '7804644720385', 'tremex', 'LOL11544', '2017-06-15', 10, 100, 1000),
-(53, 34, 'ECO2', '7804644720385', 'tremex', '544554', '2017-06-16', 10, 100, 1000);
+(53, 34, 'ECO2', '7804644720385', 'tremex', '544554', '2017-06-16', 10, 100, 1000),
+(54, 35, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 2, 2000, 4000);
 
 -- --------------------------------------------------------
 
@@ -274,7 +277,9 @@ INSERT INTO `detalle_pedido` (`cod_detalle`, `folio`, `cod_producto`, `cod_barra
 (41, 5, 'DSS0002', '', 'UNIFORME AUXILIAR DAMA', 1000),
 (42, 6, 'CV', '', 'UNIDAD REFRIGERANTE ', 100),
 (43, 6, 'CV29', '', 'APOSITO C/PLATA Y FIBRA REFUERZO', 100),
-(44, 7, 'ECO2', '7804644720385', 'tremex', 10);
+(44, 7, 'ECO2', '7804644720385', 'tremex', 10),
+(45, 8, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 15),
+(46, 8, 'ECO2', '7804644720385', 'tremex', 11);
 
 -- --------------------------------------------------------
 
@@ -286,20 +291,94 @@ CREATE TABLE `detalle_salida` (
   `cod_detalle` int(11) NOT NULL,
   `cod_salida` int(11) DEFAULT NULL,
   `cod_producto` varchar(8) DEFAULT NULL,
-  `cantidad` int(6) DEFAULT NULL
+  `nombre_prod` varchar(100) NOT NULL,
+  `lote` varchar(100) NOT NULL,
+  `fecha_vencimiento` varchar(100) NOT NULL,
+  `cantidad` int(6) DEFAULT NULL,
+  `valor` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `detalle_salida`
 --
 
-INSERT INTO `detalle_salida` (`cod_detalle`, `cod_salida`, `cod_producto`, `cantidad`) VALUES
-(815, 1, 'EAS0051', 1),
-(816, 1, 'IMQM000', 1),
-(980, 2, 'EAS0045', 1),
-(981, 2, 'EAS0043', 1),
-(982, 2, 'EAS0044', 1),
-(1384, 3, 'IMQI057', 3);
+INSERT INTO `detalle_salida` (`cod_detalle`, `cod_salida`, `cod_producto`, `nombre_prod`, `lote`, `fecha_vencimiento`, `cantidad`, `valor`) VALUES
+(1, 7, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 10, 100),
+(2, 8, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 2, 2000),
+(3, 8, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 10, 100),
+(4, 8, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(5, 9, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 10, 100),
+(6, 9, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(7, 10, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 10, 100),
+(8, 11, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 10, 100),
+(9, 12, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 5, 100),
+(10, 13, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 2, 2000),
+(11, 13, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 4, 100),
+(12, 13, 'ECO2', 'tremex', '544554', '2017-06-26', 10, 100),
+(13, 14, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(14, 14, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(15, 14, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(16, 22, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(17, 22, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(18, 22, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(19, 23, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 9, 100),
+(20, 23, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(21, 26, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(22, 26, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 2, 100),
+(23, 26, 'ECO2', 'tremex', '544554', '2017-06-26', 2, 100),
+(24, 27, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(25, 27, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(26, 27, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(27, 28, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(28, 29, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(29, 29, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(30, 29, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(31, 30, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(32, 30, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(33, 30, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(34, 31, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(35, 31, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(36, 31, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(37, 32, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(38, 32, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(39, 32, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(40, 33, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(41, 33, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(42, 33, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(43, 34, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(44, 34, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(45, 34, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(46, 35, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(47, 35, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 5, 100),
+(48, 35, 'ECO2', 'tremex', '544554', '2017-06-26', 5, 100),
+(49, 36, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(50, 36, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(51, 36, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(52, 37, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(53, 37, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(54, 37, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(55, 38, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(56, 38, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(57, 38, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(58, 39, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(59, 39, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(60, 39, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(61, 40, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(62, 40, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(63, 40, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(64, 41, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 4, 2000),
+(65, 42, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 4, 100),
+(66, 43, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 2, 100),
+(67, 44, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 5, 2000),
+(68, 44, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 5, 100),
+(69, 44, 'ECO2', 'tremex', '544554', '2017-06-26', 5, 100),
+(70, 45, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(71, 45, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(72, 45, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(73, 46, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
+(74, 46, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(75, 46, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(76, 47, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100);
 
 -- --------------------------------------------------------
 
@@ -396,10 +475,11 @@ CREATE TABLE `lotes` (
 --
 
 INSERT INTO `lotes` (`id`, `lote`, `cod_producto`, `nombre`, `fecha_vencimiento`, `cantidad`, `precio`, `estado`) VALUES
-(1, 'ISOKA123', 'FCM0069', 'METILFENIDATO 10MG', '2017-06-24', 10, 100, 'Activo'),
+(1, 'ISOKA123', 'FCM0069', 'METILFENIDATO 10MG', '2017-06-24', 0, 100, 'Desact'),
 (2, 'FILO123', 'ECO0146', 'CARPETA CUADRADA BYSTRECH', '2017-06-16', 10, 100, 'Activo'),
-(3, 'LOL11544', 'ECO2', 'tremex', '2017-06-15', 10, 100, 'Activo'),
-(4, '544554', 'ECO2', 'tremex', '2017-06-26', 10, 100, 'Activo');
+(3, 'LOL11544', 'ECO2', 'tremex', '2017-06-15', 7, 100, 'Activo'),
+(4, '544554', 'ECO2', 'tremex', '2017-06-26', 8, 100, 'Activo'),
+(5, 'YUO455555', 'ECO1', 'Mr.Musculo 450ml', '2017-06-30', 8, 2000, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -427,13 +507,14 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`folio`, `fecha`, `hora`, `cod_depto`, `depto`, `cod_tipo_pedido`, `tipo_pedido`, `tiempo_pedido`, `rut`, `nombre`, `comentario`, `estado`) VALUES
-(1, '0000-00-00', '08:48:54', 2, 'Reparto Leche', 0, 'Farmacia', 'Mensual', '11111111-1', 'Edgardo Avila', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'Activo'),
+(1, '0000-00-00', '08:48:54', 2, 'Reparto Leche', 0, 'Farmacia', 'Mensual', '11111111-1', 'Edgardo Avila', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'activo'),
 (2, '2017-06-13', '09:10:01', 1, 'Medicina Hombre', 101, 'Farmacia', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
 (3, '2017-06-13', '09:15:23', 2, 'Reparto Leche', 101, 'Farmacia', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
 (4, '2017-06-13', '09:17:22', 1104, 'Enfermera CV', 105, 'Leche', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
 (5, '2017-06-13', '09:26:59', 1, 'Medicina Hombre', 101, 'Farmacia', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
 (6, '2017-06-13', '09:31:50', 1, 'Medicina Hombre', 102, 'Insumos', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
-(7, '2017-06-14', '14:00:48', 2, 'Reparto Leche', 103, 'Economato', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo');
+(7, '2017-06-14', '14:00:48', 2, 'Reparto Leche', 103, 'Economato', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'desact'),
+(8, '2017-06-19', '08:45:22', 2, 'Reparto Leche', 103, 'Economato', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo');
 
 -- --------------------------------------------------------
 
@@ -858,8 +939,8 @@ INSERT INTO `producto` (`cod_interno_prod`, `codigo_barra`, `cod_bodega`, `nombr
 ('ECO0166', '', '103', 'HARINA 5 KILOS', 0, '2660', 'UNIDAD', 0, 0, 0),
 ('ECO0167', '', '103', 'FRUTOS SECOS ', 0, '0', 'UNIDAD', 0, 0, 0),
 ('ECO0168', '', '103', 'CUCHARA TE ', 100, '1', 'UNIDAD', 0, 0, 0),
-('ECO1', '7790520012524', '103', 'Mr.Musculo 450ml', 87, '2150', 'Botella', 5, 10, 100),
-('ECO2', '7804644720385', '103', 'tremex', 228, '2160', 'Botella', 5, 10, 100),
+('ECO1', '7790520012524', '103', 'Mr.Musculo 450ml', 33, '2150', 'Botella', 5, 10, 100),
+('ECO2', '7804644720385', '103', 'tremex', 9, '2160', 'Botella', 5, 10, 100),
 ('ECO3', '2554455', '103', 'rueba', 11, '1200', 'Botella', 10, 10, 100),
 ('EES', '', '103', 'COMPUTADOR HP PROONE 400G1', 0, '928,4', 'UNIDAD', 0, 0, 0),
 ('EES0001', '', '103', 'ALFILERES DE COLORES', 0, '300', 'CAJA', 0, 2, 4),
@@ -7905,22 +7986,69 @@ INSERT INTO `registro` (`idregistro`, `rut_usuario`, `actividad`, `fecha`, `acci
 
 CREATE TABLE `salidas` (
   `cod_salida` int(11) NOT NULL,
+  `cod_tiposalida` int(11) NOT NULL,
+  `nombre_salida` varchar(100) NOT NULL,
   `cod_depto` int(11) DEFAULT NULL,
   `nombre_depto` varchar(50) DEFAULT NULL,
   `num_pedido` int(11) DEFAULT NULL,
   `fecha` varchar(25) DEFAULT NULL,
   `usuario` varchar(11) DEFAULT NULL,
-  `nombre` varchar(100) NOT NULL
+  `nombre` varchar(100) NOT NULL,
+  `comentarios` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `salidas`
 --
 
-INSERT INTO `salidas` (`cod_salida`, `cod_depto`, `nombre_depto`, `num_pedido`, `fecha`, `usuario`, `nombre`) VALUES
-(1, 1300, 'Rehabilitacion', 108, '2013-10-01', '13887515-6', ''),
-(2, 1111, 'Baño Publico', 140, '2013-10-11', '13887515-6', ''),
-(3, 1300, 'Rehabilitacion', 179, '2013-10-18', '13887515-6', '');
+INSERT INTO `salidas` (`cod_salida`, `cod_tiposalida`, `nombre_salida`, `cod_depto`, `nombre_depto`, `num_pedido`, `fecha`, `usuario`, `nombre`, `comentarios`) VALUES
+(1, 0, '', 1300, 'Rehabilitacion', 108, '2013-10-01', '13887515-6', '', ''),
+(2, 0, '', 1111, 'Baño Publico', 140, '2013-10-11', '13887515-6', '', ''),
+(3, 0, '', 1300, 'Rehabilitacion', 179, '2013-10-18', '13887515-6', '', ''),
+(4, 1, 'Pedidos', 2, 'Reparto Leche', 8, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(5, 1, 'Pedidos', 2, 'Reparto Leche', 8, '19-06-2017', '11111111-1', 'Edgardo Avila', 'aaaa'),
+(6, 1, 'Pedidos', 2, 'Reparto Leche', 7, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(7, 1, 'Pedidos', 2, 'Reparto Leche', 7, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(8, 1, 'Pedidos', 2, 'Reparto Leche', 8, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(9, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(10, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', 'jkj'),
+(11, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(12, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(13, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(14, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(15, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(16, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(17, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(18, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(19, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(20, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(21, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(22, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(23, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(24, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(25, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(26, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(27, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(28, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(29, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(30, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(31, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(32, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(33, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(34, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(35, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(36, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(37, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(38, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(39, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(40, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(41, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(42, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(43, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(44, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(45, 1, 'Pedidos', 2, 'Reparto Leche', 8, '21-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(46, 1, 'Pedidos', 2, 'Reparto Leche', 8, '21-06-2017', '11111111-1', 'Edgardo Avila', ''),
+(47, 1, 'Pedidos', 2, 'Reparto Leche', 7, '21-06-2017', '11111111-1', 'Edgardo Avila', '');
 
 -- --------------------------------------------------------
 
@@ -8125,22 +8253,22 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `bincard`
 --
 ALTER TABLE `bincard`
-  MODIFY `idbincard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idbincard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `detalle_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `detalle_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
-  MODIFY `cod_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `cod_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT de la tabla `detalle_salida`
 --
 ALTER TABLE `detalle_salida`
-  MODIFY `cod_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1385;
+  MODIFY `cod_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT de la tabla `eliminar_compra`
 --
@@ -8155,7 +8283,7 @@ ALTER TABLE `eliminar_salida`
 -- AUTO_INCREMENT de la tabla `lotes`
 --
 ALTER TABLE `lotes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `registro`
 --
