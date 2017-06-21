@@ -113,7 +113,7 @@ $('#npedido').val(valorBuscar);
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active tdcolordanger' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' type='button'  class= 'addBtn delRowBtn  btn btn-danger '>X</button></td></tr>";
+				filas+="<tr class='active tdcolordanger' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn delRowBtn  btn btn-danger '>X</button></td></tr>";
 			});
 
 			$("#tbproductos tbody").html(filas);
@@ -128,11 +128,12 @@ $('#npedido').val(valorBuscar);
 }
 
 //evento click  en tabla productos obtene primer valor
-$('#tbproductos').on('click', 'tr', function() {
+$('#tbproductos').on('click', 'tr', function(e) {
     var values = $(this).find('td').map(function() {
         return $(this).text();
     });
-    
+    //evita llamar a otoer evento del boton
+    if (!$(e.target).closest('.delRowBtn').length) {
    valorcod=values[0]; // cod  td
    var cantpedido=values[4]; // cantidad td
    $("#cantped").empty();
@@ -160,12 +161,15 @@ $('#tbproductos').on('click', 'tr', function() {
     
     }
      $('#modal_lotes').modal('show');
-    
+        }else{
+  event.preventDefault(e);
+      }
     
 });
 //validar cheackbox
 function agregarlotes(){
  mitotal = 0;
+ var lotemayor="";
     $("#tblotes td:nth-child(8)").each(function () {
         var val = $(this).text().replace(" ", "").replace(",-", "");
         if (val==""){
@@ -173,13 +177,31 @@ function agregarlotes(){
         }
         mitotal += parseInt(val);
     });
+//comparar columas stock y valor ingresado
+$('#tblotes  tr').each(function() {
+
+     var cell3 =parseInt($(this).find("td:eq(6)").text());
+      var cell4 =parseInt($(this).find("td:eq(7)").text());
+     if(cell3<cell4) {
+       lotemayor="mayor";
+       return false;
+     }else{
+         lotemayor="no";
+     }
+
+});
+
+
     var final =mitotal;
      var checked = $("#tblotes input:checked").length > 0;
 
    if (final=="0"){
 	      swal("Error!", "Escriba una cantidad valida", "error");// a trves swift una libreria permite crear mensajes bonitos   
 
-   }else if (!checked){
+   }else if (lotemayor=="mayor"){
+       	swal("Error!", "Cantidad ingresada es  mayor que el stock lote", "error");// a trves swift una libreria permite crear mensajes bonitos    
+
+    }else if (!checked){
        	swal("Error!", "Seleccione un lote", "error");// a trves swift una libreria permite crear mensajes bonitos    
 
     }else{
@@ -192,7 +214,7 @@ function agregarlotes(){
            if(index > 0)
                values += " ";
            
-           values += "<tr class='active tdcolor' ><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(7)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar'   class= 'addBtn delRowBtn  btn btn-danger '>X</button></td></tr>";           
+           values += "<tr class='active tdcolor' ><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(7)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar'   class= 'addBtn delRowBtn   btn btn-danger '>X</button></td></tr>";           
           searchString = $(data).find('td:eq(2)').text();
       
       });
@@ -211,21 +233,13 @@ $("#tbproductos tr td:contains('" + searchString + "')").each(function() {
 
 
 //validar lotes
-/*
- $('#tblotes').on('click', 'tr', function() {
-   validarcantidad();
-    });
-//validar cantidad de los lotes para ingresar al pedido
-function validarcantidad(){
- var cont;
- $("div [contenteditable=true]").blur(function() {
-        if ($(this).html()!=cont) {
-       var hola=$(this).html()
-        alert(hola) ;  //Here you can write the code to run when the content change
-        }           
-    });
-}  
-*/
+var contents = $('.textfield').html();
+$('.textfield').blur(function() {
+    if (contents!=$(this).html()){
+  alert('Handler for .change() called.');
+        contents = $(this).html();
+    }
+});
 // cerrar modal
   function cerrarModal() {
   $("#msg-error").hide();
