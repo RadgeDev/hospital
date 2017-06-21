@@ -118,7 +118,7 @@ function guardarsalida() {
 			$nombreusuario= $this->session->userdata('minombre');
             $micomentario=$this->input->post("micomentario");
 
-   
+            $estado="desact";
    			$datos = array(
    				"cod_salida" => $nsalida,
 				"cod_tiposalida" => $tiposalidacod,
@@ -131,7 +131,13 @@ function guardarsalida() {
 				"nombre" => $nombreusuario,
 				"comentarios" => $micomentario
 				);
-   	
+				$desactivarpedido = array(
+   				"estado" => $estado
+				);
+				if($npedido!==""){
+				 $this->Salida_model->desactivarpedido($npedido,$desactivarpedido);
+				}
+   	       
 		if($this->Salida_model->guardarsalida($datos)==true){
   $data = array(
 			"miresultado" =>"bien"

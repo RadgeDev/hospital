@@ -113,7 +113,7 @@ $('#npedido').val(valorBuscar);
 			
 			filas = "";
 			$.each(response.obtener,function(key,item){
-				filas+="<tr class='active tdcolordanger' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+				filas+="<tr class='active tdcolordanger' ><td >"+item.cod_producto+"</td><td>"+item.nombre_prod+"</td><td>0</td><td>N/N</td><td>"+item.cantidad+"</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' type='button'  class= 'addBtn delRowBtn  btn btn-danger '>X</button></td></tr>";
 			});
 
 			$("#tbproductos tbody").html(filas);
@@ -192,7 +192,7 @@ function agregarlotes(){
            if(index > 0)
                values += " ";
            
-           values += "<tr class='active tdcolor' ><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(7)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";           
+           values += "<tr class='active tdcolor' ><td>" + $(data).find('td:eq(2)').text() + "</td><td>" + $(data).find('td:eq(3)').text() + "</td><td>" + $(data).find('td:eq(1)').text() +"</td><td>" + $(data).find('td:eq(4)').text() + "</td><td>" + cantidad+ "</td><td>"+ $(data).find('td:eq(7)').text() + "</td><td>" + $(data).find('td:eq(5)').text() +"</td><td><button  id='eliminar'   class= 'addBtn delRowBtn  btn btn-danger '>X</button></td></tr>";           
           searchString = $(data).find('td:eq(2)').text();
       
       });
@@ -717,11 +717,8 @@ function solonumerosenteros(e){
  $(document.body).delegate(".delRowBtn", "click", function(){
 
    $(this).closest("tr").remove(); 
-        calculartotal() ;
-        habilitando() ;
-           
-  swal("Producto eliminado de la lista!", "Registro eliminado.", "success");
 
+    
 });
 
 function numerofolio(){

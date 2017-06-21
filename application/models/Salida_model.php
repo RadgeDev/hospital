@@ -184,7 +184,7 @@ public function guardardetalle($data) {
 function get_cantidadlotes($lote,$codprod){
 $this->db->select('cantidad');
 $this->db->from('lotes');
-  $this->db->where('lote',$lote)->where("(cod_producto='" .$codprod."')");
+$this->db->where('lote',$lote)->where("(cod_producto='" .$codprod."')");
 $query=$this->db->get();
 return $query->result();
 }
@@ -203,11 +203,15 @@ function actualizarlotes($lote,$codprod,$data){
 	}
 
 
-Public function desactivarlote()
+Public function desactivarlote($codped)
 	{
     $this->db-> query('UPDATE lotes SET Estado="Desact" WHERE cantidad="0"');
-    
-
 	}
+  
 
+Public function desactivarpedido($codped,$data)
+	{
+    $this->db->where('folio',$codped);
+	$this->db->update('pedidos', $data); 
+	}
 }//fin de clase modelo
