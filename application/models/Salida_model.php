@@ -76,6 +76,7 @@ return $query->result();
  
 
 public function editando($codselec){
+     	$this->db->select('*');
 		$this->db->where('cod_interno_prod',$codselec);
 		$q= $this->db->get('producto');
 		return $q->result();

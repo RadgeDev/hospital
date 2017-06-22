@@ -39,8 +39,9 @@
           <label>Tipo Salida</label>
                <select name='combo_salida' id ='combo_salida' class='form-control' >
                <option selected="selected" value="0">Eliga una opcion</option>
-             <option value="1">Pedidos</option>
-            <option value="2">Ajustes de Stock</option>
+               <option value="1">Pedidos</option>
+               <option value="2">Ajustes de Inventario</option>
+               <option value="2">Salida Directa </option>
              </select >
         
             </div>
@@ -109,17 +110,18 @@
         
         <div class="panel-body">
           <div class="row">
-            <div class="col-lg-4 col-sm-4">
-       
+            <div class="col-lg-5 col-sm-5">
+   
                 <label>Buscar Articulos</label>
-                 <input type="text" id="buscarproducto" onblur="" list="buscandoprod" class="form-control" placeholder="Buscar Producto">
+                 <input type="text" id="buscarproducto" onblur="" list="buscandoprod"  class="form-control " placeholder="Buscar Producto">
+           
                   <datalist id="buscandoprod">
         
                        </datalist>
 
             </div>
 
-            <div class="col-lg-4 col-sm-4">
+            <div class="col-lg-2 col-sm-2">
                 <label>Producto a la lista</label>
                 <div class='input-group ' >
           				<button type="button" id="Agregandogrilla" class="btn btn-success"  class="btn btn-success"  onclick="listarproductos();">

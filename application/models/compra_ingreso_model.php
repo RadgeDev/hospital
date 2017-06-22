@@ -138,7 +138,7 @@ function get_proveedor(){
 function get_productos()
 {
     // armamos la consulta
-    $query = $this->db-> query('SELECT cod_interno_prod,codigo_barra,nombre FROM producto');
+    $query = $this->db-> query('SELECT * FROM producto');
 
    return $query->result();
 

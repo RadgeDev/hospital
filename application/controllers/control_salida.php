@@ -219,9 +219,9 @@ function lotes() {
 function editando() {
 
 		if ($this->input->is_ajax_request()) {
-			$codselec = $this->input->post("id");
+			$codselec = $this->input->post("buscar");
          $data = array(
-			"obtener" => $this->Producto_model->editando($codselec)
+			"obtener" => $this->Salida_model->editando($codselec)
          	);
             echo json_encode($data);
 		}

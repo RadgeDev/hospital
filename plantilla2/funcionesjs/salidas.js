@@ -1,6 +1,6 @@
     $(document).on("ready", main);
  //  $(document).on("ready", mostrarProveedores);
- //  $(document).on("ready", mostrarProductos);
+   $(document).on("ready", mostrarProductos);
    //   $(document).on("ready", desabilitarcontroles);
     
 function main(){
@@ -59,9 +59,26 @@ alert(fechatotal);
 
 
 }
+
+$("select[name=combo_salida]").change(function(){
+ var salida = $("#combo_salida").val();
+ if(salida==1){
+ $("#combo_depto").prop("disabled",false);
+  $("#combo_depto").val('0');
+  $("#Agregandogrilla").prop("disabled",true);
+  $("#buscarproducto").prop("readonly",true);
+  $("#buscarproducto").val("");
+ }else {
+  $("#combo_depto").prop("disabled",true);
+  $("#combo_depto").val('0');
+  $("#Agregandogrilla").prop("disabled",false);
+  $("#buscarproducto").prop("readonly",false);
+ }
+  
+ });
+
 $("select[name=combo_depto]").change(function(){
  var depto = $("#combo_depto").val();
- alert(depto);
  if(depto==0){
    
  }else{
@@ -96,6 +113,8 @@ function mostrarDatos(valorBuscar){
        $('#modal_pedidos').modal('show');
 
 }
+ 
+
 
  
 function Agregarpedidotabla(obj){
@@ -392,7 +411,7 @@ function mostrarProductos(){
 			
 			filas = "";
 			$.each(response.misproductos,function(key,item){
-				filas+='<option id="'+item.codigo_barra+'" data-codigo="'+item.cod_interno_prod+'" value="'+item.nombre+'" />'+item.codigo_barra+'';
+				filas+='<option id="'+item.codigo_barra+'" data-codigo="'+item.cod_interno_prod+'" value="'+item.nombre+'" /> STOCK ( '+item.cantidad+' )';
 			});
 
             var my_list=document.getElementById("buscandoprod");
@@ -760,11 +779,15 @@ $.ajax({
  function listarproductos(){
      var text2 = document.getElementById("buscarproducto"),
          element2 = document.getElementById("buscandoprod");
+var nombreproduct= $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('value');
+var correlativoprod=$("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
+
         var comprobar2=""
         
 
       if(element2.querySelector("option[value='"+text2.value+"']")){
              comprobar2="bien";
+
            }
       else{
      	comprobar2="mal";
@@ -772,10 +795,28 @@ $.ajax({
 
 
          if (comprobar2==="bien") {
-        $('#largeModal').modal('show');
+	$.ajax({
+		url : "http://localhost/hospital/control_salida/editando",
+		type: "POST",
+		data: {buscar:correlativoprod},
+		dataType:"json",
+		success:function(response){
+			
+			filas = "";
+			$.each(response.obtener,function(key,item){
+				filas+="<tr class='active tdcolordanger' ><td >"+item.cod_interno_prod+"</td><td>"+item.nombre+"</td><td>0</td><td>N/N</td><td>N/N</td><td>0</td><td>0</td><td><button href='"+item.folio+"'  id='eliminar' onclick=''  class= 'addBtn delRowBtn  btn btn-danger '>X</button></td></tr>";
+			});
+
+			$("#tbproductos tbody").append(filas);
+   
+
+		}
+	});
+
+
+    
          }else{
-         	 $('#largeModal').modal('hide');
-         	 $('#buscarproducto').val("");
+ 
        document.getElementById("buscarproducto").focus();
       swal("Error!", "Vuelva ingresar el producto articulo", "error");
       
