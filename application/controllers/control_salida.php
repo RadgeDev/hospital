@@ -152,7 +152,111 @@ function guardarsalida() {
 }
 }
 
+function guardarajusteinventario() {
+		//El metodo is_ajax_request() de la libreria input permite verificar
+		//si se esta accediendo mediante el metodo AJAX 
+	if ($this->input->is_ajax_request()) {
+
+			$nsalida = $this->input->post("minsalida");
+			$npedido = 0;
+            $tiposalidacod	= $this->input->post("mitiposalidacod");
+            $tiposalidanombre= $this->input->post("mitiposalidanombre");
+            $tipodeptocod= "NULL";
+            $tipodeptonombre= "Ajuste Stock";
+            $fecha= $this->input->post("mifecha");
+            $usuario= $this->session->userdata('mirut');
+			$nombreusuario= $this->session->userdata('minombre');
+            $micomentario=$this->input->post("micomentario");
+
+          
+   			$datos = array(
+   				"cod_salida" => $nsalida,
+				"cod_tiposalida" => $tiposalidacod,
+				"nombre_salida" => $tiposalidanombre,
+				"nombre_depto" => $tipodeptonombre,
+				"num_pedido" => $npedido,
+				"fecha" => $fecha,
+				"usuario" => $usuario,
+				"nombre" => $nombreusuario,
+				"comentarios" => $micomentario
+				);
+		
+	
+   	       
+		if($this->Salida_model->guardarsalida($datos)==true){
+  $data = array(
+			"miresultado" =>"bien"
+         	);
+		
+			}else{
+				echo "error";
+		
+
+		}
+		echo json_encode($data);
+}
+}
+
 function guardardetalle() {
+
+	
+ $data = json_decode($this->input->post('sendData'));
+ $micodigo=0;
+ $obtenerstock=0;
+ $stockactual=0;
+ $stockactualote=0;
+ 
+          foreach($data->datos as $d) {
+            $detalle_salida = array(
+            "cod_salida" => $d->nsalida,
+            "cod_producto" => $d->codinterno,
+            "nombre_prod" => $d->nombre,
+            "lote" => $d->lote,
+            "fecha_vencimiento" => $d->fechavenc,
+            "cantidad" => $d->entrega,
+            "valor" => $d->valor
+        );
+	
+  	        $stockactual=0;
+			$stockactualote=0;
+			$totalcantidad=0;
+			$totalcantidadlote=0;
+			$mientrega= $d->entrega;
+			$milote= $d->lote;
+			echo json_encode($milote);
+		    $micodigo=$d->codinterno;
+
+		    $obtenerstock= $this->Compra_ingreso_model->get_cantidad($micodigo);
+	        foreach( $obtenerstock  as $r){
+            $stockactual = $r->cantidad;
+            }
+			(int)$totalcantidad=(int)$stockactual-(int)$mientrega;
+              $datosactualizar = array(
+				"cantidad" =>$totalcantidad
+			);	
+			
+		    $stockactualote=0;
+			$totalcantidadlote=0;
+            $obtenerstocklote= $this->Salida_model->get_cantidadlotes($milote,$micodigo);
+	        foreach( $obtenerstocklote  as $r){
+            $stockactualote = $r->cantidad;
+            } 
+			
+			(int)$totalcantidadlote=(int)$stockactualote-(int)$mientrega;
+            $datosactualizarlote = array(
+				"cantidad" =>$totalcantidadlote
+			);	
+	
+           //Call the save method
+		   	$this->Salida_model->actualizarlotes($milote,$micodigo,$datosactualizarlote);
+           $this->Salida_model->guardardetalle($detalle_salida);
+		   $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
+		  	$this->Salida_model->desactivarlote();
+		  
+    }
+
+	}
+function guardardetalledirecto() {
 
 	
  $data = json_decode($this->input->post('sendData'));

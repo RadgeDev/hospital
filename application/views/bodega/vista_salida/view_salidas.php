@@ -14,7 +14,7 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Salidas
-<button class='btn btn-success' onclick="cambiarlote();" >aaaaaa</button>
+<button class='btn btn-success' onclick="probando();" >aaaaaa</button>
 
                             </li>
                         </ol>
@@ -41,7 +41,7 @@
                <option selected="selected" value="0">Eliga una opcion</option>
                <option value="1">Pedidos</option>
                <option value="2">Ajustes de Inventario</option>
-               <option value="2">Salida Directa </option>
+               <option value="3">Salida Directa </option>
              </select >
         
             </div>

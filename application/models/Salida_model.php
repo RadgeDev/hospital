@@ -206,7 +206,7 @@ function actualizarlotes($lote,$codprod,$data){
 
 Public function desactivarlote($codped)
 	{
-    $this->db-> query('UPDATE lotes SET Estado="Desact" WHERE cantidad="0"');
+    $this->db-> query('UPDATE lotes SET estado="Desact" WHERE cantidad="0"');
 	}
   
 
