@@ -29,6 +29,16 @@ $query=$this->db->get();
 return $query->result();
 	}
 
+Public function cargarlotevenc($buscar)
+{
+$this->db->select('*');
+$this->db->from('lotes');
+$this->db->where('fecha_vencimiento <= CURDATE()' )->where('cod_producto',$buscar)->where("(estado='Activo')");
+$query=$this->db->get();
+return $query->result();
+	}
+	
+	
 
 	function validar( $rutsele){
 		$this->db->where('cod_interno_prod', $rutsele);
@@ -81,6 +91,7 @@ public function editando($codselec){
 		$q= $this->db->get('producto');
 		return $q->result();
 		}
+	
 
 	public function obtenerfolio(){
 
@@ -90,7 +101,7 @@ public function editando($codselec){
                 }else
                        {
 	             return "error";
-                        }
+         }
 		}
 
 

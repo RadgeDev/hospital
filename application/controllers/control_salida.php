@@ -48,7 +48,16 @@ class Control_salida extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
-
+		public function cargarlotesvenc()
+	{	
+		//valor a Buscar
+		$buscar = $this->input->post("buscar");
+		$data = array(
+			"obtener" => $this->Salida_model->cargarlotevenc($buscar)
+		);
+		echo json_encode($data);
+	}
+	
 function devolverarray() {
 $datosproveedor = array(
 			"proveedor" => $this->Compra_ingreso_model->get_proveedor()
@@ -113,7 +122,8 @@ function guardarsalida() {
             $tiposalidanombre= $this->input->post("mitiposalidanombre");
             $tipodeptocod= $this->input->post("mitipodeptocod");
             $tipodeptonombre= $this->input->post("mitipodeptonombre");
-            $fecha= $this->input->post("mifecha");
+			$fecha= $this->input->post("mifecha");
+			$mifecha= date('Y-m-d', strtotime($fecha));
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
             $micomentario=$this->input->post("micomentario");
@@ -126,7 +136,7 @@ function guardarsalida() {
 				"cod_depto" => $tipodeptocod,
 				"nombre_depto" => $tipodeptonombre,
 				"num_pedido" => $npedido,
-				"fecha" => $fecha,
+				"fecha" => $mifecha,
 				"usuario" => $usuario,
 				"nombre" => $nombreusuario,
 				"comentarios" => $micomentario
@@ -163,7 +173,8 @@ function guardarajusteinventario() {
             $tiposalidanombre= $this->input->post("mitiposalidanombre");
             $tipodeptocod= "NULL";
             $tipodeptonombre= "Ajuste Stock";
-            $fecha= $this->input->post("mifecha");
+			$fecha= $this->input->post("mifecha");
+			$mifecha= date('Y-m-d', strtotime($fecha));
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
             $micomentario=$this->input->post("micomentario");
@@ -175,7 +186,7 @@ function guardarajusteinventario() {
 				"nombre_salida" => $tiposalidanombre,
 				"nombre_depto" => $tipodeptonombre,
 				"num_pedido" => $npedido,
-				"fecha" => $fecha,
+				"fecha" => $mifecha,
 				"usuario" => $usuario,
 				"nombre" => $nombreusuario,
 				"comentarios" => $micomentario
@@ -207,12 +218,14 @@ function guardardetalle() {
  $stockactualote=0;
  
           foreach($data->datos as $d) {
+			$fecha= $d->fechavenc;
+			$fechavenc= date('Y-m-d', strtotime($fecha));
             $detalle_salida = array(
             "cod_salida" => $d->nsalida,
             "cod_producto" => $d->codinterno,
             "nombre_prod" => $d->nombre,
             "lote" => $d->lote,
-            "fecha_vencimiento" => $d->fechavenc,
+            "fecha_vencimiento" =>$fechavenc,
             "cantidad" => $d->entrega,
             "valor" => $d->valor
         );
@@ -246,7 +259,25 @@ function guardardetalle() {
             $datosactualizarlote = array(
 				"cantidad" =>$totalcantidadlote
 			);	
-	
+
+			$fecha2= $d->fecha;
+			$fechaactu= date('Y-m-d', strtotime($fecha2));
+		
+	$datosbincard = array(
+                "cod_producto" => $d->codinterno,
+				"nombre"  => $d->nombre,
+				"cod_depto" =>$d->cod_depto,
+				"seccion" =>$d->nom_depto,
+				"proveedor"=> "salida",
+				"entrada"=> "0",
+			    "salida" =>$mientrega,
+				"saldo" =>$totalcantidad,
+			    "fecha" => $fechaactu,
+                "cod_compra"=> "0",
+                "cod_salida" =>$d->nsalida
+                 );	
+				  //Call the save method
+    $this->Compra_ingreso_model->guardarbincard($datosbincard);   
            //Call the save method
 		   	$this->Salida_model->actualizarlotes($milote,$micodigo,$datosactualizarlote);
            $this->Salida_model->guardardetalle($detalle_salida);
@@ -256,9 +287,9 @@ function guardardetalle() {
     }
 
 	}
+
 function guardardetalledirecto() {
 
-	
  $data = json_decode($this->input->post('sendData'));
  $micodigo=0;
  $obtenerstock=0;
@@ -266,12 +297,14 @@ function guardardetalledirecto() {
  $stockactualote=0;
  
           foreach($data->datos as $d) {
+			$fecha= $d->fechavenc;
+			$fechavenc= date('Y-m-d', strtotime($fecha));
             $detalle_salida = array(
             "cod_salida" => $d->nsalida,
             "cod_producto" => $d->codinterno,
             "nombre_prod" => $d->nombre,
             "lote" => $d->lote,
-            "fecha_vencimiento" => $d->fechavenc,
+            "fecha_vencimiento" => $fechavenc,
             "cantidad" => $d->entrega,
             "valor" => $d->valor
         );
@@ -305,12 +338,29 @@ function guardardetalledirecto() {
             $datosactualizarlote = array(
 				"cantidad" =>$totalcantidadlote
 			);	
-	
+		$fecha2= $d->fecha;
+			$fechaactu= date('Y-m-d', strtotime($fecha2));
+
+	$datosbincard = array(
+                "cod_producto" => $d->codinterno,
+				"nombre"  => $d->nombre,
+				"cod_depto" =>"0",
+				"seccion" =>$d->salida_nombre,
+				"proveedor"=> $d->salida_nombre,
+				"entrada"=> "0",
+			    "salida" =>$mientrega,
+				"saldo" =>$totalcantidad,
+			    "fecha" => $fechaactu,
+                "cod_compra"=> "0",
+                "cod_salida" =>$d->nsalida
+                 );	
+				  //Call the save method
+    $this->Compra_ingreso_model->guardarbincard($datosbincard);   
            //Call the save method
 		   	$this->Salida_model->actualizarlotes($milote,$micodigo,$datosactualizarlote);
            $this->Salida_model->guardardetalle($detalle_salida);
 		   $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
-		  	$this->Salida_model->desactivarlote();
+		   $this->Salida_model->desactivarlote();
 		  
     }
 

@@ -61,6 +61,7 @@ function mostrarfecha() {
 }
 
 $("select[name=combo_salida]").change(function () {
+    var filas="";
   var salida = $("#combo_salida").val();
   if (salida == 1) {
     $("#combo_depto").prop("disabled", false);
@@ -68,11 +69,13 @@ $("select[name=combo_salida]").change(function () {
     $("#Agregandogrilla").prop("disabled", true);
     $("#buscarproducto").prop("readonly", true);
     $("#buscarproducto").val("");
+    $("#tbproductos tbody").html(filas);
   } else {
     $("#combo_depto").prop("disabled", true);
     $("#combo_depto").val('0');
     $("#Agregandogrilla").prop("disabled", false);
     $("#buscarproducto").prop("readonly", false);
+    $("#tbproductos tbody").html(filas);
   }
 
 });
@@ -151,7 +154,46 @@ $('#tbproductos').on('click', 'tr', function (e) {
   var values = $(this).find('td').map(function () {
     return $(this).text();
   });
+  var opcion = document.getElementsByName("combo_salida")[0].value;
+  /*switch (opcion) {
+
+   case "4"://pedidos
+   alert("aaaaaaaaaaaaa");
   //evita llamar a otoer evento del boton
+  if (!$(e.target).closest('.delRowBtn').length) {
+    valorcod = values[0]; // cod  td
+    var cantpedido = values[4]; // cantidad td
+    $("#cantped").empty();
+    $("#cantped").append(cantpedido);
+    if (valorcod == "0") {
+      $('#tbproductos').children('tr:not(:first)').remove();
+    } else {
+      $.ajax({
+        url: "http://localhost/hospital/control_salida/cargarlotesvenc",
+        type: "POST",
+        data: { buscar: valorcod },
+        dataType: "json",
+        success: function (response) {
+          filas = "";
+          $.each(response.obtener, function (key, item) {
+            filas += "<tr class='active' ><td >  <input type='checkbox'  class='case' name='case[]' value=" + item.id + "></td><td >" + item.lote + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.fecha_vencimiento + "</td><td>" + item.precio + "</td><td>" + item.cantidad + "</td><td><div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);'></div></td></tr>";
+          });
+
+          $("#tblotes tbody").html(filas);
+
+
+        }
+      });
+
+    }
+    $('#modal_lotes').modal('show');
+  } else {
+    event.preventDefault(e);
+  }
+  break;
+
+  default:*/
+    //evita llamar a otoer evento del boton
   if (!$(e.target).closest('.delRowBtn').length) {
     valorcod = values[0]; // cod  td
     var cantpedido = values[4]; // cantidad td
@@ -166,7 +208,6 @@ $('#tbproductos').on('click', 'tr', function (e) {
         data: { buscar: valorcod },
         dataType: "json",
         success: function (response) {
-
           filas = "";
           $.each(response.obtener, function (key, item) {
             filas += "<tr class='active' ><td >  <input type='checkbox'  class='case' name='case[]' value=" + item.id + "></td><td >" + item.lote + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.fecha_vencimiento + "</td><td>" + item.precio + "</td><td>" + item.cantidad + "</td><td><div contenteditable='true' class='textfield' max='10' style='color:blue;background:#E7F570;' onkeypress='return solonumerosenteros(event);'></div></td></tr>";
@@ -185,6 +226,8 @@ $('#tbproductos').on('click', 'tr', function (e) {
   }
 
 });
+
+
 //validar cheackbox
 function agregarlotes() {
   mitotal = 0;
@@ -545,71 +588,6 @@ if (micodigoarticulo==="") {
 
 */
 
-function createRow(data) {
-  return (
-    `<tr class='active'>` +
-    `<td>${data.codigointerno}</td>` +
-    `<td>${data.codigobarra}</td>` +
-    `<td>${data.nombre}</td>` +
-    `<td>${data.lote}</td>` +
-    `<td>${data.vencimiento}</td>` +
-    `<td>${data.cantidad}</td>` +
-    `<td>${data.valorunitario}</td>` +
-    `<td>${data.valortotal}</td>` +
-    `<td><button   id='eliminando'  class='btn btn-danger delRowBtn' >X</button></td>` +
-    `</tr>`
-  );
-}
-
-function calculartotal() {
-  var theneto = 0;
-  $("td:nth-child(8)").each(function () {
-    var val = $(this).text().replace(" ", "").replace(",-", "");
-    theneto += parseFloat(val);
-  });
-  var iva_venta = 0;
-  var total = 0;
-  var descuento = $("#descuento").val();
-  if (descuento === "") {
-    swal("Error", "Agrege decuento valido", "error");
-    $("#descuento").val(0);
-    descuento = 0;
-  } else if (descuento > theneto) {
-    swal("Error", "El decuento es mayor al valor total", "error");
-    descuento = 0;
-    $("#descuento").val(0);
-  }
-
-  thenetodesc = theneto - descuento;
-  iva_venta = parseFloat(thenetodesc * (19 / 100));
-  total = parseFloat(thenetodesc + iva_venta);
-  $("#valorfactura").val(theneto);
-  $("#neto").val(thenetodesc);
-  $("#iva").val(iva_venta);
-  $("#total").val(total);
-  var mivalor = $("#agregardesc").val();
-
-  if (mivalor == "desactivar") {
-    $("#descuento").prop("readonly", true);
-    $("#agregardesc").val("activar");
-  } else {
-    $("#descuento").prop("readonly", false);
-    $("#agregardesc").val("desactivar");
-  }
-
-
-
-  if (theneto == thenetodesc) {
-    $("#lblneto").hide();
-  } else {
-
-    $("#lblneto").show();
-
-  }
-
-}
-
-
 
 function desabilitarcontroles() {
   $("#ndocumento").prop("readonly", true);
@@ -619,43 +597,8 @@ function desabilitarcontroles() {
   $("#combo_depto").prop("disabled", true);
   $("#Agregandogrilla").prop("disabled", true);
   $("#guardarsalida").prop("disabled", true);
+
 }
-
-
-$("select[name=combo_tipoingreso]").change(function () {
-  var porNombre = document.getElementsByName("combo_tipoingreso")[0].value;
-  if (porNombre == 0) {
-    $("#ndocumento").prop("readonly", true);
-    $("#ndocumento").val("");
-  } else {
-
-    $("#ndocumento").prop("readonly", false);
-
-  }
-});
-
-
-
-
-
-
-
-
-$("select[name=combo_tipocompra]").change(function () {
-  var porNombre = document.getElementsByName("combo_tipocompra")[0].value;
-  if (porNombre == 0) {
-    $("#proveedorrut").prop("readonly", true);
-    $("#agregarprov").prop("disabled", true);
-    $("#proveedorrut").val("");
-  } else {
-
-    $("#proveedorrut").prop("readonly", false);
-    $("#agregarprov").prop("disabled", false);
-
-  }
-
-});
-
 
 
 
@@ -688,40 +631,7 @@ $('#nombre').keypress(function (e) {
   }
 });
 
-/*
-function obtenerCorrelativo() {
-var porId=document.getElementById("cod_combo").value;
-if (porId==0) {
-$("#codigo").val("");
-}else {
 
-   var micorrelatico;
-   var ultimocodigo;
-    var entero;
-    micod = $("#combocorrelativo").val();
-    $.ajax({
-    url:"http://localhost/hospital/control_producto/obtenercorrelativo",
-    type:"POST",
-    dataType:"json",
-    data:{cod:micod},
-    success:function(respuesta){
-    $.each(respuesta.obtener,function(key,item){
-     micorrelativo=item.correlativo;
-    ultimocodigo=item.ultimo_codigo;
-   // alert(ultimocodigo);
-    entero = parseInt(ultimocodigo);
-  });
-       
-   var numero=entero+1;
-    $("#codigo").val(micorrelativo+numero);
-    $("#ultimocorrelativo").val(numero);
-
-  }
-  });
-  }
-  }
-
-*/
 function solonumeros(e) {
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key).toLowerCase();
@@ -744,7 +654,24 @@ function solonumerosenteros(e) {
   }
 }
 
+    $("#tbproductos td:nth-child(2)").each(function () {
+                theneto = 0;
+                var val = $(this).text().replace(" ", "").replace(",-", "");
+                theneto += parseFloat(val);
+                desc = $("#descuento").val();
+                if ($("#cod_prevision").val() >= 4) {
+                    i = i + 1;
 
+                    midesc = parseFloat(theneto);
+                    $('#second_table tr:nth-child(' + i + ') td:nth-child(3)').text(midesc.toFixed(0));
+                }
+                else {
+                    i = i + 1;
+
+                    midesc = parseFloat(theneto * (desc / 100));
+                    $('#second_table tr:nth-child(' + i + ') td:nth-child(3)').text(midesc.toFixed(0));
+                }
+            });
 
 $(document.body).delegate(".delRowBtn", "click", function () {
 
@@ -824,7 +751,6 @@ function listarproductos() {
 
 function guardarsalida() {
   numerofolio();
-
   var tiposalidacod = document.getElementsByName("combo_salida")[0].value;
   var tiposalidanombre = $("#combo_salida option:selected").text();
   var npedido = $("#npedido").val();
@@ -839,7 +765,6 @@ function guardarsalida() {
   switch (opcion) {
 
     case "1"://pedidos
-
       if (tiposalidacod == 0) {
         swal("Error!", "Ingrese un tipo de salida", "error");
       } else if (nsalida === "") {
@@ -920,9 +845,83 @@ function guardarsalida() {
       break;
 
     case "3"://Salida directa
-      alert("aaaaahf");
+      if (tiposalidacod == 0) {
+        swal("Error!", "Ingrese un tipo de salida", "error");
+      } else if (nsalida === "") {
+        swal("Error!", "Ingrese un N° Folio", "error");
+      } else if (fecha === "") {
+        swal("Error!", "Ingrese un fecha", "error");
+      } else {
+        event.preventDefault();
+        $.ajax({
+
+          url: "http://localhost/hospital/control_salida/guardarajusteinventario",
+          type: "POST",
+          data: { minsalida: nsalida, minpedido: npedido, mitiposalidacod: tiposalidacod, mitiposalidanombre: tiposalidanombre, mitipodeptocod: tipodeptocod, mitipodeptonombre: tipodeptonombre, mifecha: fecha, micomentario: comentarios },
+          dataType: "json",
+          success: function (respuesta) {
+        guardardetalledirecto();
+            console.log(respuesta);
+            $("#msg-error3").hide();
+            $("#msg-bien").show();
+            swal("Exito!", "Ingreso guardado.", "success");
+            window.location.hash = '#msg-bien';
+            desabilitarcontroles();
+            $("#imprimirsalida").prop("disabled", false);
+            $("#combo_salida").prop("disabled", true);
+            $("#tbproductos").find("input,button,textarea,select").attr("disabled", "disabled");
+
+          },
+          error: function () {
+            console.log('error');// solo ingresa a esta parte
+            $("#msg-error3").show();
+            $("#msg-bien").hide();
+            swal("Algo fallo!", "Intentelo mas tarde verifique su conexion.", "error");
+            window.location.hash = '#msg-error3';
+          }
+        });
+      }
       break;
-    default: alert("debe elgir una opcion");
+
+      case "4"://Salida directa
+       if (tiposalidacod == 0) {
+        swal("Error!", "Ingrese un tipo de salida", "error");
+      } else if (nsalida === "") {
+        swal("Error!", "Ingrese un N° Folio", "error");
+      } else if (fecha === "") {
+        swal("Error!", "Ingrese un fecha", "error");
+      } else {
+        event.preventDefault();
+        $.ajax({
+
+          url: "http://localhost/hospital/control_salida/guardarajusteinventario",
+          type: "POST",
+          data: { minsalida: nsalida, minpedido: npedido, mitiposalidacod: tiposalidacod, mitiposalidanombre: tiposalidanombre, mitipodeptocod: tipodeptocod, mitipodeptonombre: tipodeptonombre, mifecha: fecha, micomentario: comentarios },
+          dataType: "json",
+          success: function (respuesta) {
+        guardardetalledirecto();
+            console.log(respuesta);
+            $("#msg-error3").hide();
+            $("#msg-bien").show();
+            swal("Exito!", "Ingreso guardado.", "success");
+            window.location.hash = '#msg-bien';
+            desabilitarcontroles();
+            $("#imprimirsalida").prop("disabled", false);
+            $("#combo_salida").prop("disabled", true);
+            $("#tbproductos").find("input,button,textarea,select").attr("disabled", "disabled");
+
+          },
+          error: function () {
+            console.log('error');// solo ingresa a esta parte
+            $("#msg-error3").show();
+            $("#msg-bien").hide();
+            swal("Algo fallo!", "Intentelo mas tarde verifique su conexion.", "error");
+            window.location.hash = '#msg-error3';
+          }
+        });
+      }
+       break;
+    default:  swal("Algo fallo!", "Eliga tipo de salida.", "error");
   }
 
 }
@@ -954,10 +953,12 @@ function guardardetalle() {
       }
 
     })
-
-    var nsalida = $("#nsalida").val();
+  var tipodeptocod = document.getElementsByName("combo_depto")[0].value;
+  var tipodeptonombre = $("#combo_depto option:selected").text();
+  var nsalida = $("#nsalida").val();
+    var actfecha= $("#datetimepicker1").val();
     //  var obj = JSON.parse('[datostabla]');
-    obj['datos'].push({ "nsalida": nsalida, "codinterno": micodinterno, "nombre": minombre, "lote": milote, "fechavenc": mifechavenc, "cantidad": micantidad, "valor": mivalor, "entrega": micantentreg });
+    obj['datos'].push({ "nsalida": nsalida,"fecha":actfecha,"cod_depto":tipodeptocod,"nom_depto":tipodeptonombre, "codinterno": micodinterno, "nombre": minombre, "lote": milote, "fechavenc": mifechavenc, "cantidad": micantidad, "valor": mivalor, "entrega": micantentreg });
 
     //var miJSON = JSON.encode(obj);
     //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
@@ -968,6 +969,7 @@ function guardardetalle() {
   }, "json");
 
 }
+
 function guardardetalledirecto() {
   var miJSON = "";
   var datostabla = { datos: [] };
@@ -994,10 +996,12 @@ function guardardetalledirecto() {
       }
 
     })
-
+  var tiposalidacod = document.getElementsByName("combo_salida")[0].value;
+  var tiposalidanombre = $("#combo_salida option:selected").text();
     var nsalida = $("#nsalida").val();
+    var actfecha= $("#datetimepicker1").val();
     //  var obj = JSON.parse('[datostabla]');
-    obj['datos'].push({ "nsalida": nsalida, "codinterno": micodinterno, "nombre": minombre, "lote": milote, "fechavenc": mifechavenc, "cantidad": micantidad, "valor": mivalor, "entrega": micantentreg });
+    obj['datos'].push({ "nsalida": nsalida,"fecha":actfecha,"tipo_salida":tiposalidacod,"salida_nombre":tiposalidanombre, "codinterno": micodinterno, "nombre": minombre, "lote": milote, "fechavenc": mifechavenc, "cantidad": micantidad, "valor": mivalor, "entrega": micantentreg });
 
     //var miJSON = JSON.encode(obj);
     //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
@@ -1014,22 +1018,7 @@ function limpiar() {
   location.reload(true);
 }
 
-function probando() {
-  var opcion = document.getElementsByName("combo_salida")[0].value;
-  alert(opcion);
-  switch (opcion) {
-    case "1"://pedidos
-      alert("gg");
-      break;
-    case "2"://ajuste inventario
-      alert("hf");
-      break;
-    case "3"://Salida directa
-      alert("aaaaahf");
-      break;
-    default: alert("debe elgir una opcion");
-  }
-}
+
 
 
 //crea reporte

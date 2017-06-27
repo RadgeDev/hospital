@@ -42,6 +42,7 @@
                <option value="1">Pedidos</option>
                <option value="2">Ajustes de Inventario</option>
                <option value="3">Salida Directa </option>
+               <option value="4">Salida Vencimiento </option>
              </select >
         
             </div>
@@ -111,14 +112,12 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-lg-5 col-sm-5">
-   
+  
                 <label>Buscar Articulos</label>
-                 <input type="text" id="buscarproducto" onblur="" list="buscandoprod"  class="form-control " placeholder="Buscar Producto">
-           
+                 <input type="text" id="buscarproducto"  list="buscandoprod"   class=" form-control" placeholder="Buscar Producto">
                   <datalist id="buscandoprod">
-        
-                       </datalist>
-
+                  </datalist>
+              
             </div>
 
             <div class="col-lg-2 col-sm-2">

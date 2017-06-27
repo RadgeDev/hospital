@@ -103,6 +103,7 @@ function guardaringreso() {
             $nombreproveedor = $this->input->post("minombreproveedor");
             $rutproveedor= $this->input->post("mirutproveedor");
             $fecha= $this->input->post("mifecha");
+			$mifecha= date('Y-m-d', strtotime($fecha));
             $nombreproduct= $this->input->post("minombreproduct");
             $codbarraproduct= $this->input->post("micodbarraproduct");
             $correlativoprod= $this->input->post("micorrelativoprod");
@@ -124,7 +125,7 @@ function guardaringreso() {
 				"tipo_compra_nombre" => $tipocompranombre,
 				"rut_proveedor" => $rutproveedor,
 				"nombre_proveedor" => $nombreproveedor,
-				"fecha" => $fecha,
+				"fecha" => $mifecha,
 				"neto" => $neto,
 				"iva" => $iva,
 				"total_compra" => $total,
@@ -157,13 +158,15 @@ function guardardetalle() {
 
 
           foreach($data->datos as $d) {
+			$fecha= $d->fechavenc;
+			$fechavenc= date('Y-m-d', strtotime($fecha));
             $array_detalle = array(
             "cod_compra" => $d->folio,
             "cod_producto" => $d->codinterno,
             "cod_barra" => $d->codbarra,
              "nombre_prod" => $d->nombre,
             "numero_lote" => $d->lote,
-             "fecha_vencimiento" => $d->fechavenc,
+             "fecha_vencimiento" => $fechavenc,
              "cantidad" => $d->cantidad,
              "precio" => $d->valor,
              "total" => $d->total
@@ -172,7 +175,7 @@ function guardardetalle() {
 			"lote" => $d->lote,
             "cod_producto" => $d->codinterno,
              "nombre" => $d->nombre,
-             "fecha_vencimiento" => $d->fechavenc,
+             "fecha_vencimiento" => $fechavenc,
              "cantidad" => $d->cantidad,
              "precio" => $d->valor,
              "estado" =>$estado
@@ -193,7 +196,11 @@ foreach( $cantidadactual  as $r){
 }
 $micantidadingresar=$d->cantidad;
 (int)$totalcantidad=(int)$micantidadingresar+(int)$actual;
-            $datosactualizar = array(
+
+			$fecha= $d->fecha;
+			$fechact= date('Y-m-d', strtotime($fecha));
+            
+			$datosactualizar = array(
 				"cantidad" =>$totalcantidad
 			                         );	
 			$datosbincard = array(
@@ -205,7 +212,7 @@ $micantidadingresar=$d->cantidad;
 				"entrada"=> $d->cantidad,
 			    "salida" =>"0",
 				"saldo" =>$totalcantidad,
-			    "fecha" => $d->fecha,
+			    "fecha" => $fechact,
                 "cod_compra"=> $d->folio,
                 "cod_salida" =>"0"
                  );	
