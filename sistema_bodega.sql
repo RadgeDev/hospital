@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2017 a las 23:02:27
+-- Tiempo de generación: 27-06-2017 a las 22:53:25
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -36,7 +36,7 @@ CREATE TABLE `bincard` (
   `entrada` int(11) DEFAULT NULL,
   `salida` int(11) DEFAULT NULL,
   `saldo` int(11) DEFAULT NULL,
-  `fecha` varchar(45) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `cod_compra` int(11) DEFAULT NULL,
   `cod_salida` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -47,10 +47,15 @@ CREATE TABLE `bincard` (
 
 INSERT INTO `bincard` (`idbincard`, `cod_producto`, `nombre`, `cod_depto`, `seccion`, `proveedor`, `entrada`, `salida`, `saldo`, `fecha`, `cod_compra`, `cod_salida`) VALUES
 (1, 'DSS0002', 'kill', 1, 'urgencia', '', 100, 0, 1500, '2017-06-14', 5, 0),
-(2, 'ECO0146', 'CARPETA CUADRADA BYSTRECH', 0, 'N/N', '', 10, 0, 20, '14-06-2017', 33, 0),
-(3, 'ECO2', 'tremex', 0, 'N/N', '', 10, 0, 218, '14-06-2017', 33, 0),
-(4, 'ECO2', 'tremex', 0, 'N/N', 'FABIOLA CONTRERAS', 10, 0, 228, '14-06-2017', 34, 0),
-(5, 'ECO1', 'Mr.Musculo 450ml', 0, 'N/N', 'JAIME CIFUENTES YAÑEZ', 2, 0, 89, '19-06-2017', 35, 0);
+(2, 'ECO0146', 'CARPETA CUADRADA BYSTRECH', 0, 'N/N', '', 10, 0, 20, '0000-00-00', 33, 0),
+(3, 'ECO2', 'tremex', 0, 'N/N', '', 10, 0, 218, '0000-00-00', 33, 0),
+(4, 'ECO2', 'tremex', 0, 'N/N', 'FABIOLA CONTRERAS', 10, 0, 228, '0000-00-00', 34, 0),
+(5, 'ECO1', 'Mr.Musculo 450ml', 0, 'N/N', 'JAIME CIFUENTES YAÑEZ', 2, 0, 89, '0000-00-00', 35, 0),
+(6, 'ECO1', 'Mr.Musculo 450ml', 0, 'N/N', 'hch', 1, 0, 34, '1970-01-01', 36, 0),
+(7, 'ECO1', 'Mr.Musculo 450ml', 0, 'N/N', 'CARJES', 11, 0, 45, '1970-01-01', 37, 0),
+(8, 'ECO1', 'Mr.Musculo 450ml', 0, 'N/N', 'COMERCIALIZADORA LOS ALAMOS', 100, 0, 145, '2017-06-27', 38, 0),
+(9, 'ECO1', 'Mr.Musculo 450ml', 2, 'Reparto Leche', 'N/N', 0, 1, 144, '2017-06-27', 0, 52),
+(10, 'ECO2', 'tremex', 0, 'Salida Directa ', 'Salida Directa ', 0, 1, 10, '2017-06-27', 0, 53);
 
 -- --------------------------------------------------------
 
@@ -93,7 +98,7 @@ CREATE TABLE `compra` (
   `tipo_compra_nombre` varchar(100) NOT NULL,
   `rut_proveedor` varchar(11) DEFAULT NULL,
   `nombre_proveedor` varchar(100) NOT NULL,
-  `fecha` varchar(25) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `neto` float NOT NULL,
   `iva` float NOT NULL,
   `total_compra` float DEFAULT NULL,
@@ -108,40 +113,43 @@ CREATE TABLE `compra` (
 --
 
 INSERT INTO `compra` (`cod_compra`, `tipo_documento`, `numero_documento`, `tipo_compra`, `tipo_compra_nombre`, `rut_proveedor`, `nombre_proveedor`, `fecha`, `neto`, `iva`, `total_compra`, `descuento`, `usuario`, `nombre_usuario`, `comentarios`) VALUES
-(2, 'Canje', '131231', 2, 'Chile Compra', '12124463-2', 'RODRIGO VIDAL CAMPOS ', '22-05-2017', 9900, 1881, 11781, 100, '13887515-6', '', 'aaaaaa'),
-(3, 'Factura', '2147483647', 1, 'Cenabast', '5693805-2', 'iris garrido lopez', '24-05-2017', 61000, 11590, 72590, 1000, '11111111-1', '', 'probando'),
-(4, 'Factura', '46456', 2, 'Chile Compra', '13987452-8', 'Marcela Alejandra Henriquez Diaz', '24-05-2017', 990, 188.1, 1178.1, 10, '11111111-1', '', 'hghgh'),
-(5, 'Factura', '456456456', 2, 'Chile Compra', '16360976-2', 'ESTUDIO CROKEA', '24-05-2017', 19900, 3781, 23681, 100, '11111111-1', '', '100'),
-(6, 'Factura', '66666', 1, 'Cenabast', '11279210-4', 'TODO TELAS', '25-05-2017', 47450, 9015.5, 56465.5, 100, '11111111-1', '', 'probando funciona'),
-(7, 'Factura', '2147483647', 3, 'Compra Directa', '76006662-1', 'FAMED LTDA', '25-05-2017', 999, 189.81, 1188.81, 1, '11111111-1', '', 'loool'),
-(8, 'Factura', '1313', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 900, 171, 1071, 100, '11111111-1', '', 'lllll'),
-(9, 'Factura', '2147483647', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 500, 95, 595, 0, '11111111-1', '', 'lñl'),
-(10, 'Factura', NULL, 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 1000, 190, 1190, 0, '11111111-1', '', ''),
-(11, 'Factura', '2147483647', 2, 'Chile Compra', '11111111-1', 'hch', '25-05-2017', 1000, 190, 1190, 0, '11111111-1', '', '456456'),
-(12, 'Factura', '11111111111111', 1, 'Cenabast', '14641378-1', 'IMPRINK', '25-05-2017', 19900, 3781, 23681, 100, '11111111-1', '', 'ghfgh'),
-(13, 'Factura', '66666666666666666', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 99, 18.81, 117.81, 1, '11111111-1', '', 'aa'),
-(14, 'Canje', 'ggggg45455454', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 2999, 569.81, 3568.81, 1, '11111111-1', '', 'loñ'),
-(15, 'Factura', '5555555555555555', 3, 'Compra Directa', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 31712, 6025.28, 37737.3, 0, '11111111-1', 'Edgardo Avila', ''),
-(16, 'Factura', '9669738696', 2, 'Chile Compra', '15119583-0', 'THE PRINCESS', '25-05-2017', 37892, 7199.48, 45091.5, 10, '11111111-1', 'Edgardo Avila', 'lol'),
-(17, 'Factura', '3333333333333', 1, 'Cenabast', '12369683-2', 'RAMADA ARELIS', '25-05-2017', 19900, 3781, 23681, 100, '13887515-6', 'Ursula Guzman Patiño', 'probando nombre'),
-(18, 'Factura', '134545545', 1, 'Cenabast', '14205499-K', 'EL ROBLE', '25-05-2017', 20003.4, 3800.65, 23804, 0, '11111111-1', 'Edgardo Avila', ''),
-(19, 'Factura', '636363636', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 9900, 1881, 11781, 100, '11111111-1', 'Edgardo Avila', 'sssssssssssssssssssssssss'),
-(20, 'Factura', '546456456456465', 2, 'Chile Compra', '12369683-2', 'RAMADA ARELIS', '25-05-2017', 9990, 1898.1, 11888.1, 10, '11111111-1', 'Edgardo Avila', 'lololol'),
-(21, 'Factura', '45645645', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 20000, 3800, 23800, 0, '11111111-1', 'Edgardo Avila', 'aaaa'),
-(22, 'Factura', '124564564', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 10900, 2071, 12971, 0, '11111111-1', 'Edgardo Avila', ''),
-(23, 'Factura', '4564646', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '25-05-2017', 100000000, 19000000, 119000000, 0, '11111111-1', 'Edgardo Avila', ''),
-(24, 'Factura', '456464645', 1, 'Cenabast', '15119583-0', 'THE PRINCESS', '25-05-2017', 12000, 2280, 14280, 0, '11111111-1', 'Edgardo Avila', ''),
-(25, 'Factura', '456456', 2, 'Chile Compra', '11555652-5', 'ALVARO GONZALEZ ZUÑIGA ', '25-05-2017', 30000, 5700, 35700, 0, '11111111-1', 'Edgardo Avila', 'fdgdfgdfgdfgfggd'),
-(26, 'Canje', '4564564564645', 1, 'Cenabast', '11111332-7', 'LIQUIDADORA LA NUEVA ', '25-05-2017', 190.6, 36.214, 226.814, 10, '11111111-1', 'Edgardo Avila', 'lllllllllllllllllllllllll'),
-(27, 'Factura', '561266', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '13-06-2017', 10, 1.9, 11.9, 0, '11111111-1', 'Edgardo Avila', ''),
-(28, 'Factura', '7987', 1, 'Cenabast', '11674149-0', 'PACHITA', '13-06-2017', 1100, 209, 1309, 0, '11111111-1', 'Edgardo Avila', ''),
-(29, 'Factura', '456456', 1, 'Cenabast', '11281746-8', 'PAQUETERIA  HULUZ', '13-06-2017', 3000, 570, 3570, 0, '11111111-1', 'Edgardo Avila', ''),
-(30, 'Factura', '45645', 2, 'Chile Compra', '13987452-8', 'Marcela Alejandra Henriquez Diaz', '13-06-2017', 10000, 1900, 11900, 0, '11111111-1', 'Edgardo Avila', ''),
-(31, 'Factura', '46456', 1, 'Cenabast', '12782277-8', 'VICTOR DUQUE JARA', '13-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
-(32, 'Canje', '54645', 1, 'Cenabast', '12413501-K', 'JESSICA', '13-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
-(33, 'Factura', '2515654564', 3, 'Compra Directa', '6432664-3', 'FARMACIA LOURDES', '14-06-2017', 2000, 380, 2380, 0, '11111111-1', 'Edgardo Avila', ''),
-(34, 'Factura', '5464654', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '14-06-2017', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
-(35, 'Factura', '2564554', 2, 'Chile Compra', '10953742-K', 'JAIME CIFUENTES YAÑEZ', '19-06-2017', 4000, 760, 4760, 0, '11111111-1', 'Edgardo Avila', '');
+(2, 'Canje', '131231', 2, 'Chile Compra', '12124463-2', 'RODRIGO VIDAL CAMPOS ', '0000-00-00', 9900, 1881, 11781, 100, '13887515-6', '', 'aaaaaa'),
+(3, 'Factura', '2147483647', 1, 'Cenabast', '5693805-2', 'iris garrido lopez', '0000-00-00', 61000, 11590, 72590, 1000, '11111111-1', '', 'probando'),
+(4, 'Factura', '46456', 2, 'Chile Compra', '13987452-8', 'Marcela Alejandra Henriquez Diaz', '0000-00-00', 990, 188.1, 1178.1, 10, '11111111-1', '', 'hghgh'),
+(5, 'Factura', '456456456', 2, 'Chile Compra', '16360976-2', 'ESTUDIO CROKEA', '0000-00-00', 19900, 3781, 23681, 100, '11111111-1', '', '100'),
+(6, 'Factura', '66666', 1, 'Cenabast', '11279210-4', 'TODO TELAS', '0000-00-00', 47450, 9015.5, 56465.5, 100, '11111111-1', '', 'probando funciona'),
+(7, 'Factura', '2147483647', 3, 'Compra Directa', '76006662-1', 'FAMED LTDA', '0000-00-00', 999, 189.81, 1188.81, 1, '11111111-1', '', 'loool'),
+(8, 'Factura', '1313', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 900, 171, 1071, 100, '11111111-1', '', 'lllll'),
+(9, 'Factura', '2147483647', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 500, 95, 595, 0, '11111111-1', '', 'lñl'),
+(10, 'Factura', NULL, 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 1000, 190, 1190, 0, '11111111-1', '', ''),
+(11, 'Factura', '2147483647', 2, 'Chile Compra', '11111111-1', 'hch', '0000-00-00', 1000, 190, 1190, 0, '11111111-1', '', '456456'),
+(12, 'Factura', '11111111111111', 1, 'Cenabast', '14641378-1', 'IMPRINK', '0000-00-00', 19900, 3781, 23681, 100, '11111111-1', '', 'ghfgh'),
+(13, 'Factura', '66666666666666666', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 99, 18.81, 117.81, 1, '11111111-1', '', 'aa'),
+(14, 'Canje', 'ggggg45455454', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 2999, 569.81, 3568.81, 1, '11111111-1', '', 'loñ'),
+(15, 'Factura', '5555555555555555', 3, 'Compra Directa', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 31712, 6025.28, 37737.3, 0, '11111111-1', 'Edgardo Avila', ''),
+(16, 'Factura', '9669738696', 2, 'Chile Compra', '15119583-0', 'THE PRINCESS', '0000-00-00', 37892, 7199.48, 45091.5, 10, '11111111-1', 'Edgardo Avila', 'lol'),
+(17, 'Factura', '3333333333333', 1, 'Cenabast', '12369683-2', 'RAMADA ARELIS', '0000-00-00', 19900, 3781, 23681, 100, '13887515-6', 'Ursula Guzman Patiño', 'probando nombre'),
+(18, 'Factura', '134545545', 1, 'Cenabast', '14205499-K', 'EL ROBLE', '0000-00-00', 20003.4, 3800.65, 23804, 0, '11111111-1', 'Edgardo Avila', ''),
+(19, 'Factura', '636363636', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 9900, 1881, 11781, 100, '11111111-1', 'Edgardo Avila', 'sssssssssssssssssssssssss'),
+(20, 'Factura', '546456456456465', 2, 'Chile Compra', '12369683-2', 'RAMADA ARELIS', '0000-00-00', 9990, 1898.1, 11888.1, 10, '11111111-1', 'Edgardo Avila', 'lololol'),
+(21, 'Factura', '45645645', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 20000, 3800, 23800, 0, '11111111-1', 'Edgardo Avila', 'aaaa'),
+(22, 'Factura', '124564564', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 10900, 2071, 12971, 0, '11111111-1', 'Edgardo Avila', ''),
+(23, 'Factura', '4564646', 1, 'Cenabast', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 100000000, 19000000, 119000000, 0, '11111111-1', 'Edgardo Avila', ''),
+(24, 'Factura', '456464645', 1, 'Cenabast', '15119583-0', 'THE PRINCESS', '0000-00-00', 12000, 2280, 14280, 0, '11111111-1', 'Edgardo Avila', ''),
+(25, 'Factura', '456456', 2, 'Chile Compra', '11555652-5', 'ALVARO GONZALEZ ZUÑIGA ', '0000-00-00', 30000, 5700, 35700, 0, '11111111-1', 'Edgardo Avila', 'fdgdfgdfgdfgfggd'),
+(26, 'Canje', '4564564564645', 1, 'Cenabast', '11111332-7', 'LIQUIDADORA LA NUEVA ', '0000-00-00', 190.6, 36.214, 226.814, 10, '11111111-1', 'Edgardo Avila', 'lllllllllllllllllllllllll'),
+(27, 'Factura', '561266', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 10, 1.9, 11.9, 0, '11111111-1', 'Edgardo Avila', ''),
+(28, 'Factura', '7987', 1, 'Cenabast', '11674149-0', 'PACHITA', '0000-00-00', 1100, 209, 1309, 0, '11111111-1', 'Edgardo Avila', ''),
+(29, 'Factura', '456456', 1, 'Cenabast', '11281746-8', 'PAQUETERIA  HULUZ', '0000-00-00', 3000, 570, 3570, 0, '11111111-1', 'Edgardo Avila', ''),
+(30, 'Factura', '45645', 2, 'Chile Compra', '13987452-8', 'Marcela Alejandra Henriquez Diaz', '0000-00-00', 10000, 1900, 11900, 0, '11111111-1', 'Edgardo Avila', ''),
+(31, 'Factura', '46456', 1, 'Cenabast', '12782277-8', 'VICTOR DUQUE JARA', '0000-00-00', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
+(32, 'Canje', '54645', 1, 'Cenabast', '12413501-K', 'JESSICA', '0000-00-00', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
+(33, 'Factura', '2515654564', 3, 'Compra Directa', '6432664-3', 'FARMACIA LOURDES', '0000-00-00', 2000, 380, 2380, 0, '11111111-1', 'Edgardo Avila', ''),
+(34, 'Factura', '5464654', 2, 'Chile Compra', '10684571-9', 'FABIOLA CONTRERAS', '0000-00-00', 1000, 190, 1190, 0, '11111111-1', 'Edgardo Avila', ''),
+(35, 'Factura', '2564554', 2, 'Chile Compra', '10953742-K', 'JAIME CIFUENTES YAÑEZ', '0000-00-00', 4000, 760, 4760, 0, '11111111-1', 'Edgardo Avila', ''),
+(36, 'Factura', '54646456', 3, 'Compra Directa', '11111111-1', 'hch', '2017-06-27', 99, 18.81, 117.81, 1, '11111111-1', 'Edgardo Avila', 'aaa'),
+(37, 'Ajuste de St', '145654654', 1, 'Cenabast', '11455355-7', 'CARJES', '2017-06-27', 10999, 2089.81, 13088.8, 1, '11111111-1', 'Edgardo Avila', ''),
+(38, 'Ajuste de St', '546546546', 1, 'Cenabast', '14048803-8', 'COMERCIALIZADORA LOS ALAMOS', '2017-06-27', 999, 189.81, 1188.81, 1, '11111111-1', 'Edgardo Avila', '');
 
 -- --------------------------------------------------------
 
@@ -181,7 +189,7 @@ CREATE TABLE `detalle_compra` (
   `cod_barra` longtext NOT NULL,
   `nombre_prod` varchar(100) NOT NULL,
   `numero_lote` varchar(50) DEFAULT NULL,
-  `fecha_vencimiento` varchar(25) NOT NULL,
+  `fecha_vencimiento` date NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `precio` float DEFAULT NULL,
   `total` float NOT NULL
@@ -242,7 +250,10 @@ INSERT INTO `detalle_compra` (`detalle_compra`, `cod_compra`, `cod_producto`, `c
 (51, 33, 'ECO0146', '', 'CARPETA CUADRADA BYSTRECH', 'FILO123', '2017-06-16', 10, 100, 1000),
 (52, 33, 'ECO2', '7804644720385', 'tremex', 'LOL11544', '2017-06-15', 10, 100, 1000),
 (53, 34, 'ECO2', '7804644720385', 'tremex', '544554', '2017-06-16', 10, 100, 1000),
-(54, 35, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 2, 2000, 4000);
+(54, 35, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 2, 2000, 4000),
+(55, 36, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 'DSFDSFDS441', '2017-06-30', 1, 100, 100),
+(56, 37, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 'LLOLOL23213', '2017-06-29', 11, 1000, 11000),
+(57, 38, 'ECO1', '7790520012524', 'Mr.Musculo 450ml', 'OPGFHGFHFG', '2017-06-30', 100, 10, 1000);
 
 -- --------------------------------------------------------
 
@@ -293,7 +304,7 @@ CREATE TABLE `detalle_salida` (
   `cod_producto` varchar(8) DEFAULT NULL,
   `nombre_prod` varchar(100) NOT NULL,
   `lote` varchar(100) NOT NULL,
-  `fecha_vencimiento` varchar(100) NOT NULL,
+  `fecha_vencimiento` date NOT NULL,
   `cantidad` int(6) DEFAULT NULL,
   `valor` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -378,7 +389,14 @@ INSERT INTO `detalle_salida` (`cod_detalle`, `cod_salida`, `cod_producto`, `nomb
 (73, 46, 'ECO1', 'Mr.Musculo 450ml', 'YUO455555', '2017-06-30', 1, 2000),
 (74, 46, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
 (75, 46, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
-(76, 47, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100);
+(76, 47, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(77, 48, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(78, 49, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(79, 50, 'ECO2', 'tremex', 'LOL11544', '2017-06-15', 1, 100),
+(80, 50, 'ECO2', 'tremex', '544554', '2017-06-26', 1, 100),
+(81, 51, 'ECO2', 'tremex', 'LOL11544', '2017-07-15', 1, 100),
+(82, 52, 'ECO1', 'Mr.Musculo 450ml', 'DSFDSFDS441', '2017-06-30', 1, 100),
+(83, 53, 'ECO2', 'tremex', 'LOL11544', '2017-07-15', 1, 100);
 
 -- --------------------------------------------------------
 
@@ -464,7 +482,7 @@ CREATE TABLE `lotes` (
   `lote` varchar(100) NOT NULL,
   `cod_producto` varchar(100) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `fecha_vencimiento` varchar(50) NOT NULL,
+  `fecha_vencimiento` date NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio` float NOT NULL,
   `estado` varchar(50) NOT NULL
@@ -477,9 +495,12 @@ CREATE TABLE `lotes` (
 INSERT INTO `lotes` (`id`, `lote`, `cod_producto`, `nombre`, `fecha_vencimiento`, `cantidad`, `precio`, `estado`) VALUES
 (1, 'ISOKA123', 'FCM0069', 'METILFENIDATO 10MG', '2017-06-24', 0, 100, 'Desact'),
 (2, 'FILO123', 'ECO0146', 'CARPETA CUADRADA BYSTRECH', '2017-06-16', 10, 100, 'Activo'),
-(3, 'LOL11544', 'ECO2', 'tremex', '2017-06-15', 7, 100, 'Activo'),
-(4, '544554', 'ECO2', 'tremex', '2017-06-26', 8, 100, 'Activo'),
-(5, 'YUO455555', 'ECO1', 'Mr.Musculo 450ml', '2017-06-30', 8, 2000, 'Activo');
+(3, 'LOL11544', 'ECO2', 'tremex', '2017-07-15', 2, 100, 'Activo'),
+(4, '544554', 'ECO2', 'tremex', '2017-05-26', 7, 100, 'Activo'),
+(5, 'YUO455555', 'ECO1', 'Mr.Musculo 450ml', '2017-07-30', 8, 2000, 'Activo'),
+(6, 'DSFDSFDS441', 'ECO1', 'Mr.Musculo 450ml', '2017-06-30', 0, 100, 'Desact'),
+(7, 'LLOLOL23213', 'ECO1', 'Mr.Musculo 450ml', '2017-06-01', 11, 1000, 'Activo'),
+(8, 'OPGFHGFHFG', 'ECO1', 'Mr.Musculo 450ml', '2017-06-30', 100, 10, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -514,7 +535,7 @@ INSERT INTO `pedidos` (`folio`, `fecha`, `hora`, `cod_depto`, `depto`, `cod_tipo
 (5, '2017-06-13', '09:26:59', 1, 'Medicina Hombre', 101, 'Farmacia', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
 (6, '2017-06-13', '09:31:50', 1, 'Medicina Hombre', 102, 'Insumos', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo'),
 (7, '2017-06-14', '14:00:48', 2, 'Reparto Leche', 103, 'Economato', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'desact'),
-(8, '2017-06-19', '08:45:22', 2, 'Reparto Leche', 103, 'Economato', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'activo');
+(8, '2017-06-19', '08:45:22', 2, 'Reparto Leche', 103, 'Economato', 'Semanal', '11111111-1', 'Edgardo Avila', '', 'desact');
 
 -- --------------------------------------------------------
 
@@ -939,8 +960,8 @@ INSERT INTO `producto` (`cod_interno_prod`, `codigo_barra`, `cod_bodega`, `nombr
 ('ECO0166', '', '103', 'HARINA 5 KILOS', 0, '2660', 'UNIDAD', 0, 0, 0),
 ('ECO0167', '', '103', 'FRUTOS SECOS ', 0, '0', 'UNIDAD', 0, 0, 0),
 ('ECO0168', '', '103', 'CUCHARA TE ', 100, '1', 'UNIDAD', 0, 0, 0),
-('ECO1', '7790520012524', '103', 'Mr.Musculo 450ml', 33, '2150', 'Botella', 5, 10, 100),
-('ECO2', '7804644720385', '103', 'tremex', 9, '2160', 'Botella', 5, 10, 100),
+('ECO1', '7790520012524', '103', 'Mr.Musculo 450ml', 144, '2150', 'Botella', 5, 10, 100),
+('ECO2', '7804644720385', '103', 'tremex', 10, '2160', 'Botella', 5, 10, 100),
 ('ECO3', '2554455', '103', 'rueba', 11, '1200', 'Botella', 10, 10, 100),
 ('EES', '', '103', 'COMPUTADOR HP PROONE 400G1', 0, '928,4', 'UNIDAD', 0, 0, 0),
 ('EES0001', '', '103', 'ALFILERES DE COLORES', 0, '300', 'CAJA', 0, 2, 4),
@@ -7991,7 +8012,7 @@ CREATE TABLE `salidas` (
   `cod_depto` int(11) DEFAULT NULL,
   `nombre_depto` varchar(50) DEFAULT NULL,
   `num_pedido` int(11) DEFAULT NULL,
-  `fecha` varchar(25) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `usuario` varchar(11) DEFAULT NULL,
   `nombre` varchar(100) NOT NULL,
   `comentarios` varchar(100) NOT NULL
@@ -8005,50 +8026,56 @@ INSERT INTO `salidas` (`cod_salida`, `cod_tiposalida`, `nombre_salida`, `cod_dep
 (1, 0, '', 1300, 'Rehabilitacion', 108, '2013-10-01', '13887515-6', '', ''),
 (2, 0, '', 1111, 'Baño Publico', 140, '2013-10-11', '13887515-6', '', ''),
 (3, 0, '', 1300, 'Rehabilitacion', 179, '2013-10-18', '13887515-6', '', ''),
-(4, 1, 'Pedidos', 2, 'Reparto Leche', 8, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(5, 1, 'Pedidos', 2, 'Reparto Leche', 8, '19-06-2017', '11111111-1', 'Edgardo Avila', 'aaaa'),
-(6, 1, 'Pedidos', 2, 'Reparto Leche', 7, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(7, 1, 'Pedidos', 2, 'Reparto Leche', 7, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(8, 1, 'Pedidos', 2, 'Reparto Leche', 8, '19-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(9, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(10, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', 'jkj'),
-(11, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(12, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(13, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(14, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(15, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(16, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(17, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(18, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(19, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(20, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(21, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(22, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(23, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(24, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(25, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(26, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(27, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(28, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(29, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(30, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(31, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(32, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(33, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(34, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(35, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(36, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(37, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(38, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(39, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(40, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(41, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(42, 1, 'Pedidos', 2, 'Reparto Leche', 7, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(43, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(44, 1, 'Pedidos', 2, 'Reparto Leche', 8, '20-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(45, 1, 'Pedidos', 2, 'Reparto Leche', 8, '21-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(46, 1, 'Pedidos', 2, 'Reparto Leche', 8, '21-06-2017', '11111111-1', 'Edgardo Avila', ''),
-(47, 1, 'Pedidos', 2, 'Reparto Leche', 7, '21-06-2017', '11111111-1', 'Edgardo Avila', '');
+(4, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(5, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', 'aaaa'),
+(6, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(7, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(8, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(9, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(10, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', 'jkj'),
+(11, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(12, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(13, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(14, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(15, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(16, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(17, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(18, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(19, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(20, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(21, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(22, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(23, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(24, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(25, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(26, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(27, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(28, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(29, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(30, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(31, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(32, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(33, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(34, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(35, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(36, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(37, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(38, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(39, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(40, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(41, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(42, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(43, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(44, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(45, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(46, 1, 'Pedidos', 2, 'Reparto Leche', 8, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(47, 1, 'Pedidos', 2, 'Reparto Leche', 7, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(48, 2, 'Ajustes de Inventario', NULL, 'Ajuste Stock', 0, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(49, 2, 'Ajustes de Inventario', NULL, 'Ajuste Stock', 0, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(50, 2, 'Ajustes de Inventario', NULL, 'Ajuste Stock', 0, '0000-00-00', '11111111-1', 'Edgardo Avila', ''),
+(51, 2, 'Ajustes de Inventario', NULL, 'Ajuste Stock', 0, '2017-06-27', '11111111-1', 'Edgardo Avila', ''),
+(52, 1, 'Pedidos', 2, 'Reparto Leche', 8, '2017-06-27', '11111111-1', 'Edgardo Avila', ''),
+(53, 3, 'Salida Directa ', NULL, 'Ajuste Stock', 0, '2017-06-27', '11111111-1', 'Edgardo Avila', '');
 
 -- --------------------------------------------------------
 
@@ -8253,12 +8280,12 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `bincard`
 --
 ALTER TABLE `bincard`
-  MODIFY `idbincard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idbincard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `detalle_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `detalle_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
 --
@@ -8268,7 +8295,7 @@ ALTER TABLE `detalle_pedido`
 -- AUTO_INCREMENT de la tabla `detalle_salida`
 --
 ALTER TABLE `detalle_salida`
-  MODIFY `cod_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `cod_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 --
 -- AUTO_INCREMENT de la tabla `eliminar_compra`
 --
@@ -8283,7 +8310,7 @@ ALTER TABLE `eliminar_salida`
 -- AUTO_INCREMENT de la tabla `lotes`
 --
 ALTER TABLE `lotes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `registro`
 --
