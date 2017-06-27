@@ -1,7 +1,7 @@
 $(document).on("ready", main);
 //  $(document).on("ready", mostrarProveedores);
 $(document).on("ready", mostrarProductos);
-//   $(document).on("ready", desabilitarcontroles);
+  $(document).on("ready", desabilitarcontroles);
 
 function main() {
   //setInterval(obtenerCorrelativo, 400);
@@ -59,23 +59,48 @@ function mostrarfecha() {
 
 
 }
+function desabilitarcontroles() {
+  $("#ndocumento").prop("readonly", true);
+  $("#Comentarios").prop("readonly", true);
+  $("#buscarproducto").prop("readonly", true);
+  $("#combo_salida").prop("disabled", false);
+  $("#combo_depto").prop("disabled", true);
+  $("#Agregandogrilla").prop("disabled", true);
+  $("#guardarsalida").prop("disabled", true);
+
+}
 
 $("select[name=combo_salida]").change(function () {
     var filas="";
   var salida = $("#combo_salida").val();
-  if (salida == 1) {
+  if (salida == 0) {
     $("#combo_depto").prop("disabled", false);
+    $("#combo_depto").val('0');
+    $("#Agregandogrilla").prop("disabled", true);
+    $("#buscarproducto").prop("readonly", true);
+    $("#Comentarios").prop("readonly", true);
+    $("#Comentarios").val("");
+    $("#buscarproducto").val("");
+    $("#tbproductos tbody").html(filas);
+
+  }else if (salida == 1){
+   $("#combo_depto").prop("disabled", false);
     $("#combo_depto").val('0');
     $("#Agregandogrilla").prop("disabled", true);
     $("#buscarproducto").prop("readonly", true);
     $("#buscarproducto").val("");
     $("#tbproductos tbody").html(filas);
+  $("#Comentarios").prop("readonly", false);
+    $("#Comentarios").val("");
+
   } else {
     $("#combo_depto").prop("disabled", true);
     $("#combo_depto").val('0');
     $("#Agregandogrilla").prop("disabled", false);
     $("#buscarproducto").prop("readonly", false);
     $("#tbproductos tbody").html(filas);
+    $("#Comentarios").prop("readonly", false);
+    $("#Comentarios").val("");
   }
 
 });
@@ -589,16 +614,6 @@ if (micodigoarticulo==="") {
 */
 
 
-function desabilitarcontroles() {
-  $("#ndocumento").prop("readonly", true);
-  $("#Comentarios").prop("readonly", true);
-  $("#buscarproducto").prop("readonly", true);
-  $("#combo_salida").prop("disabled", true);
-  $("#combo_depto").prop("disabled", true);
-  $("#Agregandogrilla").prop("disabled", true);
-  $("#guardarsalida").prop("disabled", true);
-
-}
 
 
 
