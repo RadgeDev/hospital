@@ -162,7 +162,7 @@
                         <a href="<?= base_url('control_salida') ?>"><i class="fa fa-credit-card"></i>  Egreso/Salidas</a>
                     </li>
                     <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                        <a href="<?= base_url('control_boleta') ?>"><i class="fa fa-fw fa-desktop"></i> Boletas</a>
                     </li>
                     <li>
                         <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
