@@ -14,7 +14,6 @@
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Salidas
-<button class='btn btn-success' onclick="probando();" >aaaaaa</button>
 
                             </li>
                         </ol>
