@@ -10,11 +10,13 @@ class Home extends CI_Controller {
   }
 
   public function index(){
-  
 
-
-    $this->load->view('home');
-
+if(!$this->session->userdata("minombre")){
+   $this->load->view('home');
+   
+}else{
+    redirect(base_url('welcome'));
+}
   }
 
 

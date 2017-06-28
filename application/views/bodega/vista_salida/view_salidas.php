@@ -163,8 +163,8 @@
     </div>
 
   
-              <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
-              <div class="form-group form-inline col-lg-4 col-sm-4 ">
+              <div class="form-group form-inline col-lg-3 col-sm-3 "></div>
+              <div class="form-group form-inline col-lg-6 col-sm-6 ">
              <button type="button"  id="limpiarsalida" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
            
              <button type="button" id="imprimirsalida" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Egreso </button>  
@@ -172,7 +172,7 @@
          
          
     </div>
-                <div class="form-group form-inline col-lg-4 col-sm-offset-4 ">
+                <div class="form-group form-inline col-lg-3 col-sm-offset-3 ">
               	  <div class="alert alert-danger" id="msg-error3" style="text-align:left;">
                   <strong>¡Error!</strong> Intentelo mas tarde.
                   <div class="list-errors3"></div>
