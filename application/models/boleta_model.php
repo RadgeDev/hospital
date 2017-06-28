@@ -29,7 +29,7 @@ class Boleta_model extends CI_Model {
 	}
 
 	function guardar($data) {
-		$this->db->insert("compra",$data);
+		$this->db->insert("compra_directa",$data);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		}
@@ -70,7 +70,7 @@ public function editando($codselec){
 
 	public function obtenerfolio(){
 
-               $query = $this->db-> query('SELECT max(cod_compra) AS codcompra FROM compra');
+               $query = $this->db-> query('SELECT max(cod_compra) AS codcompra FROM compra_directa');
                if ($query->num_rows() > 0) {
                return $query->result();
                 }else
@@ -158,7 +158,7 @@ $query=$this->db->get();
 
 
 public function guardardetalle($data) {
-    $this->db->insert('detalle_compra', $data);
+    $this->db->insert('detalle_compra_directa', $data);
     if ($this->db->affected_rows() > 0) {
 			return true;
 		}

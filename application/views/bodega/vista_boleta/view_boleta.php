@@ -189,8 +189,8 @@
            </div>
 
               <div class="form-group form-inline col-lg-4 col-sm-4 " ">
-               <label style=" float: right;" >Valor factura :
-            <input type="text"  id="valorfactura" onblur="habilitando();" onChange="habilitando();" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="valorfactura"/></label>
+               <label style=" float: right;" >Valor factura/boleta :
+            <input type="text"  id="valorfactura" onblur="habilitando();" onChange="habilitando();" style="text-align:right;" class="form-control" readonly  placeholder="VALOR  FACT/BOL" name="valorfactura"/></label>
            </div>
 
            <div class="form-group form-inline col-lg-4 col-sm-4 ">

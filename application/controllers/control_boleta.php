@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Control_boleta extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
-		$this->load->model("Compra_ingreso_model");
+		    $this->load->model("Compra_ingreso_model");
 			$this->load->model("Producto_model");
 			$this->load->model("Boleta_model");
 		
@@ -43,7 +43,7 @@ $datosproveedor = array(
 }
 function devolverfolio() {
 $datosfolior = array(
-			"folio" => $this->Compra_ingreso_model->obtenerfolio()
+			"folio" => $this->Boleta_model->obtenerfolio()
 			
 		);
 	echo json_encode($datosfolior);
@@ -134,7 +134,7 @@ function guardaringreso() {
 				"comentarios" => $comentarios
 				);
    	
-		if($this->Compra_ingreso_model->guardar($datos)==true){
+		if($this->Boleta_model->guardar($datos)==true){
   $data = array(
 			"miresultado" =>"bien"
          	);
@@ -150,11 +150,8 @@ function guardaringreso() {
 
 function guardardetalle() {
 
-	 	$estado="Activo"; 
+	 
  $data = json_decode($this->input->post('sendData'));
-
-
-
 
           foreach($data->datos as $d) {
 			$fecha= $d->fechavenc;
@@ -170,68 +167,29 @@ function guardardetalle() {
              "precio" => $d->valor,
              "total" => $d->total
         );
-		$lote_array = array(
-			"lote" => $d->lote,
-            "cod_producto" => $d->codinterno,
-             "nombre" => $d->nombre,
-             "fecha_vencimiento" => $fechavenc,
-             "cantidad" => $d->cantidad,
-             "precio" => $d->valor,
-             "estado" =>$estado
-        );
+	
             
-       //Call the save method
-       $this->Compra_ingreso_model->guardardetalle($array_detalle);   
-       $this->Compra_ingreso_model->guardarlote($lote_array);
-    }
+       //Call the save method  
+    if( $this->Boleta_model->guardardetalle($array_detalle)==true){
+  $data = array(
+			"miresultado" =>"bien"
+         	);
+		
+			}else{
+				echo "error";
+		
 
-
-foreach($data->datos as $d) {
-$micodigo=$d->codinterno;
-$cantidadactual= $this->Compra_ingreso_model->get_cantidad($micodigo);
-$actual=0;
-foreach( $cantidadactual  as $r){
-   $actual = $r->cantidad;
+		}
+		echo json_encode($data);
 }
-$micantidadingresar=$d->cantidad;
-(int)$totalcantidad=(int)$micantidadingresar+(int)$actual;
-
-			$fecha= $d->fecha;
-			$fechact= date('Y-m-d', strtotime($fecha));
-            
-			$datosactualizar = array(
-				"cantidad" =>$totalcantidad
-			                         );	
-			$datosbincard = array(
-                "cod_producto" => $d->codinterno,
-				"nombre"  => $d->nombre,
-				"cod_depto" =>"0",
-				"seccion" =>"N/N",
-				"proveedor"=> $d->proveedor,
-				"entrada"=> $d->cantidad,
-			    "salida" =>"0",
-				"saldo" =>$totalcantidad,
-			    "fecha" => $fechact,
-                "cod_compra"=> $d->folio,
-                "cod_salida" =>"0"
-                 );	
-				  //Call the save method
-    $this->Compra_ingreso_model->guardarbincard($datosbincard);   
-    $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
-			}	
-
-    if ($this->db->trans_status() === FALSE) {
-        $this->db->trans_rollback();
-        echo json_encode("Failed to Save Data");
-    } else {
-        $this->db->trans_commit();
-        echo json_encode("Success!");
     }
+
+
 
 
 
 	
-	}
+	
 
 function editando() {
 
