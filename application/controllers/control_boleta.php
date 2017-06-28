@@ -11,6 +11,9 @@ class Control_boleta extends CI_Controller {
 	}
 
 	public function index(){
+		if(!$this->session->userdata("minombre")){
+          redirect(base_url('home'));
+        }
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
 	    $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();

@@ -5,11 +5,14 @@ class Control_pedido extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model("Compra_ingreso_model");
-			$this->load->model("Producto_model");
-				$this->load->model("Pedidos_model");
+		$this->load->model("Producto_model");
+		$this->load->model("Pedidos_model");
 	}
 
 	public function index(){
+		if(!$this->session->userdata("minombre")){
+        redirect(base_url('home'));
+        }
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
 		$datosdepto['arrayTipodepto'] = $this->Pedidos_model->get_depto();

@@ -153,23 +153,45 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="<?= base_url('control_compra_ingreso') ?>"><i class="fa fa-fw fa-edit"></i> Ingreso/Compra</a> 
+                        <a href="<?= base_url('control_compra_ingreso') ?>"><i class="fa fa-arrow-down"></i> Ingreso/Compra</a> 
                     </li>
                     <li>
                         <a href="<?= base_url('control_pedido') ?>"><i class="fa fa-fw fa-edit"></i>Pedidos</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('control_salida') ?>"><i class="fa fa-credit-card"></i>  Egreso/Salidas</a>
+                        <a href="<?= base_url('control_salida') ?>"><i class="fa fa-arrow-up"></i>  Egreso/Salidas</a>
                     </li>
                     <li>
-                        <a href="<?= base_url('control_boleta') ?>"><i class="fa fa-fw fa-desktop"></i> Boletas</a>
+                        <a href="<?= base_url('control_boleta') ?>"><i class="fa fa-credit-card"></i> Compra Directa</a>
                     </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                    </li>
-                    
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                 
+                       <li>
+                   <a href="javascript:;" data-toggle="collapse" data-target="#demon"><i class="fa fa-file-word-o"></i> Reportes <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demon" class="collapse">
+                
+                             <li>
+                                <a href="<?= base_url('control_producto') ?>">Productos</a>
+                            </li>
+
+                            <li>
+                                <a href="<?= base_url('control_proveedor') ?>">Proveedor</a>
+                            </li>
+                             <li>
+                                <a href="<?= base_url('control_depto') ?>">Departamento</a>
+                            </li>
+                             <li>
+                                <a href="<?= base_url('control_bodega') ?>">Seccion Bodega</a>
+                            </li>
+                             <li>
+                                <a href="<?= base_url('control_tipo_compra') ?>">Tipo Compra</a>
+                            </li>
+                              <li>
+                                <a href="<?= base_url('control_tipo_ingreso') ?>">Tipo Ingreso</a>
+                            </li>
+                             <li>
+                                <a href="<?= base_url('man_usuarios') ?>">Usuarios</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>

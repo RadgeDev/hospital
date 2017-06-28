@@ -8,6 +8,9 @@ class Control_depto extends CI_Controller {
 	}
 
 	public function index(){
+		if(!$this->session->userdata("minombre")){
+        redirect(base_url('home'));
+        }
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
 		$this->load->view("bodega/vista_depto/view_depto");

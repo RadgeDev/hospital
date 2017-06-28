@@ -8,10 +8,16 @@ class Control_bodega extends CI_Controller {
 	}
 
 	public function index(){
-		$this->load->view('bodega/header');
+		if(!$this->session->userdata("minombre")){
+    redirect(base_url('home'));
+   
+         }else{
+ 	   $this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
 		$this->load->view("bodega/vista_bodega/view_bodega");
-		$this->load->view("bodega/vista_bodega/footer2");
+		$this->load->view("bodega/vista_bodega/footer2"); 
+          }
+	
 	}
 
 	public function mostrar()

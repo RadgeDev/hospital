@@ -11,6 +11,9 @@ class Control_salida extends CI_Controller {
 	}
 
 	public function index(){
+		if(!$this->session->userdata("minombre")){
+        redirect(base_url('home'));
+        }
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
 		$datosdepto['arrayTipodepto'] = $this->Pedidos_model->get_depto();
