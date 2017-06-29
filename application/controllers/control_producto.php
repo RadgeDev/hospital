@@ -224,7 +224,53 @@ function eliminar() {
 		}
 	}
 
+function excel()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Productos');
+			$datos= $this->Producto_model->get_productos();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('titulto del reporte');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(50);
+			    $sheet->getColumnDimension('D')->setWidth(20);
+			    $sheet->getColumnDimension('E')->setWidth(20);
+			    $sheet->setCellValue('A1','CODIGO INTERNO');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('D1','CANTIDAD');
+				$sheet->setCellValue('E1','PRECIO');
+//recorrer datos
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
+			    $sheet->setCellValue('C'.$i,$dato->nombre);
+				$sheet->setCellValue('D'.$i,$dato->cantidad);
+				$sheet->setCellValue('E'.$i,$dato->precio);
+                $i++;
+ }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	$writer->save("php://output");
+}
 
 
 } 

@@ -47,7 +47,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
-$autoload['libraries'] = array('session','database','form_validation','pagination','mPDF');
+$autoload['libraries'] = array('session','database','form_validation','pagination','mPDF','PHPExcel');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Helper Files

@@ -18,7 +18,7 @@
    <div class="row">
       <div class="col-md-2">
         <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar Productos</a>
-
+<a href="<?= base_url('control_producto/excel') ?>" class='btn btn-info' type="button" >Excel</a>
       </div>
    
           <div class="col-md-3 col-md-offset-4">

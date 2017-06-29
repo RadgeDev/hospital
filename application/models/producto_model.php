@@ -114,4 +114,15 @@ function get_correlativo(){
      }
 }
 
+function get_productos()
+{
+    // armamos la consulta
+    $query = $this->db-> query('SELECT * FROM producto');
+
+   return $query->result();
+
+   
+     }
+
+
 }//fin de clase
