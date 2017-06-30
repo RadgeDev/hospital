@@ -18,13 +18,18 @@
    <div class="row">
       <div class="col-md-2">
         <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar Seccion </a>
-
+      </div>
+       <div class="col-md-2">
+        <a  class='btn btn-info' onclick="exportarexcel();" >Exportar Tabla Excel</a>
+      </div>
+       <div class="col-md-2">
+        <a href="<?= base_url('control_bodega/exceltodo') ?>" class='btn btn-info' >Exportar Todo Excel</a>
       </div>
    
-          <div class="col-md-3 col-md-offset-4">
+          <div class="col-md-2">
     <select name="buscando" id ="buscando" class="form-control" >
-        <option value="cod_bodegas"> Codigo Bodega</option>
         <option value="nombre"> Nombre Bodega</option>
+         <option value="cod_bodegas"> Codigo Bodega</option>
     </select>
 
       </div>

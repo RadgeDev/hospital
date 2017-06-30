@@ -197,6 +197,100 @@ function eliminar() {
 	}
 
 
+function excel()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Bodegas');
+		     $data = json_decode($this->input->post('sendData'));
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Reporte Bodegas');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+	            $sheet->getColumnDimension('A')->setWidth(40);
+			    $sheet->getColumnDimension('B')->setWidth(50);
+	            $sheet->getColumnDimension('C')->setWidth(50);
+			    $sheet->setCellValue('A1','CODIGO BODEGA');
+				$sheet->setCellValue('B1','NOMBRE ');
+                $sheet->setCellValue('C1','CORRELATIVO ');
+		
+//recorrer datos
+$i=3;
+               foreach ($data->datos as $d){
+                $sheet->setCellValue('A'.$i,$d->codigo);
+				$sheet->setCellValue('B'.$i,$d->nombre);
+				$sheet->setCellValue('C'.$i,$d->correlativo);
+                $i++;
+                 }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Bodegas ".date(" Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+   $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+
+die(json_encode($response));
+ 
+}
+
+function exceltodo()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Departamentos');
+			$datos= $this->Bodega_model->get_bodega();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Reporte Bodegas');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(40);
+			    $sheet->getColumnDimension('B')->setWidth(50);
+	            $sheet->getColumnDimension('C')->setWidth(50);
+			    $sheet->setCellValue('A1','CODIGO Bodega');
+				$sheet->setCellValue('B1','NOMBRE ');
+                $sheet->setCellValue('C1','CORRELATIVO ');
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_bodegas);
+				$sheet->setCellValue('B'.$i,$dato->nombre);
+                $sheet->setCellValue('C'.$i,$dato->correlativo);
+                $i++;
+ }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Bodegas ".date(" Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	$writer->save("php://output");
+}
+
 
 
 } 

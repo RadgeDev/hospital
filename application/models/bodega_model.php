@@ -84,6 +84,11 @@ public function eliminar($cod){
 		}
 	}
 
-
+public function get_bodega(){
+        $this->db->select("*");
+		$this->db->from("bodegas");
+		$q= $this->db->get();
+		return $q->result();
+		}
 
 }//fin de clase

@@ -70,7 +70,12 @@ public function eliminar($cod){
 			return false;
 		}
 	}
-
+public function get_tipo_compra(){
+        $this->db->select("*");
+		$this->db->from("tipo_compra");
+		$q= $this->db->get();
+		return $q->result();
+		}
 
 
 }//fin de clase
