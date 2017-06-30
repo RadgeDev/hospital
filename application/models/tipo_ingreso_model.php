@@ -71,6 +71,11 @@ public function eliminar($cod){
 		}
 	}
 
-
+public function get_tipo_ingreso(){
+        $this->db->select("*");
+		$this->db->from("tipo_ingreso");
+		$q= $this->db->get();
+		return $q->result();
+		}
 
 }//fin de clase

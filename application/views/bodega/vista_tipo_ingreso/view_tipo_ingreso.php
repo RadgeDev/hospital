@@ -20,8 +20,13 @@
         <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar tipo Ingreso</a>
 
       </div>
-   
-          <div class="col-md-3 col-md-offset-4">
+       <div class="col-md-2">
+        <a  class='btn btn-info' onclick="exportarexcel();" >Exportar Tabla Excel</a>
+      </div>
+       <div class="col-md-2">
+        <a href="<?= base_url('control_tipo_ingreso/exceltodo') ?>" class='btn btn-info' >Exportar Todo Excel</a>
+      </div>
+          <div class="col-md-3 ">
     <select name="buscando" id ="buscando" class="form-control" >
         <option value="cod_ingreso">Codigo Tipo Ingreso</option>
         <option value="nombre">Nombre </option>
