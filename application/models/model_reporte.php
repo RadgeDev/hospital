@@ -36,4 +36,33 @@ $this->db->where('rut',$mirut);
 $query=$this->db->get();
 return $query->result();
 }
+
+function getpedido($micod)
+
+{
+$this->db->select('*');
+$this->db->from('pedidos');
+$this->db->where('folio',$micod);
+$query=$this->db->get();
+return $query->result();
+}
+
+
+function getpedidodetalle($micod)
+{
+
+$this->db->select('*');
+$this->db->from('detalle_pedido');
+$this->db->where('folio',$micod);
+$query=$this->db->get();
+return $query->result();
+
+}
+
+
+
+
+
+
+
 }

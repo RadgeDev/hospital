@@ -166,5 +166,127 @@ $html.='
  }  
 
 
+function report_pedidos()
+{
+    $cod=  $this->uri->segment(3);
+    $datos= $this->Model_reporte->getpedido($cod);
+    $detalle= $this->Model_reporte->getpedidodetalle($cod);
+
+    $html="";
+
+  $html.='   <!DOCTYPE html>
+<html>
+<head>
+    
+ 
+</head>
+<body>
+<div id="wrapper">
+
+<div class="right"> 
+    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    </div>
+    '; 
+  foreach ($datos as $misdatos) {
+ $html.='
+<div  class="left"><p style="text-align:right;padding-top:0mm;font-weight:bold;" >Folio:'.$misdatos->folio.'</p> 
+  <p style="text-align:right;padding-top:0mm;font-weight:bold;" >Fecha:  '.$misdatos->fecha.'</p> </div>
+        </div>
+
+    <h3 style="text-align:center;padding-top:0mm;font-weight:bold;">INGRESO BODEGA  HOSPITAL CHIMBARONGO</h3>
+
+
+  <table style="width:100%"> 
+  <tr>
+    <td style="width:20%;font-weight:bold;background:#eee;">Cod Depto</td>
+    <td style="width:30%">'.$misdatos->cod_depto.'</td>
+    <td style="width:20%;font-weight:bold;background:#eee;">Departamento</td>
+     <td style="width:30%">'.$misdatos->depto.'</td>
+  </tr>
+  <tr>
+   <td style="width:20%;font-weight:bold;background:#eee;">Pedidos:</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->cod_tipo_pedido.' '.$misdatos->tipo_pedido.'</td>
+    
+  </tr>
+  <tr>
+  <td style="width:20%;font-weight:bold;background:#eee;">Tiempo de pedido</td>
+     <td COLSPAN="3" style="width:30%">'.$misdatos->tiempo_pedido.'</td>
+  </tr>
+   <tr>
+   <td style="width:20%;font-weight:bold;background:#eee;">Observacion:</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->comentario.'</td>
+   
+  </tr>';
+}
+      $html.='
+</table>          
+         
+    <div id="content">
+         
+        <div id="invoice_body">
+            <table>
+            <tr style="background:#eee;">
+                <td style="width:25%;"><b>Cod Producto.</b></td>
+                <td style="width:50%;"><b>Nombre</b></td>
+                <td style="width:25%;"><b>Cantidad</b></td>
+       
+            </tr>
+            </table>
+             
+           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
+           ';
+  foreach ($detalle as $misdetalle) {
+$html.='
+            <tr>
+                <td style="width:25%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
+                <td  style="width:50%;text-align:left;font-weight:bold;"><h5 class="letralegible">'.$misdetalle->nombre_prod.'</h5></td>
+                 <td  style="width:25%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
+            </tr> 
+               ';    }
+$html.='        
+            <tr>
+                <td colspan="5"></td>
+                <td></td>
+                <td></td>
+            </tr>
+              ';
+  
+$html.='   
+        </table>
+         <br >
+
+<div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
+         width: 50%;"/>
+          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+       ';
+  foreach ($datos as $misdatos) {
+ $html.='    
+<div id="cajon2" class="left"><h4>Pedido realizado por: '.$misdatos->nombre.'</h4></div>
+        </div>
+            ';    }
+$html.='
+    </div>
+
+
+  
+</body>
+</html>' ;
+
+   
+
+ 
+    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $this->mpdf->setDisplayMode('fullpage');
+    $this->mpdf->WriteHTML($estilos3,1);
+    $this->mpdf->WriteHTML($html,2);
+
+  
+    $this->mpdf->Output();
+     exit;
+
+ }  
+
+
+
 }
 ?>
