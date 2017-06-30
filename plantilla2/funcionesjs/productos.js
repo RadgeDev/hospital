@@ -421,3 +421,66 @@ function excel() {
     });
 
 }
+
+
+
+function exportarexcel() {
+
+
+    var miJSON = "";
+    var datostabla = { datos: [] };
+    var obj = JSON.parse(JSON.stringify(datostabla));
+    $("#tbclientes tbody tr").each(function(index) {
+        var micodinterno, micodbarra, micodbodega, minombre, micantidad, miprecio, miunidad;
+        $(this).children("td").each(function(index2) {
+            switch (index2) {
+                case 0:
+                    micodinterno = $(this).text();
+                    break;
+                case 1:
+                    micodbarra = $(this).text();
+                    break;
+                case 2:
+                    micodbodega = $(this).text();
+                    break;
+                case 3:
+                    minombre = $(this).text();
+                    break;
+                case 4:
+                    micantidad = $(this).text();
+                    break;
+                case 5:
+                    miprecio = $(this).text();
+                    break;
+                case 6:
+                    miunidad = $(this).text();
+                    break;
+
+            }
+
+        })
+
+
+        //  var obj = JSON.parse('[datostabla]');
+        obj['datos'].push({ "cod_interno_prod": micodinterno, "codigo_barra": micodbarra, "nombre": minombre, "cantidad": micantidad, "precio": miprecio, "cod_bodega": micodbodega, "unidad_medida": miunidad });
+
+        //var miJSON = JSON.encode(obj);
+        //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
+    })
+    var url = "http://localhost/hospital/control_producto/excel"
+    $.post(url, { sendData: JSON.stringify(obj) }, function(data) {
+        var $a = $("<a>");
+        $a.attr("href", data.file);
+        $("body").append($a);
+        var date = new Date();
+        var dia = date.getDate();
+        var mes = ("0" + (date.getMonth() + 1));
+        var anio = date.getFullYear();
+        var fechatotal = dia + "/" + mes + "/" + anio;
+        var time = date.toLocaleTimeString();
+        $a.attr("download", "Reporte Productos " + fechatotal + ' ' + time + ".xls");
+        $a[0].click();
+        $a.remove();
+    }, "json");
+
+}

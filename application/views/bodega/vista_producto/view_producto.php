@@ -18,20 +18,24 @@
    <div class="row">
       <div class="col-md-2">
         <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar Productos</a>
-<a href="<?= base_url('control_producto/excel') ?>" class='btn btn-info' type="button" >Excel</a>
       </div>
-   
-          <div class="col-md-3 col-md-offset-4">
+      <div class="col-md-2">
+         <a  class='btn btn-info' type="button"  onclick="exportarexcel();">Exportar tabla a Excel</a>
+      </div>
+   <div class="col-md-2">
+         <a href="<?= base_url('control_producto/exceltodo') ?>" class='btn btn-info' type="button"  >Exportar todo a Excel</a>
+    </div>
+          <div class="col-md-2 ">
     <select name="buscando" id ="buscando" class="form-control" >
-       <option value="codigo_barra">Codigo de barra </option>
-        <option value="cod_interno_prod">Codigo Interno</option>
         <option value="nombre">Nombre</option>
+        <option value="cod_interno_prod">Codigo Interno</option>
+        <option value="codigo_barra">Codigo de barra </option>
         <option value="cantidad">Cantidad</option>
         <option value="precio">Precio</option>
         </select>
 
       </div>
-      <div class="col-md-3 ">
+      <div class="col-md-4 ">
         <div class="form-group has-feedback has-feedback-left">
 
             <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />

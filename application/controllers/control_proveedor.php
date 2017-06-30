@@ -170,7 +170,119 @@ function eliminar() {
 		}
 	}
 
+function excel()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Proveedor');
+		     $data = json_decode($this->input->post('sendData'));
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Reporte Proveedor');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+		        $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(40);
+			    $sheet->getColumnDimension('C')->setWidth(50);
+			    $sheet->getColumnDimension('D')->setWidth(60);
+			    $sheet->getColumnDimension('E')->setWidth(20);
+				$sheet->getColumnDimension('F')->setWidth(50);
+			    $sheet->setCellValue('A1','RUT PROVEEDOR');
+				$sheet->setCellValue('B1','NOMBRE ');
+				$sheet->setCellValue('C1','RAZON SOCIAL');
+				$sheet->setCellValue('D1','DIRECCION');
+				$sheet->setCellValue('E1','TELEFONO');
+				$sheet->setCellValue('F1','CORREO');
+		
+//recorrer datos
+$i=3;
+ foreach ($data->datos as $d){
+                $sheet->setCellValue('A'.$i,$d->rut);
+				$sheet->setCellValue('B'.$i,$d->nombre);
+			    $sheet->setCellValue('C'.$i,$d->razon);
+				$sheet->setCellValue('D'.$i,$d->direccion);
+				$sheet->setCellValue('E'.$i,$d->telefono);
+				$sheet->setCellValue('F'.$i,$d->correo);
+		
+                $i++;
+ }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Productos ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+   $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+
+die(json_encode($response));
+ 
+}
+
+function exceltodo()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Proveedor');
+			$datos= $this->Proveedor_model->get_proveedor();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Reporte proveedor');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(40);
+			    $sheet->getColumnDimension('C')->setWidth(50);
+			    $sheet->getColumnDimension('D')->setWidth(60);
+			    $sheet->getColumnDimension('E')->setWidth(20);
+				$sheet->getColumnDimension('F')->setWidth(40);
+			    $sheet->setCellValue('A1','RUT PROVEEDOR');
+				$sheet->setCellValue('B1','NOMBRE ');
+				$sheet->setCellValue('C1','RAZON SOCIAL');
+				$sheet->setCellValue('D1','DIRECCION');
+				$sheet->setCellValue('E1','TELEFONO');
+				$sheet->setCellValue('F1','CORREO');
+//recorrer datos
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->rut_proveedor);
+				$sheet->setCellValue('B'.$i,$dato->nombre_proveedor);
+			    $sheet->setCellValue('C'.$i,$dato->razon_social);
+				$sheet->setCellValue('D'.$i,$dato->direccion);
+				$sheet->setCellValue('E'.$i,$dato->telefono);
+				$sheet->setCellValue('F'.$i,$dato->correo);
+                $i++;
+ }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	$writer->save("php://output");
+}
 
 
 } 

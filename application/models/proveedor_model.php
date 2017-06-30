@@ -59,6 +59,13 @@ public function editando($rutselec){
 
 		}
 
+public function get_proveedor(){
+        $this->db->select("*");
+		$this->db->from("proveedor");
+		$q= $this->db->get();
+		return $q->result();
+		}
+
 
 public function eliminar($rutas){
 		$this->db->where('rut_proveedor',$rutas);

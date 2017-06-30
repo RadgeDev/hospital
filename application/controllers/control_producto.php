@@ -229,7 +229,7 @@ function excel()
 $this->phpexcel->getProperties()
             ->setTitle('Excel')
 			->setDescription('Productos');
-			$datos= $this->Producto_model->get_productos();
+		     $data = json_decode($this->input->post('sendData'));
 			$sheet=$this->phpexcel->getActiveSheet();
 			$sheet->setTitle('titulto del reporte');
 			$style = array(
@@ -238,6 +238,71 @@ $this->phpexcel->getProperties()
                            )
                           );
 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(50);
+			    $sheet->getColumnDimension('D')->setWidth(20);
+			    $sheet->getColumnDimension('E')->setWidth(20);
+				$sheet->getColumnDimension('F')->setWidth(20);
+			    $sheet->getColumnDimension('G')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO INTERNO');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('D1','CANTIDAD');
+				$sheet->setCellValue('E1','PRECIO');
+				$sheet->setCellValue('F1','CODIGO BODEGA');
+				$sheet->setCellValue('G1','UNIDAD DE MEDIDA');
+//recorrer datos
+$i=3;
+
+ foreach ($data->datos as $d){
+                $sheet->setCellValue('A'.$i,$d->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$d->codigo_barra);
+			    $sheet->setCellValue('C'.$i,$d->nombre);
+				$sheet->setCellValue('D'.$i,$d->cantidad);
+				$sheet->setCellValue('E'.$i,$d->precio);
+				$sheet->setCellValue('F'.$i,$d->cod_bodega);
+				$sheet->setCellValue('G'.$i,$d->unidad_medida);
+                $i++;
+ }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Productos ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+   $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+
+die(json_encode($response));
+ 
+}
+
+function exceltodo()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Productos');
+			$datos= $this->Producto_model->get_productos();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('titulto del reporte');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
              $sheet->getDefaultStyle()->applyFromArray($style);
 			//generrar filas
 			    $sheet->getColumnDimension('A')->setWidth(30);
@@ -271,6 +336,5 @@ $i=3;
 	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
 	$writer->save("php://output");
 }
-
-
 } 
+

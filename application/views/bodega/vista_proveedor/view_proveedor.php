@@ -20,8 +20,14 @@
         <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalproveedor'>Agregar Proveedor</a>
 
       </div>
+        <div class="col-md-2">
+        <a  class='btn btn-info' onclick="exportarexcel();" >Exportar Tabla Excel</a>
+      </div>
+       <div class="col-md-2">
+        <a href="<?= base_url('control_proveedor/exceltodo') ?>" class='btn btn-info' >Exportar Todo Excel</a>
+      </div>
    
-          <div class="col-md-3 col-md-offset-4">
+          <div class="col-md-2 ">
     <select name="buscando" id ="buscando" class="form-control" >
         <option value="rut_proveedor">Rut</option>
         <option value="nombre_proveedor">Nombre</option>
