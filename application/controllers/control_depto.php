@@ -151,7 +151,97 @@ function eliminar() {
 		}
 	}
 
+function excel()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Proveedor');
+		     $data = json_decode($this->input->post('sendData'));
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Reporte Depto');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+	            $sheet->getColumnDimension('A')->setWidth(40);
+			    $sheet->getColumnDimension('B')->setWidth(50);
+			    $sheet->setCellValue('A1','CODIGO DEPTO');
+				$sheet->setCellValue('B1','NOMBRE ');
+		
+		
+//recorrer datos
+$i=3;
+               foreach ($data->datos as $d){
+                $sheet->setCellValue('A'.$i,$d->codigo);
+				$sheet->setCellValue('B'.$i,$d->nombre);
+                $i++;
+                 }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Productos ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+   $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+
+die(json_encode($response));
+ 
+}
+
+function exceltodo()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Excel')
+			->setDescription('Departamentos');
+			$datos= $this->Depto_model->get_depto();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Reporte Deptos');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(40);
+			    $sheet->getColumnDimension('B')->setWidth(50);
+	
+			    $sheet->setCellValue('A1','CODIGO DEPTO');
+				$sheet->setCellValue('B1','NOMBRE ');
+
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_depto);
+				$sheet->setCellValue('B'.$i,$dato->nombre_depto);
+
+                $i++;
+ }
+	
+ 
+
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Depto ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	$writer->save("php://output");
+}
 
 
 } 

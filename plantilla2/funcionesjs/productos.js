@@ -408,19 +408,7 @@ function eliminando(borrarrut) {
 
 }
 
-function excel() {
 
-    $.ajax({
-
-        url: "http://localhost/hospital/control_producto/excel",
-        type: "POST",
-        data: {},
-        success: function(respuesta) {
-
-        }
-    });
-
-}
 
 
 

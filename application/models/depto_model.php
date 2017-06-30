@@ -71,6 +71,11 @@ public function eliminar($cod){
 		}
 	}
 
-
+public function get_depto(){
+        $this->db->select("*");
+		$this->db->from("depto");
+		$q= $this->db->get();
+		return $q->result();
+		}
 
 }//fin de clase
