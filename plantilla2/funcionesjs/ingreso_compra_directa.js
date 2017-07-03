@@ -755,6 +755,7 @@
         var descuento = $("#descuento").val();
         var valorfactura = $("#valorfactura").val();
         var neto = $("#neto").val();
+        var neto2 = $("#valorfactura").val();
         var iva = $("#iva").val();
         var total = $("#total").val();
         var text = document.getElementById("proveedorrut"),
@@ -793,7 +794,7 @@
 
                 url: "http://localhost/hospital/control_boleta/guardaringreso",
                 type: "POST",
-                data: { minfolio: nfolio, mitipoingresocod: tipoingresocod, mitipoingresonombre: tipoingresonombre, mindocumento: ndocumento, minfolio: nfolio, mitipocompracod: tipocompracod, mitipocompranombre: tipocompranombre, minombreproveedor: nombreproveedor, mirutproveedor: rutproveedor, mifecha: fecha, minombreproduct: nombreproduct, micodbarraproduct: codbarraproduct, micorrelativoprod: correlativoprod, micomentarios: comentarios, midescuento: descuento, mineto: neto, miiva: iva, mitotal: total },
+                data: { minfolio: nfolio, mitipoingresocod: tipoingresocod, mitipoingresonombre: tipoingresonombre, subtotal: neto2, mindocumento: ndocumento, minfolio: nfolio, mitipocompracod: tipocompracod, mitipocompranombre: tipocompranombre, minombreproveedor: nombreproveedor, mirutproveedor: rutproveedor, mifecha: fecha, minombreproduct: nombreproduct, micodbarraproduct: codbarraproduct, micorrelativoprod: correlativoprod, micomentarios: comentarios, midescuento: descuento, mineto: neto, miiva: iva, mitotal: total },
                 dataType: "json",
                 success: function(respuesta) {
                     guardardetalle();

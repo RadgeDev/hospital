@@ -60,8 +60,49 @@ return $query->result();
 }
 
 
+function getsalida($micod)
+{
+$this->db->select('*');
+$this->db->from('salidas');
+$this->db->where('cod_salida',$micod);
+$query=$this->db->get();
+return $query->result();
+
+}
 
 
+function getsalidadetalle($micod)
+{
+
+$this->db->select('*');
+$this->db->from('detalle_salida');
+$this->db->where('cod_salida',$micod);
+$query=$this->db->get();
+return $query->result();
+
+}
+
+function getboleta($micod)
+{
+$this->db->select('*');
+$this->db->from('compra_directa');
+$this->db->where('cod_compra',$micod);
+$query=$this->db->get();
+return $query->result();
+
+}
+
+
+function getboletadetalle($micod)
+{
+
+$this->db->select('*');
+$this->db->from('detalle_compra_directa');
+$this->db->where('cod_compra',$micod);
+$query=$this->db->get();
+return $query->result();
+
+}
 
 
 

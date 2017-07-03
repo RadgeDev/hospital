@@ -193,7 +193,7 @@ function report_pedidos()
   <p style="text-align:right;padding-top:0mm;font-weight:bold;" >Fecha:  '.$misdatos->fecha.'</p> </div>
         </div>
 
-    <h3 style="text-align:center;padding-top:0mm;font-weight:bold;">INGRESO BODEGA  HOSPITAL CHIMBARONGO</h3>
+    <h3 style="text-align:center;padding-top:0mm;font-weight:bold;">PEDIDOS BODEGA  HOSPITAL CHIMBARONGO</h3>
 
 
   <table style="width:100%"> 
@@ -262,6 +262,291 @@ $html.='
   foreach ($datos as $misdatos) {
  $html.='    
 <div id="cajon2" class="left"><h4>Pedido realizado por: '.$misdatos->nombre.'</h4></div>
+        </div>
+            ';    }
+$html.='
+    </div>
+
+
+  
+</body>
+</html>' ;
+
+   
+
+ 
+    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $this->mpdf->setDisplayMode('fullpage');
+    $this->mpdf->WriteHTML($estilos3,1);
+    $this->mpdf->WriteHTML($html,2);
+
+  
+    $this->mpdf->Output();
+     exit;
+
+ }  
+
+function report_salidas()
+{
+    $cod=  $this->uri->segment(3);
+
+
+    $datos= $this->Model_reporte->getsalida($cod);
+    $detalle= $this->Model_reporte->getsalidadetalle($cod);
+
+    $html="";
+
+  $html.='   <!DOCTYPE html>
+<html>
+<head>
+    
+ 
+</head>
+<body>
+<div id="wrapper">
+
+<div class="right"> 
+    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    </div>
+    '; 
+  foreach ($datos as $misdatos) {
+ $html.='
+<div  class="left"><p style="text-align:right;padding-top:0mm;font-weight:bold;" >Folio:'.$misdatos->cod_salida.'</p> 
+  <p style="text-align:right;padding-top:0mm;font-weight:bold;" >Fecha:  '.$misdatos->fecha.'</p> </div>
+        </div>
+
+    <h3 style="text-align:center;padding-top:0mm;font-weight:bold;">EGRESO BODEGA  HOSPITAL CHIMBARONGO</h3>
+
+
+  <table style="width:100%"> 
+  <tr>
+    <td style="width:20%;font-weight:bold;background:#eee;">Tipo Salida</td>
+    <td style="width:30%">'.$misdatos->nombre_salida.'</td>
+    <td style="width:20%;font-weight:bold;background:#eee;">Depto/Servicio</td>
+     <td style="width:30%">'.$misdatos->nombre_depto.'</td>
+  </tr>
+  <tr>
+   <td style="width:20%;font-weight:bold;background:#eee;">N° Pedido:</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->num_pedido.' </td>
+    
+  </tr>
+  <tr>
+   <tr>
+   <td style="width:20%;font-weight:bold;background:#eee;">Observacion:</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->comentarios.'</td>
+   
+  </tr>';
+}
+      $html.='
+</table>          
+         
+    <div id="content">
+         
+        <div id="invoice_body">
+            <table>
+            <tr style="background:#eee;">
+                <td style="width:10%;"><b>Cod Prod.</b></td>
+                <td style="padding-left:10px;width:30%;"><b>Producto</b></td>
+                <td style="width:20%;"><b>Lote</b></td>
+                 <td style="width:10%;"><b>A.Vencer</b></td>
+                <td style="width:10%;"><b>Cant</b></td>
+                <td style="width:20%;"><b>Unitario</b></td>
+             
+            </tr>
+            </table>
+             
+           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
+           ';
+  foreach ($detalle as $misdetalle) {
+$html.='
+            <tr>
+                <td style="width:10%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
+                <td style="text-align:left; padding-left:10px;width:30%;"><h5 class="letralegible2">'.$misdetalle->nombre_prod.'</h5></td>
+                <td  style="width:20%;"><h5 class="letralegible">'.$misdetalle->lote.'</h5></td>
+                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->fecha_vencimiento.'</h5></td>
+                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
+                <td style="width:20%;" ><h5 class="letralegible">'.$misdetalle->valor.'</h5></td>
+           
+
+            </tr> 
+               ';    }
+$html.='        
+            <tr>
+                <td colspan="5"></td>
+                <td></td>
+                <td></td>
+            </tr>
+              ';
+  
+$html.='   
+        </table>
+         <br >
+
+<div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
+         width: 50%;"/>
+          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+       ';
+  foreach ($datos as $misdatos) {
+ $html.='    
+<div id="cajon2" class="left"><h4>Realizado por: '.$misdatos->nombre.'</h4></div>
+        </div>
+            ';    }
+$html.='
+    </div>
+
+
+  
+</body>
+</html>' ;
+
+   
+
+ 
+    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $this->mpdf->setDisplayMode('fullpage');
+    $this->mpdf->WriteHTML($estilos3,1);
+    $this->mpdf->WriteHTML($html,2);
+
+  
+    $this->mpdf->Output();
+     exit;
+
+ }  
+
+
+
+function reportboletas()
+{
+    $cod=  $this->uri->segment(3);
+
+
+    $datos= $this->Model_reporte->getboleta($cod);
+    $detalle= $this->Model_reporte->getboletadetalle($cod);
+
+    $html="";
+
+  $html.='   <!DOCTYPE html>
+<html>
+<head>
+    
+ 
+</head>
+<body>
+<div id="wrapper">
+
+<div class="right"> 
+    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    </div>
+    '; 
+  foreach ($datos as $misdatos) {
+ $html.='
+<div  class="left"><p style="text-align:right;padding-top:0mm;font-weight:bold;" >Folio:'.$misdatos->cod_compra.'</p> 
+  <p style="text-align:right;padding-top:0mm;font-weight:bold;" >Fecha:  '.$misdatos->fecha.'</p> </div>
+        </div>
+
+    <h3 style="text-align:center;padding-top:0mm;font-weight:bold;">COMPRA DIRECTA BODEGA  HOSPITAL CHIMBARONGO</h3>
+
+
+  <table style="width:100%"> 
+  <tr>
+    <td style="width:20%;font-weight:bold;background:#eee;">N°Documento</td>
+    <td style="width:30%">'.$misdatos->numero_documento.'</td>
+    <td style="width:20%;font-weight:bold;background:#eee;">Tipo Ingreso</td>
+     <td style="width:30%">'.$misdatos->tipo_documento.'</td>
+  </tr>
+  <tr>
+   <td style="width:20%;font-weight:bold;background:#eee;">Proveedor:</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->rut_proveedor.' '.$misdatos->nombre_proveedor.'</td>
+    
+  </tr>
+  <tr>
+  <td style="width:20%;font-weight:bold;background:#eee;">Tipo Compra</td>
+     <td COLSPAN="3" style="width:30%">'.$misdatos->tipo_compra_nombre.'</td>
+  </tr>
+   <tr>
+   <td style="width:20%;font-weight:bold;background:#eee;">Observacion:</td>
+    <td COLSPAN="3" style="width:30%">'.$misdatos->comentarios.'</td>
+   
+  </tr>';
+}
+      $html.='
+</table>          
+         
+    <div id="content">
+         
+        <div id="invoice_body">
+            <table>
+            <tr style="background:#eee;">
+                <td style="width:10%;"><b>Cod Int.</b></td>
+                <td style="padding-left:10px;width:30%;"><b>Producto</b></td>
+                <td style="width:20%;"><b>Lote</b></td>
+                <td style="width:10%;"><b>A.Vencer</b></td>
+                <td style="width:10%;"><b>Cant</b></td>
+                <td style="width:10%;"><b>Unitario</b></td>
+                <td style="width:10%;"><b>Total</b></td>
+            </tr>
+            </table>
+         
+             
+           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
+           ';
+  foreach ($detalle as $misdetalle) {
+$html.='
+            <tr>
+                <td style="width:10%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
+                <td style="text-align:left;width:30%; padding-left:10px;"><h5 class="letralegible2">'.$misdetalle->nombre_prod.'</h5></td>
+                <td  style="width:20%;"><h5 class="letralegible">'.$misdetalle->numero_lote.'</h5></td>
+                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->fecha_vencimiento.'</h5></td>
+                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
+                <td style="width:10%;" ><h5 class="letralegible">'.$misdetalle->precio.'</h5></td>
+                <td style="width:10%;" ><h5 class="letralegible">'.$misdetalle->total.'</h5></td>
+
+            </tr> 
+               ';    }
+$html.='        
+            <tr>
+                <td colspan="5"></td>
+                <td></td>
+                <td></td>
+            </tr>
+              ';
+  foreach ($datos as $misdatos) {
+ $html.='
+            <tr>
+                <td colspan="5"></td>
+                <td style="font-weight:bold; font-size:8pt;background:#eee;">NETO </td>
+                <td ><h5 class="letralegible">'.$misdatos->neto.'</h5></td>
+
+            </tr>
+             <tr>
+               
+              <td colspan="5"></td>
+              <td style="font-weight:bold; font-size:8pt;background:#eee;">IVA </td>
+                <td ><h5 class="letralegible">'.$misdatos->iva.'</h5></td>
+            </tr>
+              <tr>
+               <td colspan="5"></td>
+              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
+                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
+            </tr>
+              <tr>
+                <td colspan="5"></td>
+             <td style="font-weight:bold; font-size:8pt;background:#eee;">TOTAL </td>
+                <td ><h5 class="letralegible">'.$misdatos->total_compra.'</h5></td>
+                
+            </tr>
+       ';    }
+$html.='   
+        </table>
+         <br >
+
+<div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
+         width: 50%;"/>
+          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+       ';
+  foreach ($datos as $misdatos) {
+ $html.='    
+<div id="cajon2" class="left"><h4>Recibido por: '.$misdatos->nombre_usuario.'</h4></div>
         </div>
             ';    }
 $html.='

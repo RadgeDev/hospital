@@ -111,12 +111,16 @@ function guardaringreso() {
             $correlativoprod= $this->input->post("micorrelativoprod");
             $comentarios= $this->input->post("micomentarios");
             $descuento= $this->input->post("midescuento");
+			if ( $tipoingresocod ==="1"){
+            $neto= $this->input->post("subtotal");
+		    }else{
             $neto= $this->input->post("mineto");
+		    }
             $iva = $this->input->post("miiva");
             $total= $this->input->post("mitotal");
             $usuario= $this->session->userdata('mirut');
 			$nombreusuario= $this->session->userdata('minombre');
-
+     
 
    
    			$datos = array(

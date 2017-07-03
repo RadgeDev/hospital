@@ -1037,8 +1037,8 @@ function limpiar() {
 
 //crea reporte
 function abrirEnPestana() {
-    var codseleccionado = $("#folio").val();
-    var url = "http://localhost/hospital/control_reporte/report/" + codseleccionado + ""
+    var codseleccionado = $("#nsalida").val();
+    var url = "http://localhost/hospital/control_reporte/report_salidas/" + codseleccionado + ""
     var a = document.createElement("a");
     a.target = "_blank";
     a.href = url;
