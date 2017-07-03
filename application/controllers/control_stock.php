@@ -35,22 +35,24 @@ class Control_stock extends CI_Controller {
 		echo json_encode($data);
 	}
 
-public function mostrar2()
+
+	public function mostrar2()
 	{	
 		//valor a Buscar
 		$buscar = $this->input->post("buscar");
 		$numeropagina = $this->input->post("nropagina");
 		$cantidad = $this->input->post("cantidad");
 		$combobuscar= $this->input->post("valorcombos");
-		$bodega= $this->input->post("bodega");
 		$inicio = ($numeropagina -1)*$cantidad;
 		$data = array(
-			"obtener" => $this->Stock_model->buscar2($buscar,$inicio,$cantidad,$combobuscar,$bodega),
-			"totalregistros" => count($this->Stock_model->buscar($buscar)),
-			"cantidad" =>$cantidad		
+			"obtener" => $this->Stock_model->buscar2($buscar,$inicio,$cantidad,$combobuscar),
+			"totalregistros" => count($this->Stock_model->buscar2($buscar)),
+			"cantidad" =>$cantidad
+			
 		);
 		echo json_encode($data);
 	}
+
 function validar(){
 		if ($this->input->is_ajax_request()) {
 			$rutsele = $this->input->post("id");

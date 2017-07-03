@@ -16,15 +16,45 @@ class Stock_model extends CI_Model {
 		return $consulta->result();
 	}
 	public function buscar2($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE,$bodega=FALSE)
-	{
-		if ($valorbuscar==""){
-			$valorbuscar="cod_interno_prod";	
+	{   
+		
+		if($buscar==="1"){
+		
+		$this->db->select('*');
+        $this->db->from('producto');
+        $this->db->where('cantidad <= stock_critico');
+		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
+			$this->db->limit($cantidadregistro,$inicio);
 		}
-		$this->db->where('cod_bodega',$bodega);
-		$this->db->like($valorbuscar,$buscar);
-	    $this->db->limit($cantidadregistro,$inicio);
-		$consulta = $this->db->get("producto");
+	    $consulta = $this->db->get();
 		return $consulta->result();
+
+		}else if($buscar==="2"){
+
+        $this->db->select('*');
+        $this->db->from('producto');
+        $this->db->where('cantidad <= stock_minimo');
+		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
+			$this->db->limit($cantidadregistro,$inicio);
+		}
+	    $consulta = $this->db->get();
+		return $consulta->result();
+
+		}else if($buscar==="3"){
+
+        $this->db->select('*');
+        $this->db->from('producto');
+        $this->db->where('cantidad >= stock_maximo');
+		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
+			$this->db->limit($cantidadregistro,$inicio);
+		}
+	    $consulta = $this->db->get();
+		return $consulta->result();
+
+		}else{
+
+
+		}
 	}
 
 	function validar( $rutsele){

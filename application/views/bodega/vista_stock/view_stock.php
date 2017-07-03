@@ -17,30 +17,15 @@
                 </div>
    <div class="row">
       <div class="col-md-2">
-        <a href="#" class='btn btn-success' data-toggle='modal' data-target='#myModalguardar'>Agregar Productos</a>
+     
       </div>
-      <div class="col-md-2">
-         <a  class='btn btn-info' type="button"  onclick="exportarexcel();">Exportar tabla a Excel</a>
-      </div>
-   <div class="col-md-2">
-         <a href="<?= base_url('control_producto/exceltodo') ?>" class='btn btn-info' type="button"  >Exportar todo a Excel</a>
-    </div>
+     
           <div class="col-md-2 ">
-    <select name="buscando" id ="buscando" class="form-control" >
-        <option value="nombre">Nombre</option>
-        <option value="cod_interno_prod">Codigo Interno</option>
-        <option value="codigo_barra">Codigo de barra </option>
-        <option value="cantidad">Cantidad</option>
-        <option value="precio">Precio</option>
-        </select>
+    
 
       </div>
       <div class="col-md-4 ">
-        <div class="form-group has-feedback has-feedback-left">
-
-            <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
-            <i class="glyphicon glyphicon-search form-control-feedback"></i>
-        </div>
+        
         
       </div>
       
@@ -64,15 +49,32 @@
             </div>
 
             <div class="col-lg-4 col-sm-4">
-               <label>N° Documento</label>
-                <input type="text" id="ndocumento" onblur="habilitando();" onkeypress="return solonumerosenteros(event)" class="form-control" maxlength="25">
-            
+            <label>Buscar por:</label>
+        <select name="buscando" id ="buscando" class="form-control" >
+        <option value="nombre">Nombre</option>
+        <option value="cod_interno_prod">Codigo Interno</option>
+        <option value="codigo_barra">Codigo de barra </option>
+        <option value="cantidad">Cantidad</option>
+        <option value="precio">Precio</option>
+        </select>
+            </div>
+    <br>
+            <div class="col-lg-4 col-sm-4 ">
+
+        <div class="form-group has-feedback has-feedback-left">
+      <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
+       <i class="glyphicon glyphicon-search form-control-feedback"></i>
+      
+        </div>
+         
             </div>
 
-            <div class="col-lg-4 col-sm-4">
-                <label>Folio</label>
-                <input type="text" id="folio" readonly class="form-control">
-            </div>
+             <div class="col-md-2">
+         <a  class='btn btn-info' type="button"  onclick="exportarexcel();">Exportar tabla a Excel</a>
+      </div>
+   <div class="col-md-2">
+         <a href="<?= base_url('control_producto/exceltodo') ?>" class='btn btn-info' type="button"  >Exportar todo a Excel</a>
+    </div>
           </div>
             </div>
               </div>
@@ -101,12 +103,9 @@
                   <th>Codigo Bodega</th>
                   <th>Nombre</th>
                   <th>Cantidad</th>
-                  <th>Precio</th>
-                  <th>Unidad</th>
                   <th>Stock Critico</th>
                   <th>Stock Min.</th>
                   <th>Stock Max</th>
-                  <th>Accion</th>
                 </tr>
               </thead>
               <tbody>
