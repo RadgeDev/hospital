@@ -164,7 +164,9 @@
                     <li>
                         <a href="<?= base_url('control_boleta') ?>"><i class="fa fa-credit-card"></i> Compra Directa</a>
                     </li>
-                 
+                    <li>
+                        <a href="<?= base_url('control_stock') ?>"><i class="fa fa-credit-card"></i> Stock inventario</a>
+                    </li>
                        <li>
                    <a href="javascript:;" data-toggle="collapse" data-target="#demon"><i class="fa fa-file-word-o"></i> Reportes <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demon" class="collapse">

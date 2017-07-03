@@ -886,7 +886,7 @@
     //crea reporte
     function abrirEnPestana() {
         var codseleccionado = $("#folio").val();
-        var url = "http://localhost/hospital/control_reporte/report/" + codseleccionado + ""
+        var url = "http://localhost/hospital/control_reporte/reportboletas/" + codseleccionado + ""
         var a = document.createElement("a");
         a.target = "_blank";
         a.href = url;
