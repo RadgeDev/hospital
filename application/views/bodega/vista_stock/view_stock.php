@@ -58,23 +58,49 @@
         <option value="precio">Precio</option>
         </select>
             </div>
-    <br>
-            <div class="col-lg-4 col-sm-4 ">
 
+        <div class="col-lg-4 col-sm-4 ">
+<br>
         <div class="form-group has-feedback has-feedback-left">
       <input type="text" class="form-control" name="busqueda" placeholder="Buscar algo" />
        <i class="glyphicon glyphicon-search form-control-feedback"></i>
       
         </div>
-         
-            </div>
-
+         </div>
+    <br>
+        <br>
+            <br>
+                <br>
+             
              <div class="col-md-2">
-         <a  class='btn btn-info' type="button"  onclick="exportarexcel();">Exportar tabla a Excel</a>
+        <a href="<?= base_url('control_stock/excelstockcritico') ?>" class='btn btn-danger' type="button"  >Exportar Todo Stock Critico.</a>
       </div>
    <div class="col-md-2">
-         <a href="<?= base_url('control_producto/exceltodo') ?>" class='btn btn-info' type="button"  >Exportar todo a Excel</a>
+         <a href="<?= base_url('control_stock/excelstockminimo') ?>" class='btn btn-warning' type="button"  >Exportar Todo Stock Min.</a>
     </div>
+      <div class="col-md-2">
+         <a href="<?= base_url('control_stock/excelstockmaximo') ?>" class='btn btn-success' type="button"  >Exportar Todo Stock Max.</a>
+    </div>
+       <br>
+            <br>
+                <br>
+      <div class="col-lg-4 col-sm-4">
+          <label>Eliga Bodega</label>
+               <select name='combo_bodegas' id ='combo_bodegas' style="width:400px;" class='form-control' >
+             <?php
+                    foreach ($arrayBodegas as $i => $cod_bodegas)
+                    echo '<option value="',$i,'">',$cod_bodegas,'</option>';
+                             ?>
+             </select >
+        
+            </div>
+             <br>
+                <br>
+            <div class="col-lg-6 col-sm-6">
+   <a class='btn btn-danger' onclick="reporte_bodega_cri();"  type="button"  >Bodega Stock Critico.</a>
+            <button onclick="reporte_bodega_min();" class='btn btn-warning' type="button">Bodega Stock Minimo.</button>    
+    <a  class='btn btn-success' type="button" onclick="reporte_bodega_max();" >Bodega Stock Maximo.</a>
+            </div>
           </div>
             </div>
               </div>

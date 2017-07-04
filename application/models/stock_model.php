@@ -6,7 +6,7 @@ class Stock_model extends CI_Model {
 	public function buscar($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE)
 	{
 		if ($valorbuscar==""){
-			$valorbuscar="cod_interno_prod";
+			$valorbuscar="nombre";
 		}
 		$this->db->like($valorbuscar,$buscar);
 		if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
@@ -57,77 +57,7 @@ class Stock_model extends CI_Model {
 		}
 	}
 
-	function validar( $rutsele){
-		$this->db->where('cod_interno_prod', $rutsele);
-		$this->db->get("producto");
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	function guardar($data) {
-		$this->db->insert("producto",$data);
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}	
-
-	function actualizarcorrelativo($codigo,$data){
-		$this->db->where('cod_bodegas', $codigo);
-		$this->db->update('bodegas', $data); 
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
- 	function actualizar($codigo,$data){
-		$this->db->where('cod_interno_prod', $codigo);
-		$this->db->update('producto', $data); 
-		if ($this->db->affected_rows() > 0) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
- 
-
-public function editando($codselec){
-		$this->db->where('cod_interno_prod',$codselec);
-		$q= $this->db->get('producto');
-		return $q->result();
-		}
-
-	public function obtenercorrelativo($codselec){
-
-		$this->db->where('cod_bodegas',$codselec);
-		
-		$q= $this->db->get('bodegas');
-		return $q->result();
-
-		}
-
-
-public function eliminar($rutas){
-		$this->db->where('cod_interno_prod',$rutas);
-		$this->db->delete('producto'); 
-	  if ($this->db->affected_rows() > 0) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-function get_correlativo(){
+function get_bodegas(){
 
     // armamos la consulta
     $query = $this->db-> query('SELECT cod_bodegas,nombre FROM bodegas');
@@ -144,6 +74,7 @@ function get_correlativo(){
      }
 }
 
+
 function get_productos()
 {
     // armamos la consulta
@@ -153,6 +84,80 @@ function get_productos()
 
    
      }
+function get_stockminimo()
+{
+    // armamos la consulta
+        $this->db->select('*');
+        $this->db->from('producto');
+        $this->db->where('cantidad <= stock_minimo');
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
+	 function get_stockcritico()
+{
+    // armamos la consulta
+        $this->db->select('*');
+        $this->db->from('producto');
+        $this->db->where('cantidad <= stock_critico');
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
+
+function get_stockmaximo()
+{
+    // armamos la consulta
+        $this->db->select('*');
+        $this->db->from('producto');
+        $this->db->where('cantidad >= stock_maximo');
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
 
 
+function get_stockbodegamin($micod)
+{
+    // armamos la consulta
+        $this->db->select('*');
+        $this->db->from('producto');
+		$this->db->where('cod_bodega',$micod)->where("(cantidad <= stock_minimo)");
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
+
+	 function get_stockbodegacri($micod)
+{
+    // armamos la consulta
+        $this->db->select('*');
+        $this->db->from('producto');
+		$this->db->where('cod_bodega',$micod)->where("(cantidad <= stock_critico)");
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
+	 
+	 function get_stockbodegamax($micod)
+{
+    // armamos la consulta
+        $this->db->select('*');
+        $this->db->from('producto');
+		$this->db->where('cod_bodega',$micod)->where("(cantidad >= stock_maximo)");
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
+
+function get_nombrebodega($micod)
+{
+    // armamos la consulta
+        $this->db->select('nombre');
+        $this->db->from('bodegas');
+        $this->db->where('cod_bodegas',$micod);
+        $consulta = $this->db->get();
+		return $consulta->result();
+   
+     }
 }//fin de clase

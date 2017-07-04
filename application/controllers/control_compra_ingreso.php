@@ -181,6 +181,8 @@ function guardardetalle() {
              "fecha_vencimiento" => $fechavenc,
              "cantidad" => $d->cantidad,
              "precio" => $d->valor,
+			 "rut_proveedor" => $d->rutproveedor,
+			 "nombre_proveedor" => $d->proveedor,
              "estado" =>$estado
         );
             

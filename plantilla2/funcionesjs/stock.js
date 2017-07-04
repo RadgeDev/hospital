@@ -13,8 +13,7 @@ function main() {
     $("input[name=busqueda]").keyup(function() {
         textobuscar = $(this).val();
         valoroption = $("#cantidadpag").val();
-        var valorcombo = $("#buscando").val();
-
+        var valorcombo = document.getElementsByName("buscando")[0].value;
         mostrarDatos(textobuscar, 1, valoroption, valorcombo);
     });
 
@@ -35,7 +34,6 @@ function main() {
     });
 }
 $("select[name=combo_stock]").change(function() {
-
     valoroption = $("#cantidadpag").val();
     valorBuscar = document.getElementsByName("combo_stock")[0].value;
     mostrarDatos2(valorBuscar, 1, valoroption, "cod_interno_prod");
@@ -55,7 +53,7 @@ function mostrarDatos(valorBuscar, pagina, cantidad, valorcombo) {
                 filas += "<tr class='active' ><td >" + item.cod_interno_prod + "</td><td>" + item.codigo_barra + "</td><td>" + item.cod_bodega + "</td><td>" + item.nombre + "</td><td>" + item.cantidad +
                     "</td><td>" + item.stock_critico + "</td><td>" + item.stock_minimo +
                     "</td><td>" + item.stock_maximo +
-                    "</td><td> <button href='" + item.cod_interno_prod + "'  id='editando'  onclick='editandos(this);' class='btn btn-warning' data-toggle='modal' data-target='#myModalEditar'>E</button> <button href='" + item.cod_interno_prod + "'  id='eliminando'  onclick='eliminar(this);' class='btn btn-danger' >X</button></td></tr>";
+                    "</td></tr>";
             });
 
             $("#tbproductos tbody").html(filas);
@@ -128,7 +126,7 @@ function mostrarDatos2(valorBuscar, pagina, cantidad, valorcombo) {
             if (colores == "1") {
                 color = "red";
             } else if (colores == "2") {
-                color = "#E174E0";
+                color = "#C8670D";
             } else if (colores == "3") {
                 color = "green";
             } else {
@@ -295,4 +293,94 @@ function exportarexcel() {
         $a.remove();
     }, "json");
 
+}
+
+
+
+//crea reporte
+function reporte_bodega_min() {
+    var valorcombobodegas = document.getElementsByName("combo_bodegas")[0].value;
+
+    $.ajax({
+        url: "http://localhost/hospital/control_stock/reportebodegaminimo",
+        type: "POST",
+        data: { codigo: valorcombobodegas },
+        dataType: "json",
+        success: function(data) {
+            var $a = $("<a>");
+            $a.attr("href", data.file);
+            $("body").append($a);
+            var date = new Date();
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1));
+            var anio = date.getFullYear();
+            var fechatotal = dia + "/" + mes + "/" + anio;
+            var time = date.toLocaleTimeString();
+            var bodega = $("#combo_bodegas option:selected").text();
+            $a.attr("download", "Reporte Stock Minimo Bodega " + bodega + ' ' + fechatotal + ' ' + time + ".xls");
+            $a[0].click();
+            $a.remove();
+
+
+        }
+    });
+}
+
+//crea reporte
+function reporte_bodega_cri() {
+    var valorcombobodegas = document.getElementsByName("combo_bodegas")[0].value;
+
+    $.ajax({
+        url: "http://localhost/hospital/control_stock/reportebodegacritico",
+        type: "POST",
+        data: { codigo: valorcombobodegas },
+        dataType: "json",
+        success: function(data) {
+            var $a = $("<a>");
+            $a.attr("href", data.file);
+            $("body").append($a);
+            var date = new Date();
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1));
+            var anio = date.getFullYear();
+            var fechatotal = dia + "/" + mes + "/" + anio;
+            var time = date.toLocaleTimeString();
+            var bodega = $("#combo_bodegas option:selected").text();
+            $a.attr("download", "Reporte Stock Critico Bodega " + bodega + ' ' + fechatotal + ' ' + time + ".xls");
+            $a[0].click();
+            $a.remove();
+
+
+        }
+    });
+}
+
+
+//crea reporte
+function reporte_bodega_max() {
+    var valorcombobodegas = document.getElementsByName("combo_bodegas")[0].value;
+
+    $.ajax({
+        url: "http://localhost/hospital/control_stock/reportebodegamaximo",
+        type: "POST",
+        data: { codigo: valorcombobodegas },
+        dataType: "json",
+        success: function(data) {
+            var $a = $("<a>");
+            $a.attr("href", data.file);
+            $("body").append($a);
+            var date = new Date();
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1));
+            var anio = date.getFullYear();
+            var fechatotal = dia + "/" + mes + "/" + anio;
+            var time = date.toLocaleTimeString();
+            var bodega = $("#combo_bodegas option:selected").text();
+            $a.attr("download", "Reporte Stock Maximo Bodega " + bodega + ' ' + fechatotal + ' ' + time + ".xls");
+            $a[0].click();
+            $a.remove();
+
+
+        }
+    });
 }

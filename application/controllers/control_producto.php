@@ -335,6 +335,8 @@ $i=3;
 	header("Cache-Control: max-age=0");
 	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
 	$writer->save("php://output");
+
 }
+
 } 
 

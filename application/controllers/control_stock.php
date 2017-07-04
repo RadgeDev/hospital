@@ -13,8 +13,8 @@ class Control_stock extends CI_Controller {
         }
 		$this->load->view('bodega/header');
 		$this->load->view("bodega/nav");
-		$datoscorrelativo['arrayCorrelativo'] = $this->Stock_model->get_correlativo();
-		$this->load->view("bodega/vista_stock/view_stock", $datoscorrelativo);
+		$datosdepto['arrayBodegas'] = $this->Stock_model->get_bodegas();
+		$this->load->view("bodega/vista_stock/view_stock",$datosdepto);
 		$this->load->view("bodega/vista_stock/footer2");
 	}
 
@@ -53,252 +53,16 @@ class Control_stock extends CI_Controller {
 		echo json_encode($data);
 	}
 
-function validar(){
-		if ($this->input->is_ajax_request()) {
-			$rutsele = $this->input->post("id");
-			if($this->Stock_model->validar($rutsele) == true)
-				echo "Rut existe";
-			else
-				echo "rut no existe";
-			
-		}
-		else
-		{
-			show_404();
-		}
-	}
-
-function obtenercorrelativo(){
-
-			if ($this->input->is_ajax_request()) {
-			$codsele = $this->input->post("cod");
-         $data = array(
-			"obtener" => $this->Stock_model->obtenercorrelativo($codsele)
-         	);
-            echo json_encode($data);
-		}
-	}
-	
-function guardar() {
-		//El metodo is_ajax_request() de la libreria input permite verificar
-		//si se esta accediendo mediante el metodo AJAX 
-		if ($this->input->is_ajax_request()) {
-
-			$codigo = $this->input->post("codigo");
-			$ultimocorrelativo = $this->input->post("ultimocorrelativo");
-			$codbarra = $this->input->post("codigobarra");
-			$codbodega = $this->input->post("combocorrelativo");
-			$nombre = $this->input->post("nombre");
-			$cantidad = $this->input->post("cantidad");
-			$precio = $this->input->post("precio");
-            $unidad = $this->input->post("seleccion");
-            $stockcri = $this->input->post("stockcri");
-            $stockmin = $this->input->post("stockmin");
-            $stockmax = $this->input->post("stockmax");
-
-            $this->form_validation->set_rules('codigo','Codigo','required|min_length[1]|max_length[10]');
-			$this->form_validation->set_rules('codigobarra','Codigo Barra','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('combocorrelativo','Correlativo','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('nombre','Nombre','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('cantidad','Cantidad','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('precio','Precio','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('seleccion','Unidad','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('stockcri','Stock Critico','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('stockmin','Stock Minimo','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('stockmax','Stock Maximo','required|min_length[1]|max_length[50]|numeric');
-
-       if ($this->form_validation->run() === TRUE) {
-   			$datos = array(
-				"cod_interno_prod" => $codigo,
-				"codigo_barra" => $codbarra,
-				"cod_bodega" => $codbodega,
-				"nombre" => $nombre,
-				"cantidad" => $cantidad,
-				"precio" => $precio,
-				"unidad_medida" => $unidad,
-				"stock_critico" => $stockcri,
-				"stock_minimo" => $stockmin,
-				"stock_maximo" => $stockmax
-				);
-   			$datosactualizar = array(
-				"ultimo_codigo" => $ultimocorrelativo
-				
-				);
-		if($this->Stock_model->guardar($datos)==true){
-         $this->Stock_model->actualizarcorrelativo($codbodega,$datosactualizar);
-				echo "Registro Guardado";
-			}else{
-				echo "No se pudo guardar los datos";
-			}
-	}else
-	{
-				echo validation_errors('<li>','</li>');
-	}
-			
-		}
-		else
-		{
-			show_404();
-		}
-}
-
-function actualizar(){
-	
-		if ($this->input->is_ajax_request()) {
-			$codigo = $this->input->post("editcodigo");
-			$codbarra = $this->input->post("editcodigobarra");
-			$nombre = $this->input->post("editnombre");
-			$cantidad = $this->input->post("editcantidad");
-			$precio = $this->input->post("editprecio");
-            $unidad = $this->input->post("seleccion2");
-            $stockcri = $this->input->post("editstockcri");
-            $stockmin = $this->input->post("editstockmin");
-            $stockmax = $this->input->post("editstockmax");
-
-            $this->form_validation->set_rules('editcodigo','Codigo','required|min_length[1]|max_length[10]');
-			$this->form_validation->set_rules('editcodigobarra','Codigo Barra','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('editnombre','Nombre','required|min_length[3]|max_length[50]');
-			$this->form_validation->set_rules('editcantidad','Cantidad','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('editprecio','Precio','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('seleccion2','Unidad','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('editstockcri','Stock Critico','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('editstockmin','Stock Minimo','required|min_length[1]|max_length[50]|numeric');
-			$this->form_validation->set_rules('editstockmax','Stock Maximo','required|min_length[1]|max_length[50]|numeric');
-
-		if ($this->form_validation->run() === TRUE) {
-
-			$datos = array(
-				"codigo_barra" => $codbarra,
-				"nombre" => $nombre,
-				"cantidad" => $cantidad,
-				"precio" => $precio,
-				"unidad_medida" => $unidad,
-				"stock_critico" => $stockcri,
-				"stock_minimo" => $stockmin,
-				"stock_maximo" => $stockmax
-				);
-
-	if($this->Stock_model->actualizar($codigo,$datos)==true)
-				echo "Registro Guardado";
-			else
-				echo "No se pudo guardar los datos";
-	}else
-	{
-				echo validation_errors('<li>','</li>');
-	}
-			
-		}
-		else
-		{
-			show_404();
-		}
-}
-
-function editando() {
-
-		if ($this->input->is_ajax_request()) {
-			$codselec = $this->input->post("id");
-         $data = array(
-			"obtener" => $this->Stock_model->editando($codselec)
-         	);
-            echo json_encode($data);
-		}
-
-     
-			
-	}
 
 
-function eliminar() {
-		if ($this->input->is_ajax_request()) {
-
-			$mipost = $this->input->post("micodigo");
-
-			if($this->Stock_model->eliminar($mipost) == true)
-				echo "Registro Eliminado";
-			else
-				echo "No se pudo eliminar los datos";
-			
-		}
-		else
-		{
-			show_404();
-		}
-	}
-
-function excel()
+function excelstockcritico()
 {
 $this->phpexcel->getProperties()
             ->setTitle('Excel')
-			->setDescription('Productos');
-		     $data = json_decode($this->input->post('sendData'));
+			->setDescription('Stock');
+			$datos= $this->Stock_model->get_stockcritico();
 			$sheet=$this->phpexcel->getActiveSheet();
-			$sheet->setTitle('titulto del reporte');
-			$style = array(
-                         'alignment' => array(
-                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
-                           )
-                          );
-
-             $sheet->getDefaultStyle()->applyFromArray($style);
-			//generrar filas
-			    $sheet->getColumnDimension('A')->setWidth(30);
-			    $sheet->getColumnDimension('B')->setWidth(30);
-			    $sheet->getColumnDimension('C')->setWidth(50);
-			    $sheet->getColumnDimension('D')->setWidth(20);
-			    $sheet->getColumnDimension('E')->setWidth(20);
-				$sheet->getColumnDimension('F')->setWidth(20);
-			    $sheet->getColumnDimension('G')->setWidth(30);
-			    $sheet->setCellValue('A1','CODIGO INTERNO');
-				$sheet->setCellValue('B1','CODIGO BARRA');
-				$sheet->setCellValue('C1','NOMBRE PRODUCTO');
-				$sheet->setCellValue('D1','CANTIDAD');
-				$sheet->setCellValue('E1','PRECIO');
-				$sheet->setCellValue('F1','CODIGO BODEGA');
-				$sheet->setCellValue('G1','UNIDAD DE MEDIDA');
-//recorrer datos
-$i=3;
-
- foreach ($data->datos as $d){
-                $sheet->setCellValue('A'.$i,$d->cod_interno_prod);
-				$sheet->setCellValue('B'.$i,$d->codigo_barra);
-			    $sheet->setCellValue('C'.$i,$d->nombre);
-				$sheet->setCellValue('D'.$i,$d->cantidad);
-				$sheet->setCellValue('E'.$i,$d->precio);
-				$sheet->setCellValue('F'.$i,$d->cod_bodega);
-				$sheet->setCellValue('G'.$i,$d->unidad_medida);
-                $i++;
- }
-	
- 
-
-	//generar renderizacion
-	header("Content-Type: application/vnd.ms-excel");
-	$nombre="Reporte Productos ".date("Y-m-d H:i:s");
-	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
-	header("Cache-Control: max-age=0");
-	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
-	ob_start();
-	$writer->save("php://output");
-   $xlsData = ob_get_contents();
-   ob_end_clean();
-    $response =  array(
-        'op' => 'ok',
-        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
-    );
-
-die(json_encode($response));
- 
-}
-
-function exceltodo()
-{
-$this->phpexcel->getProperties()
-            ->setTitle('Excel')
-			->setDescription('Productos');
-			$datos= $this->Stock_model->get_productos();
-			$sheet=$this->phpexcel->getActiveSheet();
-			$sheet->setTitle('titulto del reporte');
+			$sheet->setTitle('Stock Critico');
 			$style = array(
                          'alignment' => array(
                           'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
@@ -309,34 +73,338 @@ $this->phpexcel->getProperties()
 			//generrar filas
 			    $sheet->getColumnDimension('A')->setWidth(30);
 			    $sheet->getColumnDimension('B')->setWidth(30);
-			    $sheet->getColumnDimension('C')->setWidth(50);
-			    $sheet->getColumnDimension('D')->setWidth(20);
-			    $sheet->getColumnDimension('E')->setWidth(20);
-			    $sheet->setCellValue('A1','CODIGO INTERNO');
+			    $sheet->getColumnDimension('C')->setWidth(30);
+			    $sheet->getColumnDimension('D')->setWidth(50);
+			    $sheet->getColumnDimension('E')->setWidth(30);
+			    $sheet->getColumnDimension('F')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO PROD');
 				$sheet->setCellValue('B1','CODIGO BARRA');
-				$sheet->setCellValue('C1','NOMBRE PRODUCTO');
-				$sheet->setCellValue('D1','CANTIDAD');
-				$sheet->setCellValue('E1','PRECIO');
+				$sheet->setCellValue('C1','CODIGO BODEGA');
+				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('E1','CANTIDAD');
+				$sheet->setCellValue('F1','STOCK CRITICO');
+	
 //recorrer datos
 $i=3;
  foreach ($datos as $dato){
                 $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
 				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
-			    $sheet->setCellValue('C'.$i,$dato->nombre);
-				$sheet->setCellValue('D'.$i,$dato->cantidad);
-				$sheet->setCellValue('E'.$i,$dato->precio);
+				$sheet->setCellValue('C'.$i,$dato->codigo_bodega);
+			    $sheet->setCellValue('D'.$i,$dato->nombre);
+				$sheet->setCellValue('E'.$i,$dato->cantidad);
+				$sheet->setCellValue('F'.$i,$dato->stock_critico);
                 $i++;
  }
-	
- 
-
 	//generar renderizacion
 	header("Content-Type: application/vnd.ms-excel");
-	$nombre="Reporte".date("Y-m-d H:i:s");
+	$nombre="Reporte Critico ".date("Y-m-d H:i:s");
 	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
 	header("Cache-Control: max-age=0");
 	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
 	$writer->save("php://output");
+}
+
+function excelstockminimo()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Stock Minimo')
+			->setDescription('Stock');
+			$datos= $this->Stock_model->get_stockminimo();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Stock Minimo');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(30);
+			    $sheet->getColumnDimension('D')->setWidth(50);
+			    $sheet->getColumnDimension('E')->setWidth(30);
+			    $sheet->getColumnDimension('F')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO PROD');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','CODIGO BODEGA');
+				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('E1','CANTIDAD');
+				$sheet->setCellValue('F1','STOCK MINIMO');
+	
+//recorrer datos
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
+				$sheet->setCellValue('C'.$i,$dato->codigo_bodega);
+			    $sheet->setCellValue('D'.$i,$dato->nombre);
+				$sheet->setCellValue('E'.$i,$dato->cantidad);
+				$sheet->setCellValue('F'.$i,$dato->stock_minimo);
+                $i++;
+ }
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Minimo ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	$writer->save("php://output");
+}
+
+
+function excelstockmaximo()
+{
+$this->phpexcel->getProperties()
+            ->setTitle('Stock Maximo')
+			->setDescription('Stock Maximo');
+			$datos= $this->Stock_model->get_stockmaximo();
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Stock Maximo');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(30);
+			    $sheet->getColumnDimension('D')->setWidth(50);
+			    $sheet->getColumnDimension('E')->setWidth(30);
+			    $sheet->getColumnDimension('F')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO PROD');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','CODIGO BODEGA');
+				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('E1','CANTIDAD');
+				$sheet->setCellValue('F1','STOCK Maximo');
+	
+//recorrer datos
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
+				$sheet->setCellValue('C'.$i,$dato->codigo_bodega);
+			    $sheet->setCellValue('D'.$i,$dato->nombre);
+				$sheet->setCellValue('E'.$i,$dato->cantidad);
+				$sheet->setCellValue('F'.$i,$dato->stock_maximo);
+                $i++;
+ }
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Maximo ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	$writer->save("php://output");
+}
+
+
+function reportebodegaminimo(){    
+	$finalnombre="";
+	   	if ($this->input->is_ajax_request()) {
+			$codselec = $this->input->post("codigo");
+           $this->phpexcel->getProperties()
+            ->setTitle('Stock Minimo')
+			->setDescription('Stock minimo');
+			$datos= $this->Stock_model->get_stockbodegamin($codselec);
+			$nombrebodega=$this->Stock_model->get_nombrebodega($codselec);
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Stock minimo');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(30);
+			    $sheet->getColumnDimension('D')->setWidth(50);
+			    $sheet->getColumnDimension('E')->setWidth(30);
+			    $sheet->getColumnDimension('F')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO PROD');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','BODEGA');
+				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('E1','CANTIDAD');
+				$sheet->setCellValue('F1','STOCK MINIMO');
+	
+//recorrer datos
+foreach ($nombrebodega as $minombre){
+	$finalnombre=$minombre->nombre;
+}
+
+
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
+				$sheet->setCellValue('C'.$i,$finalnombre);
+			    $sheet->setCellValue('D'.$i,$dato->nombre);
+				$sheet->setCellValue('E'.$i,$dato->cantidad);
+				$sheet->setCellValue('F'.$i,$dato->stock_minimo);
+                $i++;
+ }
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Minimo ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+    $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+    die(json_encode($response));
+}
+
+}
+
+function reportebodegacritico()
+{    
+	$finalnombre="";
+	   	if ($this->input->is_ajax_request()) {
+			$codselec = $this->input->post("codigo");
+           $this->phpexcel->getProperties()
+            ->setTitle('Stock critico')
+			->setDescription('Stock critico');
+			$datos= $this->Stock_model->get_stockbodegacri($codselec);
+			$nombrebodega=$this->Stock_model->get_nombrebodega($codselec);
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Stock minimo');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(30);
+			    $sheet->getColumnDimension('D')->setWidth(50);
+			    $sheet->getColumnDimension('E')->setWidth(30);
+			    $sheet->getColumnDimension('F')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO PROD');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','BODEGA');
+				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('E1','CANTIDAD');
+				$sheet->setCellValue('F1','STOCK CRITICO');
+	
+//recorrer datos
+foreach ($nombrebodega as $minombre){
+	$finalnombre=$minombre->nombre;
+}
+
+
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
+				$sheet->setCellValue('C'.$i,$finalnombre);
+			    $sheet->setCellValue('D'.$i,$dato->nombre);
+				$sheet->setCellValue('E'.$i,$dato->cantidad);
+				$sheet->setCellValue('F'.$i,$dato->stock_critico);
+                $i++;
+ }
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Critico ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+    $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+    die(json_encode($response));
+}
+
+}
+
+function reportebodegamaximo()
+{    
+	$finalnombre="";
+	   	if ($this->input->is_ajax_request()) {
+			$codselec = $this->input->post("codigo");
+           $this->phpexcel->getProperties()
+            ->setTitle('Stock maximo')
+			->setDescription('Stock maximo');
+			$datos= $this->Stock_model->get_stockbodegamax($codselec);
+			$nombrebodega=$this->Stock_model->get_nombrebodega($codselec);
+			$sheet=$this->phpexcel->getActiveSheet();
+			$sheet->setTitle('Stock maximo');
+			$style = array(
+                         'alignment' => array(
+                          'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+                           )
+                          );
+ 
+             $sheet->getDefaultStyle()->applyFromArray($style);
+			//generrar filas
+			    $sheet->getColumnDimension('A')->setWidth(30);
+			    $sheet->getColumnDimension('B')->setWidth(30);
+			    $sheet->getColumnDimension('C')->setWidth(30);
+			    $sheet->getColumnDimension('D')->setWidth(50);
+			    $sheet->getColumnDimension('E')->setWidth(30);
+			    $sheet->getColumnDimension('F')->setWidth(30);
+			    $sheet->setCellValue('A1','CODIGO PROD');
+				$sheet->setCellValue('B1','CODIGO BARRA');
+				$sheet->setCellValue('C1','BODEGA');
+				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
+				$sheet->setCellValue('E1','CANTIDAD');
+				$sheet->setCellValue('F1','STOCK MAXIMO');
+	
+//recorrer datos
+foreach ($nombrebodega as $minombre){
+	$finalnombre=$minombre->nombre;
+}
+
+
+$i=3;
+ foreach ($datos as $dato){
+                $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
+				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
+				$sheet->setCellValue('C'.$i,$finalnombre);
+			    $sheet->setCellValue('D'.$i,$dato->nombre);
+				$sheet->setCellValue('E'.$i,$dato->cantidad);
+				$sheet->setCellValue('F'.$i,$dato->stock_maximo);
+                $i++;
+ }
+	//generar renderizacion
+	header("Content-Type: application/vnd.ms-excel");
+	$nombre="Reporte Maximo ".date("Y-m-d H:i:s");
+	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
+	header("Cache-Control: max-age=0");
+	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");
+	ob_start();
+	$writer->save("php://output");
+    $xlsData = ob_get_contents();
+   ob_end_clean();
+    $response =  array(
+        'op' => 'ok',
+        'file' => "data:application/vnd.ms-excel;base64,".base64_encode($xlsData)
+    );
+    die(json_encode($response));
+}
+
 }
 } 
 
