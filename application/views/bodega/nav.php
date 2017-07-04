@@ -172,7 +172,7 @@
                         <ul id="demon" class="collapse">
                 
                              <li>
-                                <a href="<?= base_url('control_producto') ?>">Productos</a>
+                                <a href="<?= base_url('control_lote') ?>">Lotes</a>
                             </li>
 
                             <li>

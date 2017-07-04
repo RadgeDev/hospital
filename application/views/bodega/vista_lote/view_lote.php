@@ -3,7 +3,7 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                  Stock Inventario
+            Lotes Inventario
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -33,7 +33,7 @@
          <div class="panel panel-primary">
         <div class="panel-heading clearfix">
           <i class="icon-calendar"></i>
-          <h3 class="panel-title">Encabezado de Stock</h3>
+          <h3 class="panel-title">Encabezado de lotes</h3>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -52,10 +52,10 @@
             <label>Buscar por:</label>
         <select name="buscando" id ="buscando" class="form-control" >
         <option value="nombre">Nombre</option>
-        <option value="cod_interno_prod">Codigo Interno</option>
-        <option value="codigo_barra">Codigo de barra </option>
-        <option value="cantidad">Cantidad</option>
-        <option value="precio">Precio</option>
+        <option value="cod_producto">Codigo Producto</option>
+        <option value="lote">Lote </option>
+        <option value="rut_proveedor">Rut Proveedor</option>
+        <option value="nombre_proveedor">Nombre Proveedor</option>
         </select>
             </div>
 
@@ -84,22 +84,28 @@
        <br>
             <br>
                 <br>
-      <div class="col-lg-4 col-sm-4">
-          <label>Eliga Bodega</label>
-               <select name='combo_bodegas' id ='combo_bodegas' style="width:400px;" class='form-control' >
-             <?php
-                    foreach ($arrayBodegas as $i => $cod_bodegas)
-                    echo '<option value="',$i,'">',$cod_bodegas,'</option>';
-                             ?>
-             </select >
-        
+      <div class="col-lg-3 col-sm-3">
+                <label>Fecha Inicio</label>
+    		     <div class='input-group date' >
+                    <input type='date' id='fechainicio' name="fechainicio"  class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
             </div>
-             <br>
-                <br>
-            <div class="col-lg-6 col-sm-6">
-            <a class='btn btn-danger' onclick="reporte_bodega_cri();"  type="button"  >Bodega Stock Critico.</a>
-            <button onclick="reporte_bodega_min();" class='btn btn-warning' type="button">Bodega Stock Minimo.</button>    
-            <a  class='btn btn-success' type="button" onclick="reporte_bodega_max();" >Bodega Stock Maximo.</a>
+
+            <div class="col-lg-3 col-sm-3">
+                <label>Fecha Termino</label>
+    		     <div class='input-group date' >
+                    <input type='date' id='fechafin' name="fechafin"  class="form-control" />
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+              <div class="col-lg-2 col-sm-2">
+                <label>Buscar</label>
+                  
+            <button type="button " onclick="entrefechas();" class="form-control btn btn-success"> Buscar por fechas   </button>
+       
             </div>
           </div>
             </div>
@@ -108,7 +114,7 @@
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>Stock de Productos</h4>
+            <h4>Lotes de Productos</h4>
           </div>
 
             
@@ -124,14 +130,15 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Codigo Interno </th>
-                  <th>Codigo Barra</th>
-                  <th>Codigo Bodega</th>
+                  <th>Codigo  </th>
+                  <th>Lote</th>
+                  <th>Codigo Producto</th>
                   <th>Nombre</th>
+                 <th>Vencimiento</th>
                   <th>Cantidad</th>
-                  <th>Stock Critico</th>
-                  <th>Stock Min.</th>
-                  <th>Stock Max</th>
+                  <th>Precio</th>
+                  <th>Nombre Prov.</th>
+                  <th>Estado</th>
                 </tr>
               </thead>
               <tbody>
