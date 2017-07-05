@@ -3,14 +3,14 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-            Lotes Inventario
+           Bincard Inventario
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= base_url('welcome') ?>">Inicio</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-edit"></i> Stock Inventario
+                                <i class="fa fa-edit"></i> Bincard Inventario
                             </li>
                         </ol>
                     </div>
@@ -33,28 +33,18 @@
          <div class="panel panel-primary">
         <div class="panel-heading clearfix">
           <i class="icon-calendar"></i>
-          <h3 class="panel-title">Encabezado de lotes</h3>
+          <h3 class="panel-title">Encabezado de Bincard</h3>
         </div>
         <div class="panel-body">
           <div class="row">
-            
-            <div class="col-lg-4 col-sm-4">
-            <label>Buscar por:</label>
-        <select name="buscando" id ="buscando" class="form-control" >
-        <option value="nombre">Nombre</option>
-        <option value="cod_producto">Codigo Producto</option>
-        <option value="lote">Lote </option>
-        <option value="rut_proveedor">Rut Proveedor</option>
-        <option value="nombre_proveedor">Nombre Proveedor</option>
-        </select>
-            </div>
-
+         
         <div class="col-lg-4 col-sm-4 ">
-        <label>Filtrar:</label>
+         <label>Buscar Articulos</label>
         <div class="form-group has-feedback has-feedback-left">
-      <input type="text" class="form-control" name="busqueda" id="busqueda" placeholder="Buscar algo" />
-       <i class="glyphicon glyphicon-search form-control-feedback"></i>
-      
+                 <input type="text" id="buscarproducto"  list="buscandoprod" class="form-control" placeholder="Buscar Producto"> <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                  <datalist id="buscandoprod">
+        
+                       </datalist>
         </div>
          </div>
     <br>
@@ -62,18 +52,7 @@
             <br>
                 <br>
              
-             <div class="col-md-2">
-        <a href="<?= base_url('control_lote/reportefechascritico') ?>" class='btn btn-danger' type="button"  >Exportar Vencer 15 dias.</a>
-      </div>
-   <div class="col-md-2">
-         <a href="<?= base_url('control_lote/reportefechasminimo') ?>" class='btn btn-warning' type="button"  >Exportar Vencer 30 dias.</a>
-    </div>
-      <div class="col-md-2">
-         <a href="<?= base_url('control_lote/reportefechasmaximo') ?>" class='btn btn-success' type="button"  >Exportar Vencer 60 dias.</a>
-    </div>
-       <br>
-            <br>
-                <br>
+   
       <div class="col-lg-3 col-sm-3">
                 <label>Fecha Inicio</label>
     		     <div class='input-group date' >
@@ -110,7 +89,7 @@
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>Lotes de Productos</h4>
+            <h4> Bincard</h4>
           </div>
 
             
@@ -126,15 +105,14 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Codigo  </th>
-                  <th>Lote</th>
-                  <th>Codigo Producto</th>
+                  <th>Bincard  </th>
+                  <th>Fecha</th>
+                  <th>Cod.Prod</th>
                   <th>Nombre</th>
-                 <th>Vencimiento</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
-                  <th>Nombre Prov.</th>
-                  <th>Estado</th>
+                  <th>Proveedor</th>
+                  <th>Ingreso</th>
+                  <th>Egreso</th>
+                  <th>Saldo</th>
                 </tr>
               </thead>
               <tbody>

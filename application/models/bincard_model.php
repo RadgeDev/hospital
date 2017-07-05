@@ -16,23 +16,26 @@ class Bincard_model extends CI_Model {
 		return $consulta->result();
 	}
 
-public function buscarfecha($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE)
+public function buscarfecha($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE,$micodproducto)
 	{
 	//aca quede
-        $this->db->from('lotes');
-        $this->db->where("fecha_vencimiento BETWEEN '$buscar' AND '$valorbuscar'");
+        $this->db->select('*');
+        $this->db->from('bincard');
+        $this->db->where("cod_producto",$micodproducto);
+        $this->db->where("fecha BETWEEN '$buscar' AND '$valorbuscar'");
         if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
 			$this->db->limit($cantidadregistro,$inicio);
 		}
-        
         $consulta = $this->db->get();
 		return $consulta->result();
 	}
 
-     public function get_fechasvencimiento($inicio,$fin){
+     public function get_fechasvencimiento($inicio,$fin,$codprod){
+      
         $this->db->select('*');
-        $this->db->from('lotes');
-        $this->db->where("fecha_vencimiento BETWEEN '$inicio' AND '$fin'");
+        $this->db->from('bincard');
+        $this->db->where("cod_producto",$codprod);
+        $this->db->where("fecha BETWEEN '$inicio' AND '$fin'");
         $consulta = $this->db->get();
 		return $consulta->result();
      }

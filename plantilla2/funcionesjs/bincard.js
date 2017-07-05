@@ -6,9 +6,9 @@ function main() {
     $.ajaxPrefilter(function(options, original_Options, jqXHR) {
         options.async = true;
     });
-    mostrarDatos("", 1, 10, "nombre");
-    $("#msg-error").hide();
 
+    $("#msg-error").hide();
+    mostrarProductos();
 
     $("input[name=busqueda]").keyup(function() {
         textobuscar = $(this).val();
@@ -40,7 +40,7 @@ function main() {
 function mostrarDatos(valorBuscar, pagina, cantidad, valorcombo) {
 
     $.ajax({
-        url: "http://localhost/hospital/control_lote/mostrar",
+        url: "http://localhost/hospital/control_bincard/mostrar",
         type: "POST",
         data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo },
         dataType: "json",
@@ -48,7 +48,7 @@ function mostrarDatos(valorBuscar, pagina, cantidad, valorcombo) {
 
             filas = "";
             $.each(response.obtener, function(key, item) {
-                filas += "<tr class='active' ><td >" + item.id + "</td><td>" + item.lote + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.fecha_vencimiento + "</td><td>" + item.cantidad + "</td><td>" + item.precio + "</td><td>" + item.nombre_proveedor + "</td><td>" + item.estado + "</td></tr>";
+                filas += "<tr class='active' ><td >" + item.id + "</td><td>" + item.fecha + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.proveedor + "</td><td>" + item.ingreso + "</td><td>" + item.egreso + "</td><td>" + item.saldo + "</td></tr>";
             });
 
             $("#tbproductos tbody").html(filas);
@@ -109,30 +109,34 @@ function mostrarDatos(valorBuscar, pagina, cantidad, valorcombo) {
 function entrefechas() {
     valorfecha = $("#fechainicio").val();
     valorfecha2 = $("#fechafin").val();
+    var correlativoprod = $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
     if (valorfecha == "") {
         swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
     } else if (valorfecha2 == "") {
+        swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+    } else if (correlativoprod == "") {
         swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
     } else {
         valoroption = $("#cantidadpag").val();
         valorfecha = $("#fechainicio").val();
         valorfecha2 = $("#fechafin").val();
-        mostrarfechas(valorfecha, 1, valoroption, valorfecha2);
+
+        mostrarfechas(valorfecha, 1, valoroption, valorfecha2, correlativoprod);
     }
 }
 
-function mostrarfechas(valorBuscar, pagina, cantidad, valorcombo) {
+function mostrarfechas(valorBuscar, pagina, cantidad, valorcombo, micodigoprod) {
 
     $.ajax({
-        url: "http://localhost/hospital/control_lote/mostrarfecha",
+        url: "http://localhost/hospital/control_bincard/mostrarfecha",
         type: "POST",
-        data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo },
+        data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo, codigoprod: micodigoprod },
         dataType: "json",
         success: function(response) {
 
             filas = "";
             $.each(response.obtener, function(key, item) {
-                filas += "<tr class='active' ><td >" + item.id + "</td><td>" + item.lote + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.fecha_vencimiento + "</td><td>" + item.cantidad + "</td><td>" + item.precio + "</td><td>" + item.nombre_proveedor + "</td><td>" + item.estado + "</td></tr>";
+                filas += "<tr class='active' ><td >" + item.idbincard + "</td><td>" + item.fecha + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.proveedor + "</td><td>" + item.entrada + "</td><td>" + item.salida + "</td><td>" + item.saldo + "</td></tr>";
             });
 
             $("#tbproductos tbody").html(filas);
@@ -190,10 +194,33 @@ function mostrarfechas(valorBuscar, pagina, cantidad, valorcombo) {
     });
 }
 
+
+
+function mostrarProductos() {
+
+    $.ajax({
+        url: "http://localhost/hospital/control_compra_ingreso/devolverproductos",
+        type: "POST",
+        dataType: "json",
+        success: function(response) {
+
+            filas = "";
+            $.each(response.misproductos, function(key, item) {
+                filas += '<option id="' + item.codigo_barra + '" data-codigo="' + item.cod_interno_prod + '" value="' + item.nombre + '" />' + item.codigo_barra + '';
+            });
+
+            var my_list = document.getElementById("buscandoprod");
+            my_list.innerHTML = filas;
+        }
+    });
+
+}
+
+
 function mostrarDatos2(valorBuscar, pagina, cantidad, valorcombo) {
     $("#tbproductos tbody").html("");
     $.ajax({
-        url: "http://localhost/hospital/control_lote/mostrar2",
+        url: "http://localhost/hospital/control_bincard/mostrar2",
         type: "POST",
         data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo },
         dataType: "json",
@@ -356,7 +383,7 @@ function exportarexcel() {
         //var miJSON = JSON.encode(obj);
         //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
     })
-    var url = "http://localhost/hospital/control_lote/excel"
+    var url = "http://localhost/hospital/control_bincard/excel"
     $.post(url, { sendData: JSON.stringify(obj) }, function(data) {
         var $a = $("<a>");
         $a.attr("href", data.file);
@@ -380,15 +407,16 @@ function exportarexcel() {
 function reporte_bodega_fechas() {
     valorfecha = $("#fechainicio").val();
     valorfecha2 = $("#fechafin").val();
+    var correlativoprod = $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
     if (valorfecha == "") {
         swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
     } else if (valorfecha2 == "") {
         swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
     } else {
         $.ajax({
-            url: "http://localhost/hospital/control_lote/reportefechas",
+            url: "http://localhost/hospital/control_bincard/reportefechas",
             type: "POST",
-            data: { fechainicio: valorfecha, fechafin: valorfecha2 },
+            data: { fechainicio: valorfecha, fechafin: valorfecha2, codproducto: correlativoprod },
             dataType: "json",
             success: function(data) {
                 var $a = $("<a>");
@@ -400,7 +428,7 @@ function reporte_bodega_fechas() {
                 var anio = date.getFullYear();
                 var fechatotal = dia + "/" + mes + "/" + anio;
                 var time = date.toLocaleTimeString();
-                $a.attr("download", "Reporte Vencimiento  Bodega " + fechatotal + ' ' + time + ".xls");
+                $a.attr("download", "Reporte Bincard  Bodega " + fechatotal + ' ' + time + ".xls");
                 $a[0].click();
                 $a.remove();
 
