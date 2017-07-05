@@ -153,11 +153,23 @@ function get_tipocompra(){
 function get_proveedor(){
 
     // armamos la consulta
+
     $query = $this->db-> query('SELECT rut_proveedor,nombre_proveedor FROM proveedor');
 
    return $query->result();
 
    
+     }
+	 function get_nombreproveedor($codselec){
+
+    // armamos la consulta
+	$this->db->select("nombre_proveedor");
+	$this->db->from("lotes");
+	$this->db->where('lote',$codselec);
+	$q= $this->db->get();
+	return $q->result();
+
+
      }
 
 function get_productos()

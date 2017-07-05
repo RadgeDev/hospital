@@ -254,7 +254,8 @@ function guardardetalle() {
 		    $stockactualote=0;
 			$totalcantidadlote=0;
             $obtenerstocklote= $this->Salida_model->get_cantidadlotes($milote,$micodigo);
-	        foreach( $obtenerstocklote  as $r){
+	        
+			foreach( $obtenerstocklote  as $r){
             $stockactualote = $r->cantidad;
             } 
 			
@@ -262,16 +263,23 @@ function guardardetalle() {
             $datosactualizarlote = array(
 				"cantidad" =>$totalcantidadlote
 			);	
+			$minombreproveedor="";
+            $mislotes= $d->lote;
+            $nombreproveedor= $this->Salida_model->get_nombreproveedor($mislotes);
+	        foreach( $nombreproveedor  as $r){
+            $minombreproveedor = $r->nombre_proveedor;
+            }
+
 
 			$fecha2= $d->fecha;
 			$fechaactu= date('Y-m-d', strtotime($fecha2));
 		
-	$datosbincard = array(
+	            $datosbincard = array(
                 "cod_producto" => $d->codinterno,
 				"nombre"  => $d->nombre,
 				"cod_depto" =>$d->cod_depto,
 				"seccion" =>$d->nom_depto,
-				"proveedor"=> "salida",
+				"proveedor"=>$minombreproveedor,
 				"entrada"=> "0",
 			    "salida" =>$mientrega,
 				"saldo" =>$totalcantidad,
@@ -279,12 +287,13 @@ function guardardetalle() {
                 "cod_compra"=> "0",
                 "cod_salida" =>$d->nsalida
                  );	
-				  //Call the save method
-    $this->Compra_ingreso_model->guardarbincard($datosbincard);   
-           //Call the save method
+
+			//Call the save method
+            $this->Compra_ingreso_model->guardarbincard($datosbincard);   
+            //Call the save method
 		   	$this->Salida_model->actualizarlotes($milote,$micodigo,$datosactualizarlote);
-           $this->Salida_model->guardardetalle($detalle_salida);
-		   $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
+            $this->Salida_model->guardardetalle($detalle_salida);
+		    $this->Compra_ingreso_model->actualizarproducto($micodigo,$datosactualizar);
 		  	$this->Salida_model->desactivarlote();
 		  
     }
@@ -343,13 +352,18 @@ function guardardetalledirecto() {
 			);	
 		$fecha2= $d->fecha;
 			$fechaactu= date('Y-m-d', strtotime($fecha2));
-
+            $minombreproveedor="";
+            $mislotes= $d->lote;
+            $nombreproveedor= $this->Salida_model->get_nombreproveedor($mislotes);
+	        foreach( $nombreproveedor  as $r){
+            $minombreproveedor = $r->nombre_proveedor;
+            }
 	$datosbincard = array(
                 "cod_producto" => $d->codinterno,
 				"nombre"  => $d->nombre,
 				"cod_depto" =>"0",
 				"seccion" =>$d->salida_nombre,
-				"proveedor"=> $d->salida_nombre,
+				"proveedor"=>$minombreproveedor,
 				"entrada"=> "0",
 			    "salida" =>$mientrega,
 				"saldo" =>$totalcantidad,

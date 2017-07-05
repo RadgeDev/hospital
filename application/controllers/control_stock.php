@@ -156,7 +156,7 @@ $i=3;
 
 function excelstockmaximo()
 {
-$this->phpexcel->getProperties()
+            $this->phpexcel->getProperties()
             ->setTitle('Stock Maximo')
 			->setDescription('Stock Maximo');
 			$datos= $this->Stock_model->get_stockmaximo();

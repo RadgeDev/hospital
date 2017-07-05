@@ -176,7 +176,7 @@
                             </li>
 
                             <li>
-                                <a href="<?= base_url('control_proveedor') ?>">Proveedor</a>
+                                <a href="<?= base_url('control_bincard') ?>">Bincard</a>
                             </li>
                              <li>
                                 <a href="<?= base_url('control_depto') ?>">Departamento</a>
