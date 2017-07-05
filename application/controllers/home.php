@@ -30,6 +30,7 @@ if(!$this->session->userdata("minombre")){
       $data = [
         "mirut" => $resp->rut,
         "minombre" => $resp->nombre,
+        "usuario" => $resp->tipo_usuario,
         "login" => TRUE
       ];
 print_r($data);

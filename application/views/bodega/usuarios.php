@@ -16,25 +16,25 @@
                             </li>
                         </ol>
                     </div>
-                </div>
+              
         
-                    <div class="col-lg-12">
+             
                 
                         <h2>Datos de los usuarios</h2>
-                <div class="form-group">
-                     <div class=" col-sm-3">
+          
+                     <div class=" col-lg-3 col-sm-3">
                 
                                 <select name="buscando" id ="buscando" class="form-control">
                                     <option value="rut">Rut</option>
-                                    <option value="nombre">Nombre</option>
+                                    <optiocol-lg-12 col-sm-12n value="nombre">Nombre</option>
                                     <option value="login">Login</option>
                                     <option value="tipo_usuario">Tipo Usuario</option>
                                 </select>
                     
                             </div>
-                            <div class=" col-sm-3">   <input  class="form-control" id="buscar" style="width: 400px" placeholder="Ingrese datos para buscar">   </div>
+                            <div class=" col-lg-3 col-sm-3">   <input  class="form-control" id="buscar" style="width: 400px" placeholder="Ingrese datos para buscar">   </div>
               
-                   <div class="col-sm-4"> <button type="button" class="btn btn-search btn-info">
+                   <div class="col-lg-4 col-sm-4"> <button type="button" class="btn btn-search btn-info">
                             <span class="glyphicon glyphicon-search"></span>
                             <span class="label-icon">Buscar</span>
                         </button>   <button type="button" id="btnbuscar"  class="btn btn-primary">Mostrar Todos</button>    <button type="button" href='#' class='btn btn-success' data-toggle='modal' data-target='#myModalHorizontal'>Agregar Nuevo Usuario</button>  </div>
