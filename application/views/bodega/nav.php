@@ -179,20 +179,18 @@
                                 <a href="<?= base_url('control_bincard') ?>">Bincard</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_depto') ?>">Departamento</a>
+                                <a href="<?= base_url('control_historial_ingreso') ?>">Historial Ingreso</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_bodega') ?>">Seccion Bodega</a>
+                                <a href="<?= base_url('control_historial_egreso') ?>">Historial Egreso</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_tipo_compra') ?>">Tipo Compra</a>
+                                <a href="<?= base_url('control_historial_pedido') ?>">Historial Pedido</a>
                             </li>
                               <li>
-                                <a href="<?= base_url('control_tipo_ingreso') ?>">Tipo Ingreso</a>
+                                <a href="<?= base_url('control_historial_directo') ?>">Historial Compra Directa</a>
                             </li>
-                             <li>
-                                <a href="<?= base_url('man_usuarios') ?>">Usuarios</a>
-                            </li>
+                    
                         </ul>
                     </li>
                     <li>
