@@ -107,22 +107,50 @@ function mostrarDatos(valorBuscar, pagina, cantidad, valorcombo) {
 }
 
 function entrefechas() {
+
+    var text2 = document.getElementById("buscarproducto"),
+        element2 = document.getElementById("buscandoprod");
+    var comprobar2 = ""
     valorfecha = $("#fechainicio").val();
     valorfecha2 = $("#fechafin").val();
     var correlativoprod = $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
-    if (valorfecha == "") {
-        swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
-    } else if (valorfecha2 == "") {
-        swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
-    } else if (correlativoprod == "") {
-        swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
-    } else {
-        valoroption = $("#cantidadpag").val();
-        valorfecha = $("#fechainicio").val();
-        valorfecha2 = $("#fechafin").val();
 
-        mostrarfechas(valorfecha, 1, valoroption, valorfecha2, correlativoprod);
+    if (element2.querySelector("option[value='" + text2.value + "']")) {
+        comprobar2 = "bien";
+    } else {
+        comprobar2 = "mal";
     }
+
+
+    if (comprobar2 === "bien") {
+        if (valorfecha == "") {
+            swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
+        } else if (valorfecha2 == "") {
+            swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+        } else {
+
+
+            if (valorfecha == "") {
+                swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
+            } else if (valorfecha2 == "") {
+                swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+            } else if (correlativoprod == "") {
+                swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+            } else {
+                valoroption = $("#cantidadpag").val();
+                valorfecha = $("#fechainicio").val();
+                valorfecha2 = $("#fechafin").val();
+
+                mostrarfechas(valorfecha, 1, valoroption, valorfecha2, correlativoprod);
+            }
+        }
+    } else {
+        swal("Algo fallo!", "Producto invalido.", "error");
+
+    }
+
+
+
 }
 
 function mostrarfechas(valorBuscar, pagina, cantidad, valorcombo, micodigoprod) {
@@ -408,32 +436,53 @@ function reporte_bodega_fechas() {
     valorfecha = $("#fechainicio").val();
     valorfecha2 = $("#fechafin").val();
     var correlativoprod = $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
-    if (valorfecha == "") {
-        swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
-    } else if (valorfecha2 == "") {
-        swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+
+    var text2 = document.getElementById("buscarproducto"),
+        element2 = document.getElementById("buscandoprod");
+    var comprobar2 = ""
+
+
+    if (element2.querySelector("option[value='" + text2.value + "']")) {
+        comprobar2 = "bien";
     } else {
-        $.ajax({
-            url: "http://localhost/hospital/control_bincard/reportefechas",
-            type: "POST",
-            data: { fechainicio: valorfecha, fechafin: valorfecha2, codproducto: correlativoprod },
-            dataType: "json",
-            success: function(data) {
-                var $a = $("<a>");
-                $a.attr("href", data.file);
-                $("body").append($a);
-                var date = new Date();
-                var dia = date.getDate();
-                var mes = ("0" + (date.getMonth() + 1));
-                var anio = date.getFullYear();
-                var fechatotal = dia + "/" + mes + "/" + anio;
-                var time = date.toLocaleTimeString();
-                $a.attr("download", "Reporte Bincard  Bodega " + fechatotal + ' ' + time + ".xls");
-                $a[0].click();
-                $a.remove();
-
-
-            }
-        });
+        comprobar2 = "mal";
     }
+
+
+    if (comprobar2 === "bien") {
+        if (valorfecha == "") {
+            swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
+        } else if (valorfecha2 == "") {
+            swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+        } else {
+            $.ajax({
+                url: "http://localhost/hospital/control_bincard/reportefechas",
+                type: "POST",
+                data: { fechainicio: valorfecha, fechafin: valorfecha2, codproducto: correlativoprod },
+                dataType: "json",
+                success: function(data) {
+                    var $a = $("<a>");
+                    $a.attr("href", data.file);
+                    $("body").append($a);
+                    var date = new Date();
+                    var dia = date.getDate();
+                    var mes = ("0" + (date.getMonth() + 1));
+                    var anio = date.getFullYear();
+                    var fechatotal = dia + "/" + mes + "/" + anio;
+                    var time = date.toLocaleTimeString();
+                    $a.attr("download", "Reporte Bincard  Bodega " + fechatotal + ' ' + time + ".xls");
+                    $a[0].click();
+                    $a.remove();
+
+
+                }
+            });
+        }
+    } else {
+        swal("Algo fallo!", "Producto invalido.", "error");
+
+    }
+
+
+
 }
