@@ -8,6 +8,7 @@
 
     <!-- Morris Charts JavaScript -->
     <script src="<?= base_url()?>plantilla2/js/plugins/morris/raphael.min.js"></script>
+    <script src="<?= base_url()?>plantilla2/funcionesjs/welcome.js"></script>
 
 
 

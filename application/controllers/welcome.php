@@ -24,11 +24,29 @@ if(!$this->session->userdata("minombre")){
 }
         $this->load->view('bodega/header');
         $this->load->view($tiponav);
-        $this->load->view('bodega/body');
+        $this->load->model('Stock_model');
+        $datostockcritico = array(
+			"totalregistros"=> count($this->Stock_model->get_stockcritico()),	
+                  "totalcompra"=> count($this->Stock_model->get_totalcompra()),
+                  "stockmaximo"=> count($this->Stock_model->get_stockmaximo()),
+                  "totalsalida"=> count($this->Stock_model->get_totalsalidas())	
+		);
+        $this->load->view('bodega/body',array_merge($datostockcritico));
         $this->load->view('bodega/footer');
 }
 		
    
 	}
+
+
+function get_totalcompralimit(){
+     $this->load->model('Stock_model');
+	$data = array(
+			"obtener" => $this->Stock_model->get_totalcompralimit()
+		);
+
+}
+
+
 
 }

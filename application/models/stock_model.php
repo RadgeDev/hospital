@@ -84,6 +84,33 @@ function get_productos()
 
    
      }
+
+     
+function get_totalcompra()
+{
+// armamos la consulta
+    $query = $this->db-> query('SELECT * FROM compra');
+   return $query->result();
+
+    }
+     
+function get_totalcompralimit()
+{
+// armamos la consulta
+$limit="8";
+    $query = $this->db-> query('SELECT * FROM compra DESC LIMIT 8');
+   return $query->result();
+
+}
+function get_totalsalidas()
+{
+// armamos la consulta
+  $query = $this->db-> query('SELECT * FROM salidas');
+   return $query->result();
+   
+    }
+
+
 function get_stockminimo()
 {
     // armamos la consulta
