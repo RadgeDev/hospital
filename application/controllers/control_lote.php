@@ -8,15 +8,38 @@ class Control_lote extends CI_Controller {
 	}
 
 	public function index(){
-		if(!$this->session->userdata("minombre")){
-        redirect(base_url('home'));
-        }
+	if(!$this->session->userdata("minombre")){
+    redirect(base_url('home'));
+   
+    }else{
+	$tiponav="";
+    $tipobody="";
+	$misesion=$this->session->userdata("usuario");
+
+ switch ($misesion) {
+   case "Administrador":
+         $tiponav= 'bodega/nav'; 
+         $tipobody='bodega/vista_lote/view_lote';
+         break;
+   case "Bodeguero":
+         $tiponav="bodega/nav_bodega";
+         $tipobody='bodega/vista_lote/view_lote';
+         break;
+   case "Invitado":
+         $tiponav="bodega/nav_invitado";
+         $tipobody='bodega/vista_acerca/view_acerca';
+         break;
+   default:
+        $tiponav="bodega/nav_invitado";
+        $tipobody='bodega/vista_acerca/view_acerca';
+}
 		$this->load->view('bodega/header');
-		$this->load->view("bodega/nav");
+		$this->load->view( $tiponav);
 		$datosdepto['arrayBodegas'] = $this->Lote_model->get_bodegas();
-		$this->load->view("bodega/vista_lote/view_lote",$datosdepto);
+		$this->load->view( $tipobody,$datosdepto);
 		$this->load->view("bodega/vista_lote/footer2");
 	}
+}
 
 	public function mostrar()
 	{	

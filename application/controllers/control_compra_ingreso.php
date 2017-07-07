@@ -9,19 +9,41 @@ class Control_compra_ingreso extends CI_Controller {
 	}
 
 	public function index(){
-		if(!$this->session->userdata("minombre")){
-          redirect(base_url('home'));
-        }
+	if(!$this->session->userdata("minombre")){
+    redirect(base_url('home'));
+   
+    }else{
+	$tiponav="";
+    $tipobody="";
+	$misesion=$this->session->userdata("usuario");
+
+ switch ($misesion) {
+   case "Administrador":
+         $tiponav= 'bodega/nav'; 
+         $tipobody='bodega/vista_compra/view_ingreso_compra';
+         break;
+   case "Bodeguero":
+         $tiponav="bodega/nav_bodega";
+         $tipobody='bodega/vista_compra/view_ingreso_compra';
+         break;
+   case "Invitado":
+         $tiponav="bodega/nav_invitado";
+         $tipobody='bodega/vista_acerca/view_acerca';
+         break;
+   default:
+        $tiponav="bodega/nav_invitado";
+        $tipobody='bodega/vista_acerca/view_acerca';
+}
 		$this->load->view('bodega/header');
-		$this->load->view("bodega/nav");
+		$this->load->view( $tiponav);
 		$datostipoingreso['arrayTipoingreso'] = $this->Compra_ingreso_model->get_tipoingreso();
 		$datostipocompra['arrayTipocompra'] = $this->Compra_ingreso_model->get_tipocompra();
 	  $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
 	  
-		$this->load->view("bodega/vista_compra/view_ingreso_compra",array_merge($datostipoingreso, $datostipocompra,$datoscorrelativo));
+		$this->load->view($tipobody,array_merge($datostipoingreso, $datostipocompra,$datoscorrelativo));
 		$this->load->view("bodega/vista_compra/footer2");
 	}
-
+}
 	public function mostrar()
 	{	
 		//valor a Buscar

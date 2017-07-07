@@ -4,15 +4,39 @@ class Man_usuarios extends CI_Controller
 	public function index() {
 	if(!$this->session->userdata("minombre")){
     redirect(base_url('home'));
-     }
+   
+    }else{
+	$tiponav="";
+    $tipobody="";
+	$misesion=$this->session->userdata("usuario");
+
+ switch ($misesion) {
+   case "Administrador":
+         $tiponav= 'bodega/nav'; 
+         $tipobody='bodega/usuarios';
+         break;
+   case "Bodeguero":
+         $tiponav="bodega/nav_bodega";
+         $tipobody='bodega/usuarios';
+         break;
+   case "Invitado":
+         $tiponav="bodega/nav_invitado";
+         $tipobody='bodega/vista_acerca/view_acerca';
+         break;
+   default:
+        $tiponav="bodega/nav_invitado";
+        $tipobody='bodega/vista_acerca/view_acerca';
+}
     $this->load->view('bodega/header');
-    $this->load->view('bodega/nav');
+    $this->load->view( $tiponav);
     $this->load->model('man_usuarios_model');
     $resultado = $this->man_usuarios_model->getUsuariosmodel();
     $data = array('consulta'=> $resultado);
-    $this->load->view('bodega/usuarios', $data);
+    $this->load->view( $tipobody, $data);
     $this->load->view('bodega/footer2');
 	}
+}
+
  function mostrar(){
 		if($this->input->is_ajax_request()){
 			$buscar = $this->input->post("buscar");

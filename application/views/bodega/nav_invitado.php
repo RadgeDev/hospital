@@ -131,13 +131,10 @@
                         <a href="<?= base_url('control_pedido') ?>"><i class="fa fa-fw fa-edit"></i>Pedidos</a>
                     </li>
                    
-                    <li>
-                        <a href="<?= base_url('control_stock') ?>"><i class="fa fa-credit-card"></i> Stock inventario</a>
-                    </li>
                        <li>
                  
                     <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                        <a href="<?= base_url('control_acerca') ?>"><i class="fa fa-fw fa-dashboard"></i> Acerca de</a>
                     </li>
                 </ul>
             </div>

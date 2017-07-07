@@ -8,15 +8,37 @@ class Control_historial_directo extends CI_Controller {
 	}
 
 	public function index(){
-		if(!$this->session->userdata("minombre")){
-        redirect(base_url('home'));
-        }
+			if(!$this->session->userdata("minombre")){
+    redirect(base_url('home'));
+   
+    }else{
+	$tiponav="";
+    $tipobody="";
+	$misesion=$this->session->userdata("usuario");
+
+ switch ($misesion) {
+   case "Administrador":
+         $tiponav= 'bodega/nav'; 
+         $tipobody='bodega/vista_historial_directo/view_historial_directo';
+         break;
+   case "Bodeguero":
+         $tiponav="bodega/nav_bodega";
+         $tipobody='bodega/vista_historial_directo/view_historial_directo';
+         break;
+   case "Invitado":
+         $tiponav="bodega/nav_invitado";
+         $tipobody='bodega/vista_acerca/view_acerca';
+         break;
+   default:
+        $tiponav="bodega/nav_invitado";
+        $tipobody='bodega/vista_acerca/view_acerca';
+}
 		$this->load->view('bodega/header');
-		$this->load->view("bodega/nav");
-		$this->load->view("bodega/vista_historial_directo/view_historial_directo");
+		$this->load->view($tiponav);
+		$this->load->view($tipobody);
 		$this->load->view("bodega/vista_historial_directo/footer2");
 	}
-
+}
 	public function mostrar()
 	{	
 		//valor a Buscar

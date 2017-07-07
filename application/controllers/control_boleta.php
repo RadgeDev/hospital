@@ -11,16 +11,39 @@ class Control_boleta extends CI_Controller {
 	}
 
 	public function index(){
-		if(!$this->session->userdata("minombre")){
-          redirect(base_url('home'));
-        }
+	if(!$this->session->userdata("minombre")){
+    redirect(base_url('home'));
+   
+    }else{
+	$tiponav="";
+    $tipobody="";
+	$misesion=$this->session->userdata("usuario");
+
+ switch ($misesion) {
+   case "Administrador":
+         $tiponav= 'bodega/nav'; 
+         $tipobody='bodega/vista_boleta/view_boleta';
+         break;
+   case "Bodeguero":
+         $tiponav="bodega/nav_bodega";
+         $tipobody='bodega/vista_boleta/view_boleta';
+         break;
+   case "Invitado":
+         $tiponav="bodega/nav_invitado";
+         $tipobody='bodega/vista_acerca/view_acerca';
+         break;
+   default:
+        $tiponav="bodega/nav_invitado";
+        $tipobody='bodega/vista_acerca/view_acerca';
+}
+
 		$this->load->view('bodega/header');
-		$this->load->view("bodega/nav");
+		$this->load->view($tiponav);
 	    $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
-		$this->load->view("bodega/vista_boleta/view_boleta",array_merge($datoscorrelativo));
+		$this->load->view($tipobody,array_merge($datoscorrelativo));
 		$this->load->view("bodega/vista_boleta/footer2");
 	}
-
+}
 	public function mostrar()
 	{	
 		//valor a Buscar

@@ -155,32 +155,29 @@
                    <a href="javascript:;" data-toggle="collapse" data-target="#demon"><i class="fa fa-file-word-o"></i> Reportes <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demon" class="collapse">
                 
-                             <li>
-                                <a href="<?= base_url('control_lote') ?>">Lotes</a>
+                            <li>
+                            <a href="<?= base_url('control_lote') ?>">Lotes</a>
                             </li>
 
                             <li>
-                                <a href="<?= base_url('control_proveedor') ?>">Proveedor</a>
+                                <a href="<?= base_url('control_bincard') ?>">Bincard</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_depto') ?>">Departamento</a>
+                                <a href="<?= base_url('control_historial_ingreso') ?>">Historial Ingreso</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_bodega') ?>">Seccion Bodega</a>
+                                <a href="<?= base_url('control_historial_egreso') ?>">Historial Egreso</a>
                             </li>
                              <li>
-                                <a href="<?= base_url('control_tipo_compra') ?>">Tipo Compra</a>
+                                <a href="<?= base_url('control_historial_pedido') ?>">Historial Pedido</a>
                             </li>
                               <li>
-                                <a href="<?= base_url('control_tipo_ingreso') ?>">Tipo Ingreso</a>
-                            </li>
-                             <li>
-                                <a href="<?= base_url('man_usuarios') ?>">Usuarios</a>
+                                <a href="<?= base_url('control_historial_directo') ?>">Historial Compra Directa</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                         <a href="<?= base_url('control_acerca') ?>"><i class="fa fa-fw fa-dashboard"></i> Acerca de</a>ss
                     </li>
                 </ul>
             </div>

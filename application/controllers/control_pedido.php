@@ -10,18 +10,40 @@ class Control_pedido extends CI_Controller {
 	}
 
 	public function index(){
-		if(!$this->session->userdata("minombre")){
-        redirect(base_url('home'));
-        }
+	if(!$this->session->userdata("minombre")){
+    redirect(base_url('home'));
+   
+    }else{
+	$tiponav="";
+    $tipobody="";
+	$misesion=$this->session->userdata("usuario");
+
+ switch ($misesion) {
+   case "Administrador":
+         $tiponav= 'bodega/nav'; 
+         $tipobody='bodega/vista_pedido/view_pedido';
+         break;
+   case "Bodeguero":
+         $tiponav="bodega/nav_bodega";
+         $tipobody='bodega/vista_pedido/view_pedido';
+         break;
+   case "Invitado":
+         $tiponav="bodega/nav_invitado";
+         $tipobody='bodega/vista_pedido/view_pedido';
+         break;
+   default:
+        $tiponav="bodega/nav_invitado";
+        $tipobody='bodega/vista_acerca/view_acerca';
+}
 		$this->load->view('bodega/header');
-		$this->load->view("bodega/nav");
+		$this->load->view($tiponav);
 		$datosdepto['arrayTipodepto'] = $this->Pedidos_model->get_depto();
 		$datospedido['arrayTipopedido'] = $this->Pedidos_model->get_pedido();
 	    $datoscorrelativo['arrayCorrelativo'] = $this->Producto_model->get_correlativo();
-		$this->load->view("bodega/vista_pedido/view_pedido",array_merge($datosdepto, $datospedido,$datoscorrelativo));
+		$this->load->view( $tipobody,array_merge($datosdepto, $datospedido,$datoscorrelativo));
 		$this->load->view("bodega/vista_pedido/footer2");
 	}
-
+}
 	public function mostrar()
 	{	
 		//valor a Buscar
