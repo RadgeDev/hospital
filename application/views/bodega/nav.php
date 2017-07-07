@@ -194,7 +194,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                        <a href="<?= base_url('control_acerca') ?>"><i class="fa fa-fw fa-dashboard"></i> Acerca de</a>
                     </li>
                 </ul>
             </div>
