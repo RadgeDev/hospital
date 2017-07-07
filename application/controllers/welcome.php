@@ -44,9 +44,25 @@ function get_totalcompralimit(){
 	$data = array(
 			"obtener" => $this->Stock_model->get_totalcompralimit()
 		);
-
+  echo json_encode($data);
 }
 
+function get_totalpedidoslimit(){
+     $this->load->model('Stock_model');
+  $data = array(
+      "obtener" => $this->Stock_model->get_totalpedidoslimit()
+    );
+  echo json_encode($data);
+}
+
+
+function get_totalsalidaslimit(){
+     $this->load->model('Stock_model');
+  $data = array(
+      "obtener" => $this->Stock_model->get_totalsalidaslimit()
+    );
+  echo json_encode($data);
+}
 
 
 }

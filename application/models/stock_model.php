@@ -96,12 +96,36 @@ function get_totalcompra()
      
 function get_totalcompralimit()
 {
-// armamos la consulta
-$limit="8";
-    $query = $this->db-> query('SELECT * FROM compra DESC LIMIT 8');
-   return $query->result();
-
+// armamos la consultacod
+       $this->db->select("*");
+       $this->db->from("compra");
+       $this->db->limit("5");
+       $this->db->order_by("cod_compra","desc");
+        $consulta = $this->db->get();
+        return $consulta->result();
 }
+
+function get_totalpedidoslimit()
+{
+// armamos la consultacod
+       $this->db->select("*");
+       $this->db->from("pedidos");
+       $this->db->limit("5");
+       $this->db->order_by("folio","desc");
+        $consulta = $this->db->get();
+        return $consulta->result();
+}
+function get_totalsalidaslimit()
+{
+// armamos la consultacod
+       $this->db->select("*");
+       $this->db->from("salidas");
+       $this->db->limit("5");
+       $this->db->order_by("cod_salida","desc");
+        $consulta = $this->db->get();
+        return $consulta->result();
+}
+
 function get_totalsalidas()
 {
 // armamos la consulta
