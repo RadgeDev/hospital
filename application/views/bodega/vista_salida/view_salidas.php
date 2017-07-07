@@ -177,7 +177,7 @@
                   <div class="list-errors3"></div>
                   </div>
                   <div class="alert alert-success" id="msg-bien" style="text-align:left;">
-                  <strong>¡Ingreso Correcto!</strong> Datos Guardados.
+                  <strong>¡Egreso Correcto!</strong> Datos Guardados.
                   <div class="list-errors4"></div>
               </div>     
     </div>

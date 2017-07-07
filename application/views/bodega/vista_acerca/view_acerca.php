@@ -22,8 +22,8 @@
         <div class="row">
             <div class="col-sm-8">
                 <h2>Bodega Hospital Mercedes</h2>
-                <p>Este programa fuecreado para el uso exclusivo de la bodega del hospital entre sus funciones permitir llevar inventario ingresos,egresos,pedidos,compras directas.</p>
-                <p>Permitir generar reportes y documentos segun  requiera el  usuario y guardar la informacion en  una base de datos mysql almacenado toda la informacion perteneciente al a bodega .</p>
+                <p>Este programa fue creado para el uso exclusivo de la bodega del hospital entre sus funciones permitir llevar inventario ingresos,egresos,pedidos,compras directas.</p>
+                <p>Permitir generar reportes y documentos segun  requiera el  usuario y guardar la informacion en  una base de datos mysql almacenado toda la informacion perteneciente a la bodega .</p>
                 <p>
                     <a class="btn btn-success btn-lg" href="<?= base_url('welcome') ?>">Volver a Inicio &raquo;</a>
                 </p>

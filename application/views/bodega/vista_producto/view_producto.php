@@ -154,7 +154,7 @@
 
                             <div class="form-group">
                             <label>Cantidad</label>
-                            <input class="form-control" id="cantidad" name="cantidad" onkeypress="return solonumeros(event)"  placeholder="Ingrese su cantidad">
+                            <input class="form-control" id="cantidad" value="0" readonly name="cantidad" onkeypress="return solonumeros(event)"  placeholder="Ingrese su cantidad">
                             </div>
                             <label>Precio</label>
                             <div class="input-group">

@@ -10,7 +10,7 @@
                         </h2>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Inicio</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?= base_url('welcome') ?>">Inicio</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Ingresos
@@ -38,8 +38,8 @@
           <label>Tipo Ingreso</label>
                <select name='combo_tipoingreso' id ='combo_tipoingreso' class='form-control' >
            <option value="0" selected>Eliga tipo Ingreso</option>
-           <option value="1" selected>Boleta</option>
-           <option value="2" selected>Factura</option>
+           <option value="1" >Boleta</option>
+           <option value="2" >Factura</option>
              </select >
         
             </div>
@@ -60,7 +60,7 @@
                 <label>Tipo Compra</label>
           <select name='combo_tipocompra'  id ='combo_tipocompra'  class='form-control' >
            <option value="0" selected>Eliga tipo Compra</option>
-           <option value="1" selected>Compra Directa</option>
+           <option value="1" >Compra Directa</option>
           </select >
             </div>
               <div class="col-lg-3 col-sm-3">
