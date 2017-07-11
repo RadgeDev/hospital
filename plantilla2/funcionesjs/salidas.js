@@ -481,7 +481,7 @@ function mostrarProductos() {
 
             filas = "";
             $.each(response.misproductos, function(key, item) {
-                filas += '<option id="' + item.codigo_barra + '" data-codigo="' + item.cod_interno_prod + '" value="' + item.nombre + '" /> STOCK ( ' + item.cantidad + ' )';
+                filas += '<option id="' + item.codigo_barra + '" data-codigo="' + item.cod_interno_prod + '" value="' + item.nombre + '" />' + item.codigo_barra + '';
             });
 
             var my_list = document.getElementById("buscandoprod");

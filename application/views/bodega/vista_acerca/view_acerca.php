@@ -21,10 +21,10 @@
  <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <h2>Bodega Hospital Mercedes</h2>
+                <h2>Manual de usuario Bodega Hospital Mercedes</h2>
                 <p>Este programa fue creado para el uso exclusivo de la bodega del hospital entre sus funciones permitir llevar inventario ingresos,egresos,pedidos,compras directas.</p>
                 <p>Permitir generar reportes y documentos segun  requiera el  usuario y guardar la informacion en  una base de datos mysql almacenado toda la informacion perteneciente a la bodega .</p>
-                <p>
+                <p> 
                     <a class="btn btn-success btn-lg" href="<?= base_url('welcome') ?>">Volver a Inicio &raquo;</a>
                 </p>
             </div>
@@ -55,8 +55,9 @@
             </div>
             <div class="col-sm-4">
                 <img class="img-circle img-responsive img-center" src="<?= base_url('/plantilla2/reporte/bodega.jpg') ?>" alt="">
-                <h2>Bodega Chimbarongo</h2>
-                <p>El programa de bodega queda disposicion del Hospital de Chimbarongo para su uso exclusivo y manejo dentro del hospital.</p>
+                <h2>Manual usuario</h2>
+                <p>El programa de bodega queda disposicion del Hospital de Chimbarongo para su uso exclusivo y manejo dentro del hospital.
+                Manual de usuario  <abbr title="manual"></abbr> <a href="https://www.dropbox.com/s/wzt6tyad5niamq7/manual%20de%20usuario%20bodega.pdf?dl=0" target="_blank"> Manual usuario</a></p>
             </div>
             <div class="col-sm-4">
                 <img class="img-circle img-responsive img-center" src="<?= base_url('/plantilla2/reporte/gmail.png') ?>" alt="">
