@@ -106,6 +106,17 @@ $html.='
               ';
   foreach ($datos as $misdatos) {
  $html.='
+             <tr>
+                <td colspan="5"></td>
+                <td style="font-weight:bold; font-size:8pt;background:#eee;">SUBTOTAL </td>
+                <td ><h5 class="letralegible">'.$misdatos->subtotal.'</h5></td>
+
+            </tr>
+             <tr>
+               <td colspan="5"></td>
+              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
+                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
+            </tr>
             <tr>
                 <td colspan="5"></td>
                 <td style="font-weight:bold; font-size:8pt;background:#eee;">NETO </td>
@@ -118,16 +129,11 @@ $html.='
               <td style="font-weight:bold; font-size:8pt;background:#eee;">IVA </td>
                 <td ><h5 class="letralegible">'.$misdatos->iva.'</h5></td>
             </tr>
-              <tr>
-               <td colspan="5"></td>
-              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
-                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
-            </tr>
+        
               <tr>
                 <td colspan="5"></td>
              <td style="font-weight:bold; font-size:8pt;background:#eee;">TOTAL </td>
                 <td ><h5 class="letralegible">'.$misdatos->total_compra.'</h5></td>
-                
             </tr>
        ';    }
 $html.='   
@@ -514,6 +520,17 @@ $html.='
  $html.='
             <tr>
                 <td colspan="5"></td>
+                <td style="font-weight:bold; font-size:8pt;background:#eee;">SUBTOTAL </td>
+                <td ><h5 class="letralegible">'.$misdatos->subtotal.'</h5></td>
+
+            </tr>
+             <tr>
+               <td colspan="5"></td>
+              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
+                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
+            </tr>
+            <tr>
+                <td colspan="5"></td>
                 <td style="font-weight:bold; font-size:8pt;background:#eee;">NETO </td>
                 <td ><h5 class="letralegible">'.$misdatos->neto.'</h5></td>
 
@@ -524,16 +541,11 @@ $html.='
               <td style="font-weight:bold; font-size:8pt;background:#eee;">IVA </td>
                 <td ><h5 class="letralegible">'.$misdatos->iva.'</h5></td>
             </tr>
-              <tr>
-               <td colspan="5"></td>
-              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
-                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
-            </tr>
+        
               <tr>
                 <td colspan="5"></td>
              <td style="font-weight:bold; font-size:8pt;background:#eee;">TOTAL </td>
                 <td ><h5 class="letralegible">'.$misdatos->total_compra.'</h5></td>
-                
             </tr>
        ';    }
 $html.='   

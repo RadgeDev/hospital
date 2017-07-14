@@ -276,7 +276,8 @@
             $("#valortotal").val(0);
         } else {
             total = parseInt(n1) * parseFloat(n2);
-            $("#valortotal").val(parseFloat(total));
+            var mitotal = total.toFixed(0);
+            $("#valortotal").val(parseFloat(mitotal));
         }
     }
 
@@ -367,6 +368,13 @@
         );
     }
 
+    Number.prototype.roundToNearest = function(multiple, roundingFunction) {
+        // Use normal rounding by default
+        roundingFunction = roundingFunction || Math.round;
+
+        return roundingFunction(this / multiple) * multiple;
+    }
+
     function calculartotal() {
 
         var tipoingresocod = document.getElementsByName("combo_tipoingreso")[0].value;
@@ -389,13 +397,14 @@
                 $("#descuento").val(0);
             }
 
-            thenetodesc = theneto - descuento;
-            iva_venta = parseFloat(thenetodesc * (19 / 100));
-            total = parseFloat(thenetodesc + iva_venta);
+            thenetodesc = Parsefloat(theneto - descuento);
+            iva_venta = Parsefloat((thenetodesc * 19) / 100);
+            total = Parsefloat(thenetodesc + iva_venta);
+
             $("#valorfactura").val(theneto);
             $("#neto").val("0");
             $("#iva").val("0");
-            $("#total").val(thenetodesc);
+            $("#total").val(thenetodesc.roundToNearest(5));
             var mivalor = $("#agregardesc").val();
 
             if (mivalor == "desactivar") {
@@ -433,10 +442,10 @@
                 descuento = 0;
                 $("#descuento").val(0);
             }
-
-            thenetodesc = theneto - descuento;
-            iva_venta = parseFloat(thenetodesc * (19 / 100));
+            thenetodesc = parseFloat(theneto - descuento);
+            iva_venta = parseFloat((thenetodesc * 19) / 100);
             total = parseFloat(thenetodesc + iva_venta);
+
             $("#valorfactura").val(theneto);
             $("#neto").val(thenetodesc);
             $("#iva").val(iva_venta);
@@ -794,7 +803,7 @@
 
                 url: "http://localhost/hospital/control_boleta/guardaringreso",
                 type: "POST",
-                data: { minfolio: nfolio, mitipoingresocod: tipoingresocod, mitipoingresonombre: tipoingresonombre, subtotal: neto2, mindocumento: ndocumento, minfolio: nfolio, mitipocompracod: tipocompracod, mitipocompranombre: tipocompranombre, minombreproveedor: nombreproveedor, mirutproveedor: rutproveedor, mifecha: fecha, minombreproduct: nombreproduct, micodbarraproduct: codbarraproduct, micorrelativoprod: correlativoprod, micomentarios: comentarios, midescuento: descuento, mineto: neto, miiva: iva, mitotal: total },
+                data: { minfolio: nfolio, mitipoingresocod: tipoingresocod, subtotal: valorfactura, mitipoingresonombre: tipoingresonombre, subtotal: neto2, mindocumento: ndocumento, minfolio: nfolio, mitipocompracod: tipocompracod, mitipocompranombre: tipocompranombre, minombreproveedor: nombreproveedor, mirutproveedor: rutproveedor, mifecha: fecha, minombreproduct: nombreproduct, micodbarraproduct: codbarraproduct, micorrelativoprod: correlativoprod, micomentarios: comentarios, midescuento: descuento, mineto: neto, miiva: iva, mitotal: total },
                 dataType: "json",
                 success: function(respuesta) {
                     guardardetalle();

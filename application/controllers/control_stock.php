@@ -111,7 +111,7 @@ $i=3;
  foreach ($datos as $dato){
                 $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
 				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
-				$sheet->setCellValue('C'.$i,$dato->codigo_bodega);
+				$sheet->setCellValue('C'.$i,$dato->cod_bodega);
 			    $sheet->setCellValue('D'.$i,$dato->nombre);
 				$sheet->setCellValue('E'.$i,$dato->cantidad);
 				$sheet->setCellValue('F'.$i,$dato->stock_critico);
@@ -160,7 +160,7 @@ $i=3;
  foreach ($datos as $dato){
                 $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
 				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
-				$sheet->setCellValue('C'.$i,$dato->codigo_bodega);
+				$sheet->setCellValue('C'.$i,$dato->cod_bodega);
 			    $sheet->setCellValue('D'.$i,$dato->nombre);
 				$sheet->setCellValue('E'.$i,$dato->cantidad);
 				$sheet->setCellValue('F'.$i,$dato->stock_minimo);
@@ -210,7 +210,7 @@ $i=3;
  foreach ($datos as $dato){
                 $sheet->setCellValue('A'.$i, $dato->cod_interno_prod);
 				$sheet->setCellValue('B'.$i,$dato->codigo_barra);
-				$sheet->setCellValue('C'.$i,$dato->codigo_bodega);
+				$sheet->setCellValue('C'.$i,$dato->cod_bodega);
 			    $sheet->setCellValue('D'.$i,$dato->nombre);
 				$sheet->setCellValue('E'.$i,$dato->cantidad);
 				$sheet->setCellValue('F'.$i,$dato->stock_maximo);

@@ -128,6 +128,7 @@ function guardaringreso() {
             $nombreproveedor = $this->input->post("minombreproveedor");
             $rutproveedor= $this->input->post("mirutproveedor");
             $fecha= $this->input->post("mifecha");
+			$subtotal= $this->input->post("subtotal");
 			$mifecha= date('Y-m-d', strtotime($fecha));
             $nombreproduct= $this->input->post("minombreproduct");
             $codbarraproduct= $this->input->post("micodbarraproduct");
@@ -151,6 +152,7 @@ function guardaringreso() {
 				"rut_proveedor" => $rutproveedor,
 				"nombre_proveedor" => $nombreproveedor,
 				"fecha" => $mifecha,
+				"subtotal" => $subtotal,
 				"neto" => $neto,
 				"iva" => $iva,
 				"total_compra" => $total,
