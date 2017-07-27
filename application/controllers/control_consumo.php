@@ -45,6 +45,7 @@ if(!$this->session->userdata("minombre")){
 
 	public function mostrar()
 	{	
+
 		//valor a Buscar
 		$buscar = $this->input->post("buscar");
 		$numeropagina = $this->input->post("nropagina");
@@ -59,8 +60,9 @@ if(!$this->session->userdata("minombre")){
 		);
 		echo json_encode($data);
 	}
-public function mostrarfecha()
-	{	
+
+    public function mostrarfecha()
+	  {	
 		//valor a Buscar
 		$buscar = $this->input->post("buscar");
 		$numeropagina = $this->input->post("nropagina");
@@ -76,12 +78,12 @@ public function mostrarfecha()
 			"cantidad" =>$cantidad
 			
 		);
-		echo json_encode($data);
-	}
+		echo json_encode($data);	
+	  }
 
 	public function mostrar2()
 	{	
-		//valor a Buscar
+	    //valor a Buscar
 		$buscar = $this->input->post("buscar");
 		$numeropagina = $this->input->post("nropagina");
 		$cantidad = $this->input->post("cantidad");
@@ -102,8 +104,8 @@ public function mostrarfecha()
 
 
 function reportefechas()
-{    
-	   	if ($this->input->is_ajax_request()) {
+{   
+    	if ($this->input->is_ajax_request()) {
 			$fecha = $this->input->post("fechainicio");
 			$fecha2 = $this->input->post("fechafin");
 			$codproducto = $this->input->post("codproducto");
@@ -151,7 +153,6 @@ $i=3;
 				$sheet->setCellValue('F'.$i,$dato->entrada);
 				$sheet->setCellValue('G'.$i,$dato->salida);
 				$sheet->setCellValue('H'.$i,$dato->saldo);
-
                 $i++;
  }
 	//generar renderizacion

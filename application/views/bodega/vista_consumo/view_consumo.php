@@ -118,14 +118,13 @@
             <table id="tbclientes" name="tbclientes" class="table table-striped  table-hover ">
               <thead>
                 <tr class="success">
-                  <th>Bincard  </th>
-                  <th>Fecha</th>
+                  <th>Año </th>
+                  <th>Mes</th>
                   <th>Cod.Prod</th>
                   <th>Nombre</th>
-                  <th>Proveedor</th>
-                  <th>Ingreso</th>
-                  <th>Egreso</th>
-                  <th>Saldo</th>
+                  <th>Bodega</th>
+                  <th>Consumo</th>
+                  <th>Depto</th>
                 </tr>
               </thead>
               <tbody>

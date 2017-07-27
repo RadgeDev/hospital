@@ -8,7 +8,6 @@ function main() {
     });
 
     $("#msg-error").hide();
-    mostrarProductos();
 
     $("input[name=busqueda]").keyup(function() {
         textobuscar = $(this).val();
@@ -40,7 +39,7 @@ function main() {
 function mostrarDatos(valorBuscar, pagina, cantidad, valorcombo) {
 
     $.ajax({
-        url: "http://localhost/hospital/control_bincard/mostrar",
+        url: "http://localhost/hospital/control_consumo/mostrar",
         type: "POST",
         data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo },
         dataType: "json",
@@ -113,41 +112,27 @@ function entrefechas() {
     var comprobar2 = ""
     valorfecha = $("#fechainicio").val();
     valorfecha2 = $("#fechafin").val();
-    var correlativoprod = $("#buscandoprod option[value='" + $('#buscarproducto').val() + "']").attr('data-codigo');
-
-    if (element2.querySelector("option[value='" + text2.value + "']")) {
-        comprobar2 = "bien";
+    var correlativoprod = $("#combo_tipocompra option:selected").text();
+    alert(correlativoprod);
+    if (valorfecha == "") {
+        swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
+    } else if (valorfecha2 == "") {
+        swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
     } else {
-        comprobar2 = "mal";
-    }
-
-
-    if (comprobar2 === "bien") {
         if (valorfecha == "") {
             swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
         } else if (valorfecha2 == "") {
             swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
+        } else if (correlativoprod == "") {
+            swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
         } else {
-
-
-            if (valorfecha == "") {
-                swal("Algo fallo!", "Ingrese fecha valida fecha inicio.", "error");
-            } else if (valorfecha2 == "") {
-                swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
-            } else if (correlativoprod == "") {
-                swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
-            } else {
-                valoroption = $("#cantidadpag").val();
-                valorfecha = $("#fechainicio").val();
-                valorfecha2 = $("#fechafin").val();
-
-                mostrarfechas(valorfecha, 1, valoroption, valorfecha2, correlativoprod);
-            }
+            valoroption = $("#cantidadpag").val();
+            valorfecha = $("#fechainicio").val();
+            valorfecha2 = $("#fechafin").val();
+            mostrarfechas(valorfecha, 1, valoroption, valorfecha2, correlativoprod);
         }
-    } else {
-        swal("Algo fallo!", "Producto invalido.", "error");
-
     }
+
 
 
 
@@ -156,7 +141,7 @@ function entrefechas() {
 function mostrarfechas(valorBuscar, pagina, cantidad, valorcombo, micodigoprod) {
 
     $.ajax({
-        url: "http://localhost/hospital/control_bincard/mostrarfecha",
+        url: "http://localhost/hospital/control_consumo/mostrarfecha",
         type: "POST",
         data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo, codigoprod: micodigoprod },
         dataType: "json",
@@ -164,7 +149,7 @@ function mostrarfechas(valorBuscar, pagina, cantidad, valorcombo, micodigoprod) 
 
             filas = "";
             $.each(response.obtener, function(key, item) {
-                filas += "<tr class='active' ><td >" + item.idbincard + "</td><td>" + item.fecha + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.proveedor + "</td><td>" + item.entrada + "</td><td>" + item.salida + "</td><td>" + item.saldo + "</td></tr>";
+                filas += "<tr class='active' ><td >" + item.ano + "</td><td>" + item.mes + "</td><td>" + item.cod_producto + "</td><td>" + item.nombre + "</td><td>" + item.seccion + "</td><td> " + item.total + "</td><td></tr>";
             });
 
             $("#tbproductos tbody").html(filas);
@@ -248,7 +233,7 @@ function mostrarProductos() {
 function mostrarDatos2(valorBuscar, pagina, cantidad, valorcombo) {
     $("#tbproductos tbody").html("");
     $.ajax({
-        url: "http://localhost/hospital/control_bincard/mostrar2",
+        url: "http://localhost/hospital/control_consumo/mostrar2",
         type: "POST",
         data: { buscar: valorBuscar, nropagina: pagina, cantidad: cantidad, valorcombos: valorcombo },
         dataType: "json",
@@ -411,7 +396,7 @@ function exportarexcel() {
         //var miJSON = JSON.encode(obj);
         //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
     })
-    var url = "http://localhost/hospital/control_bincard/excel"
+    var url = "http://localhost/hospital/control_consumo/excel"
     $.post(url, { sendData: JSON.stringify(obj) }, function(data) {
         var $a = $("<a>");
         $a.attr("href", data.file);
@@ -456,7 +441,7 @@ function reporte_bodega_fechas() {
             swal("Algo fallo!", "Ingrese fecha valida fecha termino.", "error");
         } else {
             $.ajax({
-                url: "http://localhost/hospital/control_bincard/reportefechas",
+                url: "http://localhost/hospital/control_consumo/reportefechas",
                 type: "POST",
                 data: { fechainicio: valorfecha, fechafin: valorfecha2, codproducto: correlativoprod },
                 dataType: "json",

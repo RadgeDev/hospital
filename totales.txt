@@ -1,0 +1,4 @@
+var n2 = 1000;
+n2 = parseFloat(n2);
+var a2 = Math.floor(n2 * 100) / 100;
+alert('Sin redondeo: ' + a2.toFixed(2));

@@ -1,4 +1,4 @@
-<?php
+              <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Consumo_model extends CI_Model {
@@ -17,15 +17,16 @@ class Consumo_model extends CI_Model {
 	}
 
 public function buscarfecha($buscar,$inicio = FALSE, $cantidadregistro = FALSE,$valorbuscar=FALSE,$micodproducto)
-	{
-	//aca quede
-        $this->db->select('*');
+	{   
+
+        $this->db->select('cod_producto ,seccion');
         $this->db->from('bincard');
-        $this->db->where("cod_producto",$micodproducto);
+       // $this->db->join('producto', 'bincard.cod_producto = producto.cod_interno_prod');
+        $this->db->where("seccion",$micodproducto);
         $this->db->where("fecha BETWEEN '$buscar' AND '$valorbuscar'");
-        if ($inicio !== FALSE && $cantidadregistro !== FALSE) {
-			$this->db->limit($cantidadregistro,$inicio);
-		}
+    
+       // $this->db->group_by('mes', 'desc'); 
+        // $this->db->order_by('total', 'desc'); 
         $consulta = $this->db->get();
 		return $consulta->result();
 	}
@@ -79,7 +80,6 @@ Public function porvencercritico()
 	{   
 		
 		if($buscar==="1"){
-		
 		$this->db->select('*');
         $this->db->from('producto');
         $this->db->where('cantidad <= stock_critico');

@@ -1,0 +1,1 @@
+SELECT Year(fecha) AS ano,Month(fecha) AS mes ,cod_producto ,producto.nombre,seccion, SUM(salida) AS total FROM bincard INNER JOIN producto on bincard.cod_producto = producto.cod_interno_prod where seccion = 'Urgencias' and fecha BETWEEN '2017-06-01' AND '2017-07-25' GROUP BY mes DESC
