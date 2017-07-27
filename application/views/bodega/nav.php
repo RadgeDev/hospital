@@ -178,6 +178,9 @@
                             <li>
                                 <a href="<?= base_url('control_bincard') ?>">Bincard</a>
                             </li>
+                            <li>
+                                <a href="<?= base_url('control_consumo') ?>">Consumo Bodega</a>
+                            </li>
                              <li>
                                 <a href="<?= base_url('control_historial_ingreso') ?>">Historial Ingreso</a>
                             </li>
