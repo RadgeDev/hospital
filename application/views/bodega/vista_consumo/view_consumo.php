@@ -60,6 +60,18 @@
                              ?>
              </select >
             </div>
+             <div class="col-lg-2 col-sm-2">
+                <label>Exportar Excel</label>
+                  
+            <button type="button " onclick="reporte_bodega_fechas();" class="form-control btn btn-info"> Por Bodega   </button>
+       
+            </div>
+             <div class="col-lg-2 col-sm-2">
+                <label>Exportar Excel</label>
+                  
+            <button type="button " onclick="reporte_bodega_fechas();" class="form-control btn btn-info"> Por Depto   </button>
+       
+            </div>
     <br>
         <br>
             <br>
@@ -83,18 +95,20 @@
                     </span>
                 </div>
             </div>
+
               <div class="col-lg-2 col-sm-2">
                 <label>Buscar</label>
                   
-            <button type="button " onclick="entrefechas();" class="form-control btn btn-success"> Buscar por fechas   </button>
+            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por bodega   </button>
        
             </div>
             <div class="col-lg-2 col-sm-2">
-                <label>Exportar Excel</label>
+                <label>Buscar</label>
                   
-            <button type="button " onclick="reporte_bodega_fechas();" class="form-control btn btn-info"> Por fechas   </button>
+            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por Depto  </button>
        
             </div>
+           
           </div>
             </div>
               </div>
