@@ -49,27 +49,12 @@
                   ?>
              </select >
          </div>
-            <div class="col-lg-4 col-sm-4 ">
-            <label>Departamento</label>
-               <select name='combo_depto' id ='combo_depto' class='form-control' onBlur="bloqueosdias(),bloqueoservicios();" >
-             <?php
-                 $elige="Elige una opcion";
-                   echo '  <option value="',0,'">', $elige ,'</option>';
-                    foreach ($arrayTipodepto as $i => $cod_depto)
-                    echo '<option value="',$i,'" >',$cod_depto,'</option>';
-                             ?>
-             </select >
-            </div>
-             <div class="col-lg-2 col-sm-2">
-                <label>Exportar Excel</label>
+          
+  
+                <div class="col-lg-2 col-sm-2">
+                <label>Buscar</label>
                   
-            <button type="button " onclick="reporte_bodega_fechas();" class="form-control btn btn-info"> Por Bodega   </button>
-       
-            </div>
-             <div class="col-lg-2 col-sm-2">
-                <label>Exportar Excel</label>
-                  
-            <button type="button " onclick="reporte_bodega_fechas();" class="form-control btn btn-info"> Por Depto   </button>
+            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por bodega   </button>
        
             </div>
     <br>
@@ -96,18 +81,13 @@
                 </div>
             </div>
 
-              <div class="col-lg-2 col-sm-2">
-                <label>Buscar</label>
+               <div class="col-lg-2 col-sm-2">
+                <label>Exportar Excel</label>
                   
-            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por bodega   </button>
+            <button type="button " onclick="reporte_bodega_fechas();" class="form-control btn btn-info"> Exportar por bodega  </button>
        
             </div>
-            <div class="col-lg-2 col-sm-2">
-                <label>Buscar</label>
-                  
-            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por Depto  </button>
-       
-            </div>
+     
            
           </div>
             </div>
@@ -138,7 +118,7 @@
                   <th>Nombre</th>
                   <th>Bodega</th>
                   <th>Consumo</th>
-                  <th>Depto</th>
+     
                 </tr>
               </thead>
               <tbody>
