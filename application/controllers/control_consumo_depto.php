@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Control_consumo extends CI_Controller {
+class Control_consumo_depto extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
-		$this->load->model("Consumo_model");
+		$this->load->model("Consumodepto_model");
 		$this->load->model("Pedidos_model");
 	}
 
@@ -20,11 +20,11 @@ if(!$this->session->userdata("minombre")){
  switch ($misesion) {
    case "Administrador":
          $tiponav= 'bodega/nav'; 
-         $tipobody='bodega/vista_consumo/view_consumo';
+         $tipobody='bodega/vista_consumo_depto/view_consumo_depto';
          break;
    case "Bodeguero":
          $tiponav="bodega/nav_bodega";
-         $tipobody='bodega/vista_consumo/view_consumo';
+         $tipobody='bodega/vista_consumo_depto/view_consumo_depto';
          break;
    case "Invitado":
          $tiponav="bodega/nav_invitado";
@@ -39,7 +39,7 @@ if(!$this->session->userdata("minombre")){
 		$datosdepto['arrayTipodepto'] = $this->Pedidos_model->get_depto();
 		$datospedido['arrayTipopedido'] = $this->Pedidos_model->get_pedido();
 		$this->load->view($tipobody,array_merge($datosdepto, $datospedido));
-		$this->load->view("bodega/vista_consumo/footer2");
+		$this->load->view("bodega/vista_consumo_depto/footer2");
 	}
 }
 
@@ -55,8 +55,8 @@ public function mostrar()
 		$mifin= $this->input->post("mifin");
 		$inicio = ($numeropagina -1)*$cantidad;
 		$data = array(
-			"obtener" => $this->Consumo_model->buscar($miinicio,$inicio,$cantidad,$mifin,$bodega),
-			"totalregistros" => count($this->Consumo_model->buscar($miinicio,$inicio,$cantidad,$mifin,$bodega)),
+			"obtener" => $this->Consumodepto_model->buscar($miinicio,$inicio,$cantidad,$mifin,$bodega),
+			"totalregistros" => count($this->Consumodepto_model->buscar($miinicio,$inicio,$cantidad,$mifin,$bodega)),
 			"cantidad" =>$cantidad
 		);
 		echo json_encode($data);
@@ -73,11 +73,11 @@ function reportefechas()
 	    $miinicio= $this->input->post("fechainicio");
 		$mifin= $this->input->post("fechafin");
            $this->phpexcel->getProperties()
-            ->setTitle('Consumo bodega')
+            ->setTitle('COnsumo depto')
 			->setDescription('bodega');
-			$datos= $this->Consumo_model->exportar($miinicio,$mifin,$bodega);
+			$datos= $this->Consumodepto_model->exportar($miinicio,$mifin,$bodega);
 			$sheet=$this->phpexcel->getActiveSheet();
-			$sheet->setTitle('Consumo bodega');
+			$sheet->setTitle('COnsumo depto');
 			$style = array(
                          'alignment' => array(
                           'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
@@ -96,7 +96,7 @@ function reportefechas()
 				$sheet->setCellValue('B1','MES');
 				$sheet->setCellValue('C1','CODIGO PRODUCTO');
 				$sheet->setCellValue('D1','NOMBRE PRODUCTO');
-				$sheet->setCellValue('E1','BODEGA');
+				$sheet->setCellValue('E1','DEPARTAMENTO');
 				$sheet->setCellValue('F1','CONSUMO');
 
 $i=3;
@@ -111,7 +111,7 @@ $i=3;
  }
 	//generar renderizacion
 	header("Content-Type: application/vnd.ms-excel");
-	$nombre="'Consumo bodega".date("Y-m-d H:i:s");
+	$nombre="'COnsumo depto".date("Y-m-d H:i:s");
 	header("Content-Disposition: attachment; filename=\"$nombre.xls\"");
 	header("Cache-Control: max-age=0");
 	$writer=PHPExcel_IOFactory::createWriter($this->phpexcel,"Excel5");

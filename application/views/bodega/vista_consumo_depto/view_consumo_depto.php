@@ -3,14 +3,14 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-         Consumo de Bodega
+         Consumo de  Departamento
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?= base_url('welcome') ?>">Inicio</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-edit"></i>   Consumo de Bodega
+                                <i class="fa fa-edit"></i>   Consumo de  Departamento
                             </li>
                         </ol>
                     </div>
@@ -33,28 +33,28 @@
          <div class="panel panel-primary">
         <div class="panel-heading clearfix">
           <i class="icon-calendar"></i>
-          <h3 class="panel-title">Encabezado de  Consumo de Bodega</h3>
+          <h3 class="panel-title">Encabezado de  Consumo de  Departamento</h3>
         </div>
         <div class="panel-body">
           <div class="row">
          
-        <div class="col-lg-4 col-sm-4 ">
-            <label>Tipo Bodega</label>
-                  <select name='combo_pedido'  id ='combo_tipocompra'  class='form-control' >
-                  <?php
-                 $elige="Elige una opcion";
+      <div class="col-lg-4 col-sm-4 ">
+            <label>Departamento</label>
+              <select name='combo_depto' id ='combo_depto' class='form-control'  >
+             <?php
+                $elige="Elige una opcion";
                    echo '  <option value="',0,'">', $elige ,'</option>';
-                    foreach ($arrayTipopedido as $i => $cod_bodegas)
-                    echo '<option value="',$i,'">',$cod_bodegas,'</option>';
-                  ?>
-             </select >
-         </div>
+                    foreach ($arrayTipodepto as $i => $cod_depto)
+                    echo '<option value="',$i,'" >',$cod_depto,'</option>';
+                             ?>
+           </select >
+           </div>
           
   
                 <div class="col-lg-2 col-sm-2">
                 <label>Buscar</label>
                   
-            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por bodega   </button>
+            <button type="button " onclick="buscarmostrardatos();" class="form-control btn btn-success"> Buscar por depto   </button>
        
             </div>
     <br>
@@ -84,7 +84,7 @@
                <div class="col-lg-2 col-sm-2">
                 <label>Exportar Excel</label>
                   
-            <button type="button " onclick="exportardatos();" class="form-control btn btn-info">  Por bodega  </button>
+            <button type="button " onclick="exportardatos();" class="form-control btn btn-info">  Por depto  </button>
        
             </div>
      
@@ -96,7 +96,7 @@
       <div class="col-md-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4>   Consumo de Bodega</h4>
+            <h4>   Consumo de  Departamento</h4>
           </div>
 
             
@@ -117,7 +117,7 @@
                   <th>Mes</th>
                   <th>Cod.Prod</th>
                   <th>Nombre</th>
-                  <th>Bodega</th>
+                  <th>Depto</th>
                   <th>Consumo</th>
      
                 </tr>

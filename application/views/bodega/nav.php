@@ -181,6 +181,12 @@
                             <li>
                                 <a href="<?= base_url('control_consumo') ?>">Consumo Bodega</a>
                             </li>
+                              <li>
+                                <a href="<?= base_url('control_consumo_depto') ?>">Consumo Depto</a>
+                            </li>
+                                     <li>
+                                <a href="<?= base_url('control_consumo_deptobodega') ?>">Consumo Depto-Bodega</a>
+                            </li>
                              <li>
                                 <a href="<?= base_url('control_historial_ingreso') ?>">Historial Ingreso</a>
                             </li>

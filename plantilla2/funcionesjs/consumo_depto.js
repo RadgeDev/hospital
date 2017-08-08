@@ -10,32 +10,48 @@ function main() {
     $("body").on("click", ".paginacion li a", function(e) {
         e.preventDefault();
         valorhref = $(this).attr("href");
-        bodega = document.getElementsByName("combo_pedido")[0].value;
+        bodega = document.getElementsByName("combo_depto")[0].value;
         inicio = $("#fechainicio").val();
         fin = $("#fechafin").val();
         cantidad = $("#cantidadpag").val();
+        if(bodega=="0"){
+ swal("Algo fallo!", "Escoga un depto  valido.", "error");
+}else if(inicio ==""){
+   swal("Algo fallo!", "Escoga una Fecha inicio  valida.", "error");  
+}else if(fin ==""){
+   swal("Algo fallo!", "Escoga una Fecha termino  valida.", "error");  
+}else {
         mostrarDatos(bodega, valorhref, cantidad, inicio,fin);
+}
     });
 
     $("#cantidadpag").change(function() {
-      bodega = document.getElementsByName("combo_pedido")[0].value;
+      bodega = document.getElementsByName("combo_depto")[0].value;
       inicio = $("#fechainicio").val();
       fin = $("#fechafin").val();
       cantidad = $("#cantidadpag").val();
       pagina="1";
+      if(bodega=="0"){
+ swal("Algo fallo!", "Escoga un depto  valido.", "error");
+}else if(inicio ==""){
+   swal("Algo fallo!", "Escoga una Fecha inicio  valida.", "error");  
+}else if(fin ==""){
+   swal("Algo fallo!", "Escoga una Fecha termino  valida.", "error");  
+}else {
       mostrarDatos(bodega, pagina, cantidad, inicio,fin);
+}
     });
     }
 
 function buscarmostrardatos(){
-bodega = document.getElementsByName("combo_pedido")[0].value;
+bodega = document.getElementsByName("combo_depto")[0].value;
   inicio = $("#fechainicio").val();
   fin = $("#fechafin").val();
   cantidad = $("#cantidadpag").val();
   pagina="1";
 
 if(bodega=="0"){
- swal("Algo fallo!", "Escoga una bodega  valida.", "error");
+ swal("Algo fallo!", "Escoga un depto  valido.", "error");
 }else if(inicio ==""){
    swal("Algo fallo!", "Escoga una Fecha inicio  valida.", "error");  
 }else if(fin ==""){
@@ -51,7 +67,7 @@ if(bodega=="0"){
 function mostrarDatos(bodega, pagina, cantidad, inicio,fin) {
 
     $.ajax({
-        url: "http://localhost/hospital/control_consumo/mostrar",
+        url: "http://localhost/hospital/control_consumo_depto/mostrar",
         type: "POST",
         data: { mibodega: bodega, mipagina: pagina, micantidad: cantidad, miinicio: inicio,mifin:fin },
         dataType: "json",
@@ -119,12 +135,12 @@ function mostrarDatos(bodega, pagina, cantidad, inicio,fin) {
 
 
 function exportardatos(){
-bodega = document.getElementsByName("combo_pedido")[0].value;
+bodega = document.getElementsByName("combo_depto")[0].value;
 inicio = $("#fechainicio").val();
 fin = $("#fechafin").val();
 
 if(bodega=="0"){
- swal("Algo fallo!", "Escoga una bodega  valida.", "error");
+ swal("Algo fallo!", "Escoga un depto  valido.", "error");
 }else if(inicio ==""){
    swal("Algo fallo!", "Escoga una Fecha inicio  valida.", "error");  
 }else if(fin ==""){
@@ -132,7 +148,7 @@ if(bodega=="0"){
 }else {
 
           $.ajax({
-                url: "http://localhost/hospital/control_consumo/reportefechas",
+                url: "http://localhost/hospital/control_consumo_depto/reportefechas",
                 type: "POST",
                 data: { fechainicio: inicio, fechafin: fin, mibodega: bodega },
                 dataType: "json",
@@ -146,7 +162,7 @@ if(bodega=="0"){
                     var anio = date.getFullYear();
                     var fechatotal = dia + "/" + mes + "/" + anio;
                     var time = date.toLocaleTimeString();
-                    $a.attr("download", "Reporte Consumo  Bodega " + fechatotal + ' ' + time + ".xls");
+                    $a.attr("download", "Reporte Consumo  Depto " + fechatotal + ' ' + time + ".xls");
                     $a[0].click();
                     $a.remove();
 
