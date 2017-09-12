@@ -202,8 +202,8 @@
       </div>
         <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
-             <button type="button"  id="limpiarpedido" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
-             <button type="button" id="imprimirpedido" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Pedido </button>  
+             <button type="button"  id="limpiarpedido" class="btn btn-danger" onclick="limpiar();" > Limpiar  </button> 
+             <button type="button" id="imprimirpedido" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir</button>  
              <button type="button" id="guardarpedido" onclick="guardarpedido();" class="btn btn-success" > Enviar Pedido </button>  
            </div>
             <div class="form-group form-inline col-lg-4 col-sm-4">

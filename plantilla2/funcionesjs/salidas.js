@@ -130,7 +130,7 @@ function mostrarDatos(valorBuscar) {
 
                 filas = "";
                 $.each(response.obtener, function(key, item) {
-                    filas += "<tr class='active' ><td >" + item.depto + "</td><td>" + item.comentario + "</td><td>" + item.estado + "</td><td>" + item.fecha + "</td><td>" + item.hora + "</td><td><button href='" + item.folio + "'  type='button' onclick='Agregarpedidotabla(this);'  id='agregartabla'   class= '  btn btn-success '  >+</button></td><td> <button href='" + item.folio + "'  id='eliminar' onclick=''  class= 'addBtn  btn btn-danger '>X</button></td></tr>";
+                    filas += "<tr class='active' ><td >" + item.depto + "</td><td>" + item.comentario + "</td><td>" + item.estado + "</td><td>" + item.fecha + "</td><td>" + item.hora + "</td><td><button href='" + item.folio + "'  type='button' onclick='Agregarpedidotabla(this);'  id='agregartabla'   class= '  btn btn-success '  >+</button></td><td> <button href='" + item.folio + "'  id='eliminar' type='button' onclick='Eliminarpedidotabla(this);'  class= ' btn btn-danger '>X</button></td></tr>";
                 });
 
                 $("#tbpedidos tbody").html(filas);
@@ -174,6 +174,33 @@ function Agregarpedidotabla(obj) {
     $('#modal_pedidos').modal('hide');
 
 }
+
+function Eliminarpedidotabla(obj) {
+    valorBuscar = obj.getAttribute("href");
+    $('#npedido').val(valorBuscar);
+    if (valorBuscar == "0") {
+        $('#tbproductos').children('tr:not(:first)').remove();
+    } else {
+        $.ajax({
+            url: "http://localhost/hospital/control_salida/eliminarpedido",
+            type: "POST",
+            data: { buscar: valorBuscar },
+            dataType: "json",
+            success: function(response) {
+
+      
+  swal("Eliminado!", "Pedido Eliminado", "success");
+
+            }
+        });
+
+    }
+    $('#modal_pedidos').modal('hide');
+
+}
+
+
+
 
 //evento click  en tabla productos obtene primer valor
 $('#tbproductos').on('click', 'tr', function(e) {

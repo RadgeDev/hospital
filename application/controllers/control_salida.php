@@ -64,6 +64,20 @@ class Control_salida extends CI_Controller {
 		);
 		echo json_encode($data);
 	}
+
+
+public function eliminarpedido()
+	{	
+
+
+		//valor a Buscar
+		$buscar = $this->input->post("buscar");
+		$data = array(
+			"obtener" => $this->Salida_model->eliminarpedido($buscar)
+		);
+		echo json_encode($data);
+	}
+
 		public function cargarlotes()
 	{	
 		//valor a Buscar

@@ -20,6 +20,17 @@ $this->db->where('folio',$buscar);
 $query=$this->db->get();
 return $query->result();
 	}
+
+
+	Public function eliminarpedido($buscar)
+	{
+
+		$sql = "UPDATE pedidos SET estado='Desact' WHERE folio=".$buscar;
+        $this->db->query($sql);
+
+	}
+
+
 	Public function cargarlote($buscar)
 	{
 $this->db->select('*');
