@@ -19,8 +19,7 @@
               
         
              
-                
-                        <h2>Datos de los usuarios</h2>
+                   <h2>Datos de los usuarios</h2>
           
                      <div class=" col-lg-3 col-sm-3">
                 
@@ -37,7 +36,7 @@
                    <div class="col-lg-4 col-sm-4"> <button type="button" class="btn btn-search btn-info">
                             <span class="glyphicon glyphicon-search"></span>
                             <span class="label-icon">Buscar</span>
-                        </button>   <button type="button" id="btnbuscar"  class="btn btn-primary">Mostrar Todos</button>    <button type="button" href='#' class='btn btn-success' data-toggle='modal' data-target='#myModalHorizontal'>Agregar Nuevo Usuario</button>  </div>
+                        </button>   <button type="button" id="btnbuscar"  class="btn btn-primary">Mostrar Todos</button>    <button type="button" href='#' class='btn btn-success' data-toggle='modal' data-target='#myModalHorizontal'>Agregar Nuevo </button>  </div>
              
                      </div>
                     <br>
@@ -188,7 +187,7 @@
 
                              <div class="form-group">
                                 <label>Clave</label>
-                             <input type="text" class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave" ">
+                             <input type="text" class="form-control" id="seleclave" name="selecclave"  placeholder="Ingrese su Clave" >
                          
                             </div>
                             

@@ -189,14 +189,14 @@
     </div>
 
   
-              <div class="form-group form-inline col-lg-4 col-sm-4 " ">
-               <label  style=" float: right;">Descuento :
+              <div class="form-group form-inline col-lg-4 col-sm-4 " >
+               <label  style=" float: right;">Desc:
              <input type="text" id="descuento" style="text-align:right;" value="0" class="form-control"  onBlur="calculartotal();">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
           				 <span class="glyphicon glyphicon-plus"></span> Desc.
           				</button>				</label>
            </div>
 
-              <div class="form-group form-inline col-lg-4 col-sm-4 " ">
+              <div class="form-group form-inline col-lg-4 col-sm-4 " >
                <label style=" float: right;" >Valor factura :
             <input type="text"  id="valorfactura" onblur="habilitando();" onChange="habilitando();" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="valorfactura"/></label>
            </div>
@@ -218,9 +218,9 @@
             </div>
               <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
-             <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar Campos </button> 
+             <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar  </button> 
            
-             <button type="button" id="imprimiringreso" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir Ingreso </button>  
+             <button type="button" id="imprimiringreso" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir  </button>  
              <button type="button" id="guardaringreso" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
          
               

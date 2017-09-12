@@ -264,9 +264,13 @@
         });
     });
 
-    function multiplicar() {
-        n1 = $("#recepcionado").val();
-        n2 = $("#valorunidad").val();
+     function multiplicar() {
+        min1 = $("#recepcionado").val();
+        var n1 = Math.floor(min1 * 100) / 100;
+        n1.toFixed(2);
+        min2 = $("#valorunidad").val();
+        var n2 = Math.floor(min2 * 100) / 100;
+        n2.toFixed(2);
         if (n1 == "") {
             $("#recepcionado").val(0);
         } else if (n2 == "") {
@@ -275,9 +279,11 @@
         if (n1 == "" || n2 == "") {
             $("#valortotal").val(0);
         } else {
-            total = parseInt(n1) * parseFloat(n2);
-            var mitotal = total.toFixed(0);
-            $("#valortotal").val(parseFloat(mitotal));
+
+            mitotal = parseInt(n1) * parseFloat(n2);
+            var total = Math.floor(mitotal * 100) / 100;
+       
+            $("#valortotal").val(total.toFixed(2));
         }
     }
 
@@ -368,107 +374,138 @@
         );
     }
 
-    Number.prototype.roundToNearest = function(multiple, roundingFunction) {
-        // Use normal rounding by default
-        roundingFunction = roundingFunction || Math.round;
 
-        return roundingFunction(this / multiple) * multiple;
-    }
 
     function calculartotal() {
 
         var tipoingresocod = document.getElementsByName("combo_tipoingreso")[0].value;
         if (tipoingresocod == "1") {
-            var theneto = 0;
-            $("td:nth-child(8)").each(function() {
-                var val = $(this).text().replace(" ", "").replace(",-", "");
-                theneto += parseFloat(val);
-            });
-            var iva_venta = 0;
-            var total = 0;
-            var descuento = $("#descuento").val();
-            if (descuento === "") {
-                swal("Error", "Agrege decuento valido", "error");
-                $("#descuento").val(0);
-                descuento = 0;
-            } else if (descuento > theneto) {
-                swal("Error", "El decuento es mayor al valor total", "error");
-                descuento = 0;
-                $("#descuento").val(0);
-            }
-
-            thenetodesc = Parsefloat(theneto - descuento);
-            iva_venta = Parsefloat((thenetodesc * 19) / 100);
-            total = Parsefloat(thenetodesc + iva_venta);
-
-            $("#valorfactura").val(theneto);
-            $("#neto").val("0");
-            $("#iva").val("0");
-            $("#total").val(thenetodesc.roundToNearest(5));
-            var mivalor = $("#agregardesc").val();
-
-            if (mivalor == "desactivar") {
-                $("#descuento").prop("readonly", true);
-                $("#agregardesc").val("activar");
-            } else {
-                $("#descuento").prop("readonly", false);
-                $("#agregardesc").val("desactivar");
-            }
+          var mineto2 = 0;
+        $("td:nth-child(8)").each(function() {
+            var val = $(this).text().replace(" ", "").replace(",-", "");
+           mival=parseFloat(val);
+           var totalgrilla = Math.floor(mival * 100) / 100;
+           alert(totalgrilla);
+           totalgrilla.toFixed(2);
+           mineto2 += totalgrilla;
+             
+        });
+        var theneto =  parseFloat(mineto2).toFixed(2);
+        var iva_venta = 0;
+        var total = 0;
+        var midescuento = $("#descuento").val();
+        var descuento = Math.floor(midescuento * 100) / 100;
+        descuento.toFixed(2);
+        if (descuento === "") {
+            swal("Error", "Agrege decuento valido", "error");
+            $("#descuento").val(0);
+            descuento = 0;
+        } else if (descuento > theneto) {
+            swal("Error", "El decuento es mayor al valor total", "error");
+            descuento = 0;
+            $("#descuento").val(0);
+        }
+        
+        midescuento= parseFloat(descuento).toFixed(2);
+        descontar = parseFloat(theneto) - parseFloat(midescuento);
+        var thenetodesc = Math.floor(descontar * 100) / 100;
+        miiva =0;
+      
+        totales = parseFloat(thenetodesc) + parseFloat(miiva) ;
+  
 
 
+        $("#valorfactura").val(parseFloat(theneto).toFixed(2));
+        $("#neto").val(parseFloat(totales).toFixed(2));
+        $("#iva").val("0");
+        $("#total").val(parseFloat(totales).toFixed(2));
+        var mivalor = $("#agregardesc").val();
 
-            if (theneto == thenetodesc) {
-                $("#lblneto").hide();
-            } else {
+        if (mivalor == "desactivar") {
+            $("#descuento").prop("readonly", true);
+            $("#agregardesc").val("activar");
+        } else {
+            $("#descuento").prop("readonly", false);
+            $("#agregardesc").val("desactivar");
+        }
 
-                $("#lblneto").show();
 
-            }
+
+        if (theneto == thenetodesc) {
+            $("#lblneto").hide();
+        } else {
+
+            $("#lblneto").show();
+
+        }
+
+
+
+
+
+
+
+
         } else if (tipoingresocod == "2") {
-            var theneto = 0;
-            $("td:nth-child(8)").each(function() {
-                var val = $(this).text().replace(" ", "").replace(",-", "");
-                theneto += parseFloat(val);
-            });
-            var iva_venta = 0;
-            var total = 0;
-            var descuento = $("#descuento").val();
-            if (descuento === "") {
-                swal("Error", "Agrege decuento valido", "error");
-                $("#descuento").val(0);
-                descuento = 0;
-            } else if (descuento > theneto) {
-                swal("Error", "El decuento es mayor al valor total", "error");
-                descuento = 0;
-                $("#descuento").val(0);
-            }
-            thenetodesc = parseFloat(theneto - descuento);
-            iva_venta = parseFloat((thenetodesc * 19) / 100);
-            total = parseFloat(thenetodesc + iva_venta);
-
-            $("#valorfactura").val(theneto);
-            $("#neto").val(thenetodesc);
-            $("#iva").val(iva_venta);
-            $("#total").val(total);
-            var mivalor = $("#agregardesc").val();
-
-            if (mivalor == "desactivar") {
-                $("#descuento").prop("readonly", true);
-                $("#agregardesc").val("activar");
-            } else {
-                $("#descuento").prop("readonly", false);
-                $("#agregardesc").val("desactivar");
-            }
-
+            var mineto2 = 0;
+        $("td:nth-child(8)").each(function() {
+            var val = $(this).text().replace(" ", "").replace(",-", "");
+           mival=parseFloat(val);
+           var totalgrilla = Math.floor(mival * 100) / 100;
+           alert(totalgrilla);
+           totalgrilla.toFixed(2);
+           mineto2 += totalgrilla;
+             
+        });
+        var theneto =  parseFloat(mineto2).toFixed(2);
+        var iva_venta = 0;
+        var total = 0;
+        var midescuento = $("#descuento").val();
+        var descuento = Math.floor(midescuento * 100) / 100;
+        descuento.toFixed(2);
+        if (descuento === "") {
+            swal("Error", "Agrege decuento valido", "error");
+            $("#descuento").val(0);
+            descuento = 0;
+        } else if (descuento > theneto) {
+            swal("Error", "El decuento es mayor al valor total", "error");
+            descuento = 0;
+            $("#descuento").val(0);
+        }
+        
+        midescuento= parseFloat(descuento).toFixed(2);
+        descontar = parseFloat(theneto) - parseFloat(midescuento);
+        var thenetodesc = Math.floor(descontar * 100) / 100;
+        miiva =(thenetodesc * 19) / 100;
+      
+        totales = parseFloat(thenetodesc) + parseFloat(miiva) ;
+  
 
 
-            if (theneto == thenetodesc) {
-                $("#lblneto").hide();
-            } else {
+        $("#valorfactura").val(parseFloat(theneto).toFixed(2));
+        $("#neto").val(parseFloat(thenetodesc).toFixed(2));
+        $("#iva").val(parseFloat(miiva).toFixed(2));
+        $("#total").val(parseFloat(totales).toFixed(2));
+        var mivalor = $("#agregardesc").val();
 
-                $("#lblneto").show();
+        if (mivalor == "desactivar") {
+            $("#descuento").prop("readonly", true);
+            $("#agregardesc").val("activar");
+        } else {
+            $("#descuento").prop("readonly", false);
+            $("#agregardesc").val("desactivar");
+        }
 
-            }
+
+
+        if (theneto == thenetodesc) {
+            $("#lblneto").hide();
+        } else {
+
+            $("#lblneto").show();
+
+        }
+
 
         } else {
             swal("Error", "Eliga tipo d eingreso", "error");
