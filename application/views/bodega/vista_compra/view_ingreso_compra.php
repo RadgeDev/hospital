@@ -149,7 +149,7 @@
             </div>
 
             <div class="col-lg-2 col-sm-2">
-                <label>Agregar Nuevo  Prod.</label>
+                <label>Agregar Prod.</label>
                 <div class='input-group ' >
           				<button type="button" id="agreganuevo" class="btn btn-info"  class="btn btn-info"  data-toggle='modal' data-target='#myModalguardar'>
           				 <span class="glyphicon glyphicon-plus"></span> Agregar Prod.
@@ -187,36 +187,88 @@
         </div>
       </div>
     </div>
+      </div>
 
-  
-              <div class="form-group form-inline col-lg-4 col-sm-4 " >
-               <label  style=" float: right;">Desc:
-             <input type="text" id="descuento" style="text-align:right;" value="0" class="form-control"  onBlur="calculartotal();">	<button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
-          				 <span class="glyphicon glyphicon-plus"></span> Desc.
-          				</button>				</label>
+<div class="row">
+    <div class="form-group form-inline col-lg-4 col-md-4 " >
+               <label  >Desc:
+             <input type="text" id="descuento" style="text-align:right;" value="0" class="form-control"  onBlur="calculartotal();">   
+                      </label>
+    </div>
+
+  <div class="form-group form-inline col-lg-2 col-md-2" >
+            <button type="button" onclick="calculartotal();" id="agregardesc" class="btn btn-warning" >
+                   <span class="glyphicon glyphicon-plus"></span> Desc.
+                  </button> 
+  </div>
+
+ <div class="form-group form-inline col-lg-6 .col-md-6" >
+               <label style=" float: right;" >Valor factura :
+            <input type="text"  id="valorfactura" onblur="habilitando();" onChange="habilitando();" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="valorfactura"/></label>
+ </div>
+
+<div class="form-group form-inline col-lg-12 col-sm-12  ">
+        
+              <label style=" float: right;">NETO :
+          <input type="text" style="text-align:right;" id="neto" class="form-control" readonly placeholder="NETO" name="neto">
+                </label>
+           <label id="lblneto" style=" float: right;Color:red;">Descuento Aplicado +  </label>
+</div>
+
+<div class="form-group form-inline col-lg-12 col-sm-12 ">
+              <label style=" float: right;">I.V.A :
+            <input type="text" style="text-align:right;" id="iva" class="form-control" readonly placeholder="IVA" name="iva">
+             </label>
+            </div>
+             <div class="form-group  col-lg-4 col-sm-4  ">
+             </div>
+   <div class="form-group  col-lg-4 col-sm-4  ">
+          
+             <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar  </button> 
+           
+             <button type="button" id="imprimiringreso" onclick="abrirEnPestana();" class="btn btn-info" target="BLANK" disabled > Imprimir  </button>  
+             <button type="button" id="guardaringreso" onclick="guardaringreso();" class="btn btn-success" > Guardar Ingreso </button>  
+         
            </div>
+  <div class="form-group form-inline col-lg-4 col-sm-4">
+             <label style=" float: right;">TOTAL :
+            <input type="text" id="total" style="text-align:right;"  class="form-control" readonly placeholder="TOTAL" name="total"/>
+             </label>
+   </div>
+  
+</div>
 
-              <div class="form-group form-inline col-lg-4 col-sm-4 " >
+
+      <!--    
+
+              <div class="form-group form-inline col-lg-4 col-md-offset-4" >
                <label style=" float: right;" >Valor factura :
             <input type="text"  id="valorfactura" onblur="habilitando();" onChange="habilitando();" style="text-align:right;" class="form-control" readonly  placeholder="VALOR FACTURA" name="valorfactura"/></label>
            </div>
 
-           <div class="form-group form-inline col-lg-4 col-sm-4 ">
+
+           <div class="form-group form-inline col-lg-4 col-sm-4  col-md-offset-4">
         
               <label style=" float: right;">NETO :
           <input type="text" style="text-align:right;" id="neto" class="form-control" readonly placeholder="NETO" name="neto">
                 </label>
            <label id="lblneto" style=" float: right;Color:red;">Descuento Aplicado +  </label>
             </div>
+
+
+
         <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
            </div>
+
             <div class="form-group form-inline col-lg-4 col-sm-4">
               <label style=" float: right;">I.V.A :
             <input type="text" style="text-align:right;" id="iva" class="form-control" readonly placeholder="IVA" name="iva">
              </label>
             </div>
+
               <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
              <button type="button"  id="limpiaringreso" class="btn btn-danger" onclick="limpiar();" > Limpiar  </button> 
            
@@ -230,6 +282,9 @@
             <input type="text" id="total" style="text-align:right;"  class="form-control" readonly placeholder="TOTAL" name="total"/>
              </label>
             </div>
+
+
+
              <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
               <div class="form-group form-inline col-lg-4 col-sm-4 ">
               	  <div class="alert alert-danger" id="msg-error3" style="text-align:left;">
@@ -242,10 +297,10 @@
               </div>
                 <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
            </div>
-  <!-- Row end -->
+  
             </div>
 
-
+<! Row end -->
 
    <!-- modal empieza aca -->
    <!-- Modal -->
