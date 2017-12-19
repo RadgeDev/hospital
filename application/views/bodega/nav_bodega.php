@@ -185,8 +185,11 @@
                             </li>
                         </ul>
                     </li>
+                     <li>
+                        <a href="<?= base_url('control_tutorial') ?>"><i class="fa fa-globe"></i> Manual de uso</a>
+                    </li>
                     <li>
-                         <a href="<?= base_url('control_acerca') ?>"><i class="fa fa-fw fa-dashboard"></i> Acerca de</a>ss
+                        <a href="<?= base_url('control_acerca') ?>"><i class="fa fa-fw fa-dashboard"></i> Acerca de</a>
                     </li>
                 </ul>
             </div>

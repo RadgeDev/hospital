@@ -170,7 +170,7 @@
     function solorut(e) {
         key = e.keyCode || e.which;
         tecla = String.fromCharCode(key).toLowerCase();
-        letras = "1234567890-";
+        letras = "1234567890-kK";
 
 
         if (letras.indexOf(tecla) == -1) {
@@ -869,11 +869,3 @@
         a.click();
     }
 
-    $("#nombre , #lote , #nombre").on('input', function(evt) {
-        var input = $(this);
-        var start = input[0].selectionStart;
-        $(this).val(function(_, val) {
-            return val.toUpperCase();
-        });
-        input[0].selectionStart = input[0].selectionEnd = start;
-    });

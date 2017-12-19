@@ -23,14 +23,14 @@ function report()
   $html.='   <!DOCTYPE html>
 <html>
 <head>
-    
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">   
  
 </head>
 <body>
 <div id="wrapper">
 
 <div class="right"> 
-    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    <img src="http://bodegachimbarongo.tk/hospital/plantilla2/reporte/logo.jpg">
     </div>
     '; 
   foreach ($datos as $misdatos) {
@@ -66,90 +66,115 @@ function report()
 }
       $html.='
 </table>          
-         
-    <div id="content">
-         
-        <div id="invoice_body">
-            <table>
-            <tr style="background:#eee;">
-                <td style="width:8%;"><b>Cod Int.</b></td>
-                <td style="padding-left:10px;"><b>Producto</b></td>
-                <td style="width:15%;"><b>Lote</b></td>
-                  <td style="width:10%;"><b>A.Vencer</b></td>
-                <td style="width:5%;"><b>Cant</b></td>
-                <td style="width:10%;"><b>Unitario</b></td>
-                <td style="width:10%;"><b>Total</b></td>
-            </tr>
-            </table>
-             
-           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
-           ';
-  foreach ($detalle as $misdetalle) {
-$html.='
-            <tr>
-                <td style="width:8%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
-                <td style="text-align:left; padding-left:10px;"><h5 class="letralegible2">'.$misdetalle->nombre_prod.'</h5></td>
-                <td  style="width:15%;"><h5 class="letralegible">'.$misdetalle->numero_lote.'</h5></td>
-                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->fecha_vencimiento.'</h5></td>
-                <td  style="width:5%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
-                <td style="width:10%;" ><h5 class="letralegible">'.$misdetalle->precio.'</h5></td>
-                <td style="width:10%;" ><h5 class="letralegible">'.$misdetalle->total.'</h5></td>
+        <br></br>
+     <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    	
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><strong>Cod.Int.</strong></td>
+        							<td class="text-center"><strong>Product.</strong></td>
+                                    <td class="text-center"><strong>Lote</strong></td>
+                                    <td class="text-center"><strong>A vencer</strong></td>
+        							<td class="text-center"><strong>Cant.</strong></td>
+        							<td class="text-right"><strong>Unit.</strong></td>
+                                    <td class="text-right"><strong>Total</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                
+                                ';
+                                foreach ($detalle as $misdetalle) {
+                              $html.='   
+    							<tr>
+    							
+    								<td class="text-center">'.$misdetalle->cod_producto.'</td>
+                                    <td class="text-center">'.$misdetalle->nombre_prod.'</td>
+                                    <td class="text-center">'.$misdetalle->numero_lote.'</td>
+    								<td class="text-center">'.$misdetalle->fecha_vencimiento.'</td>
+                                    <td class="text-right">'.$misdetalle->cantidad.'</td>
+                                    <td class="text-right">'.$misdetalle->precio.'</td>
+                                    <td class="text-right">'.$misdetalle->total.'</td>
+    							</tr>
+                                ';    }
+                                $html.='   
 
-            </tr> 
-               ';    }
-$html.='        
-            <tr>
-                <td colspan="5"></td>
-                <td></td>
-                <td></td>
-            </tr>
-              ';
-  foreach ($datos as $misdatos) {
- $html.='
-             <tr>
-                <td colspan="5"></td>
-                <td style="font-weight:bold; font-size:8pt;background:#eee;">SUBTOTAL </td>
-                <td ><h5 class="letralegible">'.$misdatos->subtotal.'</h5></td>
+                                ';
+                                foreach ($datos as $misdatos) {
+                               $html.='
+    							<tr>
+    								<td class="thick-line"></td>
+    								<td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+    								<td class="thick-line text-center"><strong>Subtotal</strong></td>
+    								<td class="thick-line text-right">'.$misdatos->subtotal.'</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+                                    	<td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="thick-line"></td>
+    								<td class="no-line text-center"><strong>Desc.</strong></td>
+    								<td class="no-line text-right">'.$misdatos->descuento.'</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="thick-line"></td>
+    								<td class="no-line text-center"><strong>Neto</strong></td>
+    								<td class="no-line text-right">'.$misdatos->neto.'</td>
+                                </tr>
+                                <tr>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="thick-line"></td>
+                                <td class="no-line text-center"><strong>IVA</strong></td>
+                                <td class="no-line text-right">'.$misdatos->iva.'</td>
+                            </tr>
+                            <tr>
+                            <td class="no-line"></td>
+                            <td class="no-line"></td>
+                            <td class="no-line"></td>
+                            <td class="no-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong>Total</strong></td>
+                            <td class="no-line text-right">'.$misdatos->total_compra.'</td>
+                        </tr>
 
-            </tr>
-             <tr>
-               <td colspan="5"></td>
-              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
-                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td style="font-weight:bold; font-size:8pt;background:#eee;">NETO </td>
-                <td ><h5 class="letralegible">'.$misdatos->neto.'</h5></td>
-
-            </tr>
-             <tr>
-               
-              <td colspan="5"></td>
-              <td style="font-weight:bold; font-size:8pt;background:#eee;">IVA </td>
-                <td ><h5 class="letralegible">'.$misdatos->iva.'</h5></td>
-            </tr>
-        
-              <tr>
-                <td colspan="5"></td>
-             <td style="font-weight:bold; font-size:8pt;background:#eee;">TOTAL </td>
-                <td ><h5 class="letralegible">'.$misdatos->total_compra.'</h5></td>
-            </tr>
-       ';    }
-$html.='   
-        </table>
-         <br >
+                        ';    }
+                        $html.='
+    						</tbody>
+                        </table>
+                        
 
 <div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
-         width: 50%;"/>
-          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
-       ';
-  foreach ($datos as $misdatos) {
- $html.='    
+width: 50%;"/>
+ <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+';
+foreach ($datos as $misdatos) {
+$html.='    
 <div id="cajon2" class="left"><h4>Recibido por: '.$misdatos->nombre_usuario.'</h4></div>
-        </div>
-            ';    }
+</div>
+   ';    }
 $html.='
+</div>
+
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </div>
 
 
@@ -160,8 +185,10 @@ $html.='
    
 
  
-    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $estilos3=file_get_contents("http://bodegachimbarongo.tk/hospital/plantilla2/reporte/reporte.css");
     $this->mpdf->setDisplayMode('fullpage');
+    
+  
     $this->mpdf->WriteHTML($estilos3,1);
     $this->mpdf->WriteHTML($html,2);
 
@@ -190,7 +217,7 @@ function report_pedidos()
 <div id="wrapper">
 
 <div class="right"> 
-    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    <img src="http://bodegachimbarongo.tk/hospital/plantilla2/reporte/logo.jpg">
     </div>
     '; 
   foreach ($datos as $misdatos) {
@@ -224,53 +251,62 @@ function report_pedidos()
    
   </tr>';
 }
-      $html.='
+$html.='
 </table>          
-         
-    <div id="content">
-         
-        <div id="invoice_body">
-            <table>
-            <tr style="background:#eee;">
-                <td style="width:25%;"><b>Cod Producto.</b></td>
-                <td style="width:50%;"><b>Nombre</b></td>
-                <td style="width:25%;"><b>Cantidad</b></td>
-       
-            </tr>
-            </table>
-             
-           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
-           ';
-  foreach ($detalle as $misdetalle) {
-$html.='
-            <tr>
-                <td style="width:25%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
-                <td  style="width:50%;text-align:left;font-weight:bold;"><h5 class="letralegible">'.$misdetalle->nombre_prod.'</h5></td>
-                 <td  style="width:25%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
-            </tr> 
-               ';    }
-$html.='        
-            <tr>
-                <td colspan="5"></td>
-                <td></td>
-                <td></td>
-            </tr>
-              ';
-  
-$html.='   
-        </table>
-         <br >
+        <br></br>
+     <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    	
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><strong>Cod.Producto.</strong></td>
+        							<td class="text-center"><strong> Nom.Product.</strong></td>
+        							<td class="text-center"><strong>Cant.</strong></td>
+        						
+                                </tr>
+    						</thead>
+    						<tbody>
+                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                
+                                ';
+                                foreach ($detalle as $misdetalle) {
+                              $html.='   
+    							<tr>
+    							
+    								<td class="text-center">'.$misdetalle->cod_producto.'</td>
+                                    <td class="text-center">'.$misdetalle->nombre_prod.'</td>
+                                    <td class="text-right">'.$misdetalle->cantidad.'</td>
+                         
+    							</tr>
+                                ';    }
+                                $html.='   
 
+                     
+                                
+    						</tbody>
+                        </table>
+                        
+<p></p>
 <div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
-         width: 50%;"/>
-          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
-       ';
-  foreach ($datos as $misdatos) {
- $html.='    
+width: 50%;"/>
+ <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+';
+foreach ($datos as $misdatos) {
+$html.='    
 <div id="cajon2" class="left"><h4>Pedido realizado por: '.$misdatos->nombre.'</h4></div>
-        </div>
-            ';    }
+</div>
+   ';    }
 $html.='
+</div>
+
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </div>
 
 
@@ -281,8 +317,10 @@ $html.='
    
 
  
-    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $estilos3=file_get_contents("http://bodegachimbarongo.tk/hospital/plantilla2/reporte/reporte.css");
     $this->mpdf->setDisplayMode('fullpage');
+    
+  
     $this->mpdf->WriteHTML($estilos3,1);
     $this->mpdf->WriteHTML($html,2);
 
@@ -291,6 +329,7 @@ $html.='
      exit;
 
  }  
+
 
 function report_salidas()
 {
@@ -312,7 +351,7 @@ function report_salidas()
 <div id="wrapper">
 
 <div class="right"> 
-    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    <img src="http://bodegachimbarongo.tk/hospital/plantilla2/reporte/logo.jpg">
     </div>
     '; 
   foreach ($datos as $misdatos) {
@@ -341,63 +380,68 @@ function report_salidas()
    <td style="width:20%;font-weight:bold;background:#eee;">Observacion:</td>
     <td COLSPAN="3" style="width:30%">'.$misdatos->comentarios.'</td>
    
-  </tr>';
+  </tr>'
+;
 }
       $html.='
 </table>          
-         
-    <div id="content">
-         
-        <div id="invoice_body">
-            <table>
-            <tr style="background:#eee;">
-                <td style="width:10%;"><b>Cod Prod.</b></td>
-                <td style="padding-left:10px;width:30%;"><b>Producto</b></td>
-                <td style="width:20%;"><b>Lote</b></td>
-                 <td style="width:10%;"><b>A.Vencer</b></td>
-                <td style="width:10%;"><b>Cant</b></td>
-                <td style="width:20%;"><b>Unitario</b></td>
-             
-            </tr>
-            </table>
-             
-           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
-           ';
-  foreach ($detalle as $misdetalle) {
-$html.='
-            <tr>
-                <td style="width:10%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
-                <td style="text-align:left; padding-left:10px;width:30%;"><h5 class="letralegible2">'.$misdetalle->nombre_prod.'</h5></td>
-                <td  style="width:20%;"><h5 class="letralegible">'.$misdetalle->lote.'</h5></td>
-                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->fecha_vencimiento.'</h5></td>
-                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
-                <td style="width:20%;" ><h5 class="letralegible">'.$misdetalle->valor.'</h5></td>
-           
+        <br></br>
+     <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    	
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+                                    <td class="text-center"><strong>Cod.Prod.</strong></td>
+                                    <td class="text-center"><strong>Producto</strong></td>
+                                    <td class="text-center"><strong>Lote</strong></td>
+                                    <td class="text-center"><strong>A vencer</strong></td>
+        							<td class="text-center"><strong>Cant.</strong></td>
+        							<td class="text-right"><strong>Unit.</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                
+                                ';
+                                foreach ($detalle as $misdetalle) {
+                              $html.='   
+    							<tr>
+    							
+    								<td class="text-center">'.$misdetalle->cod_producto.'</td>
+                                    <td class="text-center">'.$misdetalle->nombre_prod.'</td>
+                                    <td class="text-center">'.$misdetalle->lote.'</td>
+    								<td class="text-center">'.$misdetalle->fecha_vencimiento.'</td>
+                                    <td class="text-right">'.$misdetalle->cantidad.'</td>
+                                    <td class="text-right">'.$misdetalle->valor.'</td>
+                              
+    						
 
-            </tr> 
-               ';    }
-$html.='        
-            <tr>
-                <td colspan="5"></td>
-                <td></td>
-                <td></td>
-            </tr>
-              ';
-  
-$html.='   
-        </table>
-         <br >
+                        ';   }
+                        $html.='
+    						</tbody>
+                        </table>
+                        
 
 <div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
-         width: 50%;"/>
-          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
-       ';
-  foreach ($datos as $misdatos) {
- $html.='    
-<div id="cajon2" class="left"><h4>Realizado por: '.$misdatos->nombre.'</h4></div>
-        </div>
-            ';    }
+width: 50%;"/>
+ <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+';
+foreach ($datos as $misdatos) {
+$html.='    
+<div id="cajon2" class="left"><h4>Recibido por: '.$misdatos->nombre.'</h4></div>
+</div>
+   ';    }
 $html.='
+</div>
+
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </div>
 
 
@@ -408,14 +452,18 @@ $html.='
    
 
  
-    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $estilos3=file_get_contents("http://bodegachimbarongo.tk/hospital/plantilla2/reporte/reporte.css");
     $this->mpdf->setDisplayMode('fullpage');
+    
+  
     $this->mpdf->WriteHTML($estilos3,1);
     $this->mpdf->WriteHTML($html,2);
 
   
     $this->mpdf->Output();
      exit;
+
+
 
  }  
 
@@ -441,7 +489,7 @@ function reportboletas()
 <div id="wrapper">
 
 <div class="right"> 
-    <img src="http://localhost/hospital/plantilla2/reporte/logo.jpg">
+    <img src="http://bodegachimbarongo.tk/hospital/plantilla2/reporte/logo.jpg">
     </div>
     '; 
   foreach ($datos as $misdatos) {
@@ -477,91 +525,115 @@ function reportboletas()
 }
       $html.='
 </table>          
-         
-    <div id="content">
-         
-        <div id="invoice_body">
-            <table>
-            <tr style="background:#eee;">
-                <td style="width:10%;"><b>Cod Int.</b></td>
-                <td style="padding-left:10px;width:30%;"><b>Producto</b></td>
-                <td style="width:20%;"><b>Lote</b></td>
-                <td style="width:10%;"><b>A.Vencer</b></td>
-                <td style="width:10%;"><b>Cant</b></td>
-                <td style="width:10%;"><b>Unitario</b></td>
-                <td style="width:10%;"><b>Total</b></td>
-            </tr>
-            </table>
-         
-             
-           <table cellpadding=" 0" cellspacing="0" WORD-BREAK:BREAK-ALL  >
-           ';
-  foreach ($detalle as $misdetalle) {
-$html.='
-            <tr>
-                <td style="width:10%;"><h5 class="letralegible">'.$misdetalle->cod_producto.'</h5></td>
-                <td style="text-align:left;width:30%; padding-left:10px;"><h5 class="letralegible2">'.$misdetalle->nombre_prod.'</h5></td>
-                <td  style="width:20%;"><h5 class="letralegible">'.$misdetalle->numero_lote.'</h5></td>
-                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->fecha_vencimiento.'</h5></td>
-                <td  style="width:10%;"><h5 class="letralegible">'.$misdetalle->cantidad.'</h5></td>
-                <td style="width:10%;" ><h5 class="letralegible">'.$misdetalle->precio.'</h5></td>
-                <td style="width:10%;" ><h5 class="letralegible">'.$misdetalle->total.'</h5></td>
+        <br></br>
+     <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    	
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><strong>Cod.Int.</strong></td>
+        							<td class="text-center"><strong>Product.</strong></td>
+                                    <td class="text-center"><strong>Lote</strong></td>
+                                    <td class="text-center"><strong>A vencer</strong></td>
+        							<td class="text-center"><strong>Cant.</strong></td>
+        							<td class="text-right"><strong>Unit.</strong></td>
+                                    <td class="text-right"><strong>Total</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                
+                                ';
+                                foreach ($detalle as $misdetalle) {
+                              $html.='   
+    							<tr>
+    							
+    								<td class="text-center">'.$misdetalle->cod_producto.'</td>
+                                    <td class="text-center">'.$misdetalle->nombre_prod.'</td>
+                                    <td class="text-center">'.$misdetalle->numero_lote.'</td>
+    								<td class="text-center">'.$misdetalle->fecha_vencimiento.'</td>
+                                    <td class="text-right">'.$misdetalle->cantidad.'</td>
+                                    <td class="text-right">'.$misdetalle->precio.'</td>
+                                    <td class="text-right">'.$misdetalle->total.'</td>
+    							</tr>
+                                ';    }
+                                $html.='   
 
-            </tr> 
-               ';    }
-$html.='        
-            <tr>
-                <td colspan="5"></td>
-                <td></td>
-                <td></td>
-            </tr>
-              ';
-  foreach ($datos as $misdatos) {
- $html.='
-            <tr>
-                <td colspan="5"></td>
-                <td style="font-weight:bold; font-size:8pt;background:#eee;">SUBTOTAL </td>
-                <td ><h5 class="letralegible">'.$misdatos->subtotal.'</h5></td>
+                                ';
+                                foreach ($datos as $misdatos) {
+                               $html.='
+    							<tr>
+    								<td class="thick-line"></td>
+    								<td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+    								<td class="thick-line text-center"><strong>Subtotal</strong></td>
+    								<td class="thick-line text-right">'.$misdatos->subtotal.'</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+                                    	<td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="thick-line"></td>
+    								<td class="no-line text-center"><strong>Desc.</strong></td>
+    								<td class="no-line text-right">'.$misdatos->descuento.'</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="thick-line"></td>
+    								<td class="no-line text-center"><strong>Neto</strong></td>
+    								<td class="no-line text-right">'.$misdatos->neto.'</td>
+                                </tr>
+                                <tr>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="thick-line"></td>
+                                <td class="no-line text-center"><strong>IVA</strong></td>
+                                <td class="no-line text-right">'.$misdatos->iva.'</td>
+                            </tr>
+                            <tr>
+                            <td class="no-line"></td>
+                            <td class="no-line"></td>
+                            <td class="no-line"></td>
+                            <td class="no-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong>Total</strong></td>
+                            <td class="no-line text-right">'.$misdatos->total_compra.'</td>
+                        </tr>
 
-            </tr>
-             <tr>
-               <td colspan="5"></td>
-              <td style="font-weight:bold; font-size:8pt;background:#eee;">DESC </td>
-                <td ><h5 class="letralegible">'.$misdatos->descuento.'</h5></td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td style="font-weight:bold; font-size:8pt;background:#eee;">NETO </td>
-                <td ><h5 class="letralegible">'.$misdatos->neto.'</h5></td>
-
-            </tr>
-             <tr>
-               
-              <td colspan="5"></td>
-              <td style="font-weight:bold; font-size:8pt;background:#eee;">IVA </td>
-                <td ><h5 class="letralegible">'.$misdatos->iva.'</h5></td>
-            </tr>
-        
-              <tr>
-                <td colspan="5"></td>
-             <td style="font-weight:bold; font-size:8pt;background:#eee;">TOTAL </td>
-                <td ><h5 class="letralegible">'.$misdatos->total_compra.'</h5></td>
-            </tr>
-       ';    }
-$html.='   
-        </table>
-         <br >
+                        ';    }
+                        $html.='
+    						</tbody>
+                        </table>
+                        
 
 <div id="cajon1" class="right">  <hr style="color: black; background-color: black; height: 2px;text-align:left;
-         width: 50%;"/>
-          <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
-       ';
-  foreach ($datos as $misdatos) {
- $html.='    
+width: 50%;"/>
+ <p style=text-align:left;font-weight:bold;>Firma y Timbre</p></div>
+';
+foreach ($datos as $misdatos) {
+$html.='    
 <div id="cajon2" class="left"><h4>Recibido por: '.$misdatos->nombre_usuario.'</h4></div>
-        </div>
-            ';    }
+</div>
+   ';    }
 $html.='
+</div>
+
+    				</div>
+    			</div>
+    		</div>
+    	</div>
     </div>
 
 
@@ -572,8 +644,10 @@ $html.='
    
 
  
-    $estilos3=file_get_contents("http://localhost/hospital/plantilla2/reporte/reporte.css");
+    $estilos3=file_get_contents("http://bodegachimbarongo.tk/hospital/plantilla2/reporte/reporte.css");
     $this->mpdf->setDisplayMode('fullpage');
+    
+  
     $this->mpdf->WriteHTML($estilos3,1);
     $this->mpdf->WriteHTML($html,2);
 
@@ -582,7 +656,6 @@ $html.='
      exit;
 
  }  
-
 
 
 }

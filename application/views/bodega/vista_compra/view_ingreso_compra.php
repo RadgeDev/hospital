@@ -235,6 +235,19 @@
             <input type="text" id="total" style="text-align:right;"  class="form-control" readonly placeholder="TOTAL" name="total"/>
              </label>
    </div>
+   
+             <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+              <div class="form-group form-inline col-lg-4 col-sm-4 ">
+                  <div class="alert alert-danger" id="msg-error3" style="text-align:left;">
+                  <strong>¡Error!</strong> Intentelo mas tarde.
+                  <div class="list-errors3"></div>
+                  </div>
+                  <div class="alert alert-success" id="msg-bien" style="text-align:left;">
+                  <strong>¡Ingreso Correcto!</strong> Datos Guardados.
+                  <div class="list-errors4"></div>
+              </div>
+                <div class="form-group form-inline col-lg-4 col-sm-4 "></div>
+           </div>
   
 </div>
 
@@ -394,7 +407,7 @@
         </div>
           <div class="panel-body">
           <div class="row">
-         <form  id="ingresararticulo" onsubmit="addProductotabla(event)">
+         <form  id="ingresararticulo" autocomplete="off" onsubmit="addProductotabla(event)">
             <div class="col-lg-6 col-sm-6">
                 <label>Codigo Articulo</label>
                 <input id="codigoarticulo"  name="codigoarticulo" type="text" readonly class="form-control">
@@ -518,7 +531,7 @@
 
                             <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" id="nombre" name="nombre"  placeholder="Ingrese su nombre">
+                            <input class="form-control" id="nombre" name="nombre" autocomplete="off" placeholder="Ingrese su nombre">
                             </div>
 
                             <div class="form-group">
